@@ -1,0 +1,33 @@
+{
+  "name": "angular-sacffold",
+  "authors": [
+    "MyLittlePony"
+  ],
+  "description": "Analisis y diseño de Sistemas 1 app with Hapi server serving it",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "Angular",
+    "Scaffold",
+    "Hapi",
+    "Bootstrap"
+  ],
+  "license": "MIT",
+  "homepage": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "latest",
+    "angular": "latest",
+    "angular-ui-router": "latest",
+    "gulp": "latest",
+    "bootstrap-css": "latest",
+    "ngstorage": "latest",
+    "bootstrap3-dialog": "latest"
+  }
+}
