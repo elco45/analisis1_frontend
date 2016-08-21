@@ -1,0 +1,91 @@
+<div class="container" ng-controller="UsersController">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle Navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> 
+              <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
+                   width: 8em;
+                   height: 2.8em;
+                   padding-top: 0.2em;
+              ">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Manejar Habitaciones</a></li>
+              <li><a href="#">Manejar Usuarios</a></li>
+            </ul>
+        </div>
+      </div>
+  </nav>
+
+  <div class="container extra">
+  </div>
+
+  <div class="main-manage">
+    <!-- Modificar Usuarios form--> 
+    <form class="clearfix" action="index.html" method="post">
+
+      <h1>Modificar Usuarios</h1>
+
+      <fieldset>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 12px;">
+            Eliga un usuario a modificar <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">Persona1</a></li>
+            <li><a href="#">Persona2</a></li>
+            <li><a href="#">Persona3</a></li>
+          </ul>
+        </div>
+        <br>
+
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="user_name">
+
+        <label for="name">Usuario:</label>
+        <input type="text" id="name" name="user_username">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="user_password">
+
+        <label>Tipo:</label> <br>
+        <input type="radio" id="perm" value="perm" name="user_type"><label for="perm" class="light">Permanente</label><br>
+        <input type="radio" id="temp" value="temp" name="user_type"><label for="temp" class="light">Temporal</label>
+      </fieldset>
+      <p></p>
+      <button type="submit">Modificar</button>
+    </form>
+
+    <!-- Agregar Usuarios form -->
+    <form class = "fix" action="index.html" method="post">
+
+      <h1>Crear un Nuevo Usuario</h1>
+
+      <fieldset>
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="user_name">
+
+        <label for="name">Usuario:</label>
+        <input type="text" id="name" name="user_username">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="user_password">
+
+        <label>Tipo:</label> <br>
+        <input type="radio" id="perm" value="perm" name="user_age"><label for="perm" class="light">Permanente</label><br>
+        <input type="radio" id="temp" value="temp" name="user_age"><label for="temp" class="light">Temporal</label>
+      </fieldset>
+      <p></p>
+      <button type="submit">Registrar</button>
+    </form>
+
+  </div>
+</div>
