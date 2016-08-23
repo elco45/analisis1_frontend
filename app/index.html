@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="AngularScaffold">
   <head>
     <meta charset="utf-8">
     <title>Meow</title>
     <!-- inject:css -->
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/forms.css">
+    <link rel="stylesheet" href="styles/breadcrumbs.css">
     <link href="styles/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- endinject -->
 
@@ -26,7 +27,7 @@
         <link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
   </head>
   
-  <body ng-app="AngularScaffold" >
+  <body>
       <div ui-view  ></div>
   </body>
 
@@ -39,6 +40,7 @@
   <script src="/ngstorage/ngStorage.js"></script>
   <!-- endinject -->
   <script src="app.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
 
   <!-- inject:js -->
   <script src="scripts/controllers/UsersController.js"></script>

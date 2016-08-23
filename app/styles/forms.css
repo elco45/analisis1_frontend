@@ -58,7 +58,7 @@ select {
   border-radius: 2px;
 }
 
-button {
+.bform {
   padding: 19px 39px 18px 39px;
   color: #9d9d9d!important;
   background-color: #01403a;

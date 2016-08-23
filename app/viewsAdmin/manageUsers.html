@@ -18,8 +18,8 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Manejar Habitaciones</a></li>
-              <li><a href="#">Manejar Usuarios</a></li>
+              <li><a href="/#/home">Manejar Habitaciones</a></li>
+              <li class="active"><a href="/#/manage">Manejar Usuarios</a></li>
             </ul>
         </div>
       </div>
@@ -29,6 +29,36 @@
   </div>
 
   <div class="main-manage">
+    <!-- Agregar Usuarios form -->
+    <form class = "fix" action="index.html" method="post">
+
+      <h1>Crear un Nuevo Usuario</h1>
+
+      <fieldset>
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="user_name">
+
+        <label for="name">Usuario:</label>
+        <input type="text" id="name" name="user_username">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="user_password">
+        <div class="type-user">
+          <label>Tipo:</label> <br>
+          <input type="radio" id="perm" value="perm" name="user_type"><label for="perm" class="light"> Permanente</label><br>
+          <input type="radio" id="temp" value="temp" name="user_type"><label for="temp" class="light"> Temporal</label>
+        </div>
+        <div class="role-user">
+          <label>Rol:</label> <br>
+          <input type="radio" id="adm" value="adm" name="user_role"><label for="adm" class="light"> Administrador</label><br>
+          <input type="radio" id="emp" value="emp" name="user_role"><label for="emp" class="light"> Empleado</label>
+        </div>
+        
+      </fieldset>
+      <p></p>
+      <button class="bform" type="submit">Registrar</button>
+    </form>
+
     <!-- Modificar Usuarios form--> 
     <form class="clearfix" action="index.html" method="post">
 
@@ -55,37 +85,24 @@
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="user_password">
-
-        <label>Tipo:</label> <br>
-        <input type="radio" id="perm" value="perm" name="user_type"><label for="perm" class="light">Permanente</label><br>
-        <input type="radio" id="temp" value="temp" name="user_type"><label for="temp" class="light">Temporal</label>
+        <div class="type-user">
+          <label>Tipo:</label> <br>
+          <input type="radio" id="perm" value="perm" name="user_type"><label for="perm" class="light"> Permanente</label><br>
+          <input type="radio" id="temp" value="temp" name="user_type"><label for="temp" class="light"> Temporal</label>
+        </div>
+        <div class="role-user">
+          <label>Rol:</label> <br>
+          <input type="radio" id="adm" value="adm" name="user_role"><label for="adm" class="light"> Administrador</label><br>
+          <input type="radio" id="emp" value="emp" name="user_role"><label for="emp" class="light"> Empleado</label>
+        </div>
+        <div class="state-user">
+          <label>Estado:</label> <br>
+          <input type="radio" id="act" value="act" name="user_state"><label for="act" class="light"> Activo</label><br>
+          <input type="radio" id="inact" value="inact" name="user_state"><label for="inact" class="light"> Inactivo</label>
+        </div>
       </fieldset>
       <p></p>
-      <button type="submit">Modificar</button>
+      <button class="bform" type="submit">Modificar</button>
     </form>
-
-    <!-- Agregar Usuarios form -->
-    <form class = "fix" action="index.html" method="post">
-
-      <h1>Crear un Nuevo Usuario</h1>
-
-      <fieldset>
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="user_name">
-
-        <label for="name">Usuario:</label>
-        <input type="text" id="name" name="user_username">
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="user_password">
-
-        <label>Tipo:</label> <br>
-        <input type="radio" id="perm" value="perm" name="user_age"><label for="perm" class="light">Permanente</label><br>
-        <input type="radio" id="temp" value="temp" name="user_age"><label for="temp" class="light">Temporal</label>
-      </fieldset>
-      <p></p>
-      <button type="submit">Registrar</button>
-    </form>
-
   </div>
 </div>

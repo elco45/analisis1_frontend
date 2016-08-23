@@ -4,30 +4,31 @@ angular.module('AngularScaffold.Controllers', []);
 angular.module('AngularScaffold.Services', []);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise('manage');
+	$urlRouterProvider.otherwise('home');
 	$stateProvider
 		.state('home', {
             url: '/home',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/addRooms.html',
-            controller: 'UsersController'
+            templateUrl: '/viewsAdmin/addRooms.html'
         })
         .state('login', {
             url: '/login',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/loginAdmin.html',
-            controller: 'UsersController'
+            templateUrl: '/viewsAdmin/loginAdmin.html'
         })
         .state('manage', {
             url: '/manage',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/manageUsers.html',
-            controller: 'UsersController'
+            templateUrl: '/viewsAdmin/manageUsers.html'
         })
         .state('choose', {
             url: '/choose',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/chooseEmps.html',
-            controller: 'UsersController'
+            templateUrl: '/viewsAdmin/chooseEmps.html'
+        })
+        .state('dist', {
+            url: '/dist',
+            params: {content:undefined},
+            templateUrl: '/viewsAdmin/distributeRooms.html'
         });
 }])

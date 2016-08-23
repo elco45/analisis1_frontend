@@ -18,8 +18,8 @@
          </div>
          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Manejar Habitaciones</a></li>
-              <li><a href="#">Manejar Usuarios</a></li>
+              <li class="active"><a href="/#/home">Manejar Habitaciones</a></li>
+              <li><a href="/#/manage">Manejar Usuarios</a></li>
             </ul>
          </div>
       </div>
@@ -31,24 +31,42 @@
    <!-- Breadcrumbs -->
    <div class="container bod">
       <ul class="breadcrumb">
-         <li><a href="#">Agregar Habitaciones</a></li>
-         <li><a href="#">Empleados</a></li>
-         <li><a href="#">Repartición</a></li>
-         <li><a href="#">Final</a></li>
+         <li><a href="/#/home">Agregar Habitaciones</a></li>
+         <li class="active"><a href="/#/choose">Empleados</a></li>
+         <li><a href="/#/dist">Repartición</a></li>
+         <li><a href="/#/home">Final</a></li>
       </ul>
    </div>
 
    <!-- Seleccion de Empleadas -->
-   <div class="jumbotron">
+   <div class="sel-empl row">
       <h1>Selección de Empleadas</h1>
+      <div class="col-md-5">
+          <div class="list-group">
+            <a href="#" class="list-group-item">Cras justo odio</a>
+            <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+            <a href="#" class="list-group-item">Morbi leo risus</a>
+            <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+            <a href="#" class="list-group-item">Vestibulum at eros</a>
+          </div>
+      </div>
+      <div class="col-md-2">
+         
+      </div>
+      <div class="col-md-5">
+         <ul class="list-group">
+           <li class="list-group-item">Persona</li>
+           
+         </ul>
+      </div>
    </div>
 
    <!-- Pagination -->
    <div class="container bod">
       <nav aria-label="...">
         <ul class="pager">
-          <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
-          <li class="next"><a href="#">Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+          <li class="previous"><a href="/#/home"><span aria-hidden="true">&larr;</span> Older</a></li>
+          <li class="next"><a href="/#/dist">Siguiente <span aria-hidden="true">&rarr;</span></a></li>
         </ul>
       </nav>
    </div>
