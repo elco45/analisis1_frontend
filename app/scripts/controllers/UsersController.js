@@ -4,57 +4,9 @@ angular.module('AngularScaffold.Controllers')
   	$scope.$sessionStorage = $sessionStorage;
   	$scope.title = "Login";
     $scope.selectedRooms = [];
-  	
-    $scope.logout = function(){
-        authService.Logout().then(function(response){
-          	$sessionStorage.$reset();
-          	$state.go("home");
-        }).catch(function(err){
-          	BootstrapDialog.alert({
-              	title: 'ERROR',
-              	message: 'Sesión expirado, vuelva a conectarse',
-              	type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-              	closable: true, // <-- Default value is false
-              	buttonLabel: 'Cerrar', // <-- Default value is 'OK',
-          	});
-        })
-    }
-
-   	$scope.login = function(){
-        if ($scope.signIn.email != null && $scope.signIn.password != null) {
-          	authService.Login($scope.signIn).then(function(response){
-            	if (response.data=='error') {
-              		BootstrapDialog.alert({
-                		title: 'ERROR',
-		                message: 'El usuario o contraseña que usted ingreso es incorrecto!',
-		                type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-		                closable: true, // <-- Default value is false
-		                buttonLabel: 'Cerrar', // <-- Default value is 'OK',
-		            });
-            	}else{
-              		$sessionStorage.currentUser = response.data;
-              		if($sessionStorage.currentUser.IdUser <= 99999 && $sessionStorage.currentUser.IdUser >= 10000){
-                		$state.go('docente_main');
-              		}else if($sessionStorage.currentUser.IdUser >= 10000000){
-                		$state.go('estudiante_main');
-              		}
-            	}
-          	})
-        }else{
-          	BootstrapDialog.alert({
-          	  	title: 'ERROR',
-	            message: 'Porfavor ingrese un usuario y contraseña valido.',
-	            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-	            closable: true, // <-- Default value is false
-	            buttonLabel: 'Cerrar', // <-- Default value is 'OK',
-	       	});
-        }
-   	}
-
-   	$scope.signUp =function(){
-        $state.go("signUp")
-   	}
-
+  	$scope.usuario ={};
+    $scope.lisUsuario = []; 
+     $scope.usuarioSeleccionado;
     $scope.selectRoom = (roomNumber) => {
       var index = $scope.selectedRooms.indexOf(roomNumber.id);
       if(index !== -1) {
@@ -67,6 +19,47 @@ angular.module('AngularScaffold.Controllers')
       $scope.selectedRooms.sort()
       console.log($scope.selectedRooms)
     };
+
+    $scope.getUser = function(){
+     
+      UserService.GetUser().then(function(response){
+      $scope.lisUsuario = response.data
+       
+        console.log($scope.lisUsuario)
+      });
+
+
+    }
+    $scope.mostraUsuario = function(){
+          console.log($scope.usuarioSeleccionado);
+    }
+    $scope.crear_usuario = function(){
+      console.log("david");
+      console.log("Entre");
+      console.log($scope.usuario);
+      console.log($scope.usuario.rol);
+      console.log($scope.usuario.tipo);
+      UserService.Register($scope.usuario).then(function(algo){
+        console.log("Guardado con exito");
+        $scope.usuario="";
+      }).catch(function(err){
+       
+      });
+    };
+
+    $scope.modificar_usuario = function(){
+      console.log("david");
+      console.log("Entre");
+      console.log($scope.usuarioSeleccionado);
+      UserService.UpdateUser($scope.usuarioSeleccionado).then(function(algo){
+        console.log("Guardado con exito");
+        $scope.usuarioSeleccionado = " ";
+      }).catch(function(err){
+       
+      });
+    }
+
+
 
     $scope.firstfloorMock = [
       {id: 101, name:"101", selected: false},
@@ -123,3 +116,4 @@ angular.module('AngularScaffold.Controllers')
         "213","214","215","216","217","218","219","220"];
    	
   }]);
+
