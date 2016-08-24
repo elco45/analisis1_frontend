@@ -3,13 +3,9 @@ angular.module('AngularScaffold.Controllers')
   	function (authService,UserService, $scope, $state, $rootScope, $sessionStorage) {
   	$scope.$sessionStorage = $sessionStorage;
   	$scope.title = "Login";
-<<<<<<< HEAD
     $scope.selectedRooms = [];
     $scope.username = "";
     $scope.password = "";
-
-=======
->>>>>>> a55b98e2aa6eb2771ffae1d24a803bcfe269c0f7
   	
     $scope.logout = function(){
         console.log($sessionStorage.currentUser);
