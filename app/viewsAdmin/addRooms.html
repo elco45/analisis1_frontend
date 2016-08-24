@@ -1,4 +1,4 @@
-<div class="container" ng-controller="UsersController">
+<div class="container" ng-controller="RoomController">
    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
          <div class="navbar-header">
@@ -20,6 +20,7 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="active"><a href="/#/home">Manejar Habitaciones</a></li>
               <li><a href="/#/manage">Manejar Usuarios</a></li>
+              <li ng-click="logout()"><a href="">Logout</a></li>
             </ul>
          </div>
       </div>
@@ -54,7 +55,7 @@
       <nav aria-label="...">
         <ul class="pager">
           <!--li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li-->
-          <li class="next"><a href="/#/choose">Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+          <li class="next" ng-click="changeChooseEmps(selectedRooms)"><span aria-hidden="true">Siguiente &rarr;</span></li>
         </ul>
       </nav>
    </div>
