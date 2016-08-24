@@ -16,6 +16,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             params: {content:undefined},
             templateUrl: '/viewsAdmin/loginAdmin.html'
         })
+        .state('addRoom', {
+            url: '/addRooms',
+            params: {content:undefined},
+            templateUrl: '/viewsAdmin/addRooms.html'
+        })
         .state('manage', {
             url: '/manage',
             params: {content:undefined},

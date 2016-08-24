@@ -1,0 +1,84 @@
+<div class="container" ng-controller="RoomController">
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+   <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+     <span class="sr-only">Toggle Navigation</span>
+     <span class="icon-bar"></span>
+     <span class="icon-bar"></span>
+     <span class="icon-bar"></span>
+   </button>
+   <a class="navbar-brand" href="#"> 
+     <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
+     width: 8em;
+     height: 2.8em;
+     padding-top: 0.2em;
+     ">
+   </a>
+ </div>
+ <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <ul class="nav navbar-nav navbar-right">
+    <li><a href="#">Manejar Habitaciones</a></li>
+    <li><a href="#">Manejar Usuarios</a></li>
+  </ul>
+</div>
+</div>
+</nav>
+
+<div class="container extra">
+</div>
+
+<!-- Breadcrumbs -->
+<div class="container bod">
+  <ul class="breadcrumb">
+   <li><a href="#">Agregar Habitaciones</a></li>
+   <li><a href="#">Empleados</a></li>
+   <li><a href="#">Repartición</a></li>
+   <li><a href="#">Final</a></li>
+ </ul>
+</div>
+
+<!-- Reparticion de Habitaciones -->
+<div class="jumbotron">
+  <h1>Repartición de Habitaciones</h1>
+</div>
+
+<!-- Va un ngrepeat de headers para la empleadas disponibles, esto solo es un ejemplo -->
+<div class="col-md-2">
+  <table class="tableizer-table table_in">
+    <tr class="tableizer-firstrow">
+      <th class="text_table">Employee 1</th>
+    </tr>
+    <!-- Va un ngrepeat de filas para el numero de habitaciones de cada empleada, en este caso de Employee 1 -->
+    <tr>
+      <td class="c ab-bg" ng-repeat="habitacion in selectedRooms">{{habitacion}}</td>
+    </tr>
+
+  </table>
+</div>
+<div class="col-md-2">
+  <table class="tableizer-table table_in2">
+    <tr class="tableizer-firstrow2">
+      <th class="text_table">Employee 2</th>
+    </tr>
+    <!-- Va un ngrepeat de filas para el numero de habitaciones de cada empleada, en este caso de Employee 2 -->
+    <tr>
+      <td class="c ab-bg">Room 202</td>
+    </tr>
+    <tr>
+      <td class="c ab-bg">Room 206</td>
+    </tr>
+
+  </table>
+</div>
+
+<!-- Pagination -->
+<div class="container bod col-md-12">
+  <nav aria-label="...">
+    <ul class="pager">
+      <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+      <li class="next"><a href="#">Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+    </ul>
+  </nav>
+</div>
+</div>

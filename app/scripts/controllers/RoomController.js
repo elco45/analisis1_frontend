@@ -36,16 +36,19 @@ angular.module('AngularScaffold.Controllers')
       console.log($scope.selectedRooms)
     };
 
-    $scope.trying = function(params){
-    	for (var i = 0; i < params.length; i++) {
-    		console.log($scope.selectedRooms[i])
-    	};
-    }
-
     $scope.changeChooseEmps =function(params){
     	$state.go("choose")
       $scope.selectedRooms = params
-      $scope.trying($scope.selectedRooms)
+      console.log("==============")
+      console.log($scope.selectedRooms)
+    }
+
+    $scope.changeDist = function(habitaciones,empleados){
+      $state.go("dist")
+      $scope.selectedRooms = habitaciones;
+      $scope.working_employee = empleados;
+      console.log($scope.selectedRooms)
+      console.log($scope.working_employee)
     }
 
     $scope.changeAddRooms = function(){
