@@ -4,11 +4,15 @@ angular.module('AngularScaffold.Controllers')
   	$scope.$sessionStorage = $sessionStorage;
   	$scope.title = "Login";
     $scope.selectedRooms = [];
+    $scope.username = "";
+    $scope.password = "";
+
   	
     $scope.logout = function(){
+        console.log($sessionStorage.currentUser);
         authService.Logout().then(function(response){
           	$sessionStorage.$reset();
-          	$state.go("home");
+          	$state.go("login");
         }).catch(function(err){
           	BootstrapDialog.alert({
               	title: 'ERROR',
@@ -21,8 +25,25 @@ angular.module('AngularScaffold.Controllers')
     }
 
    	$scope.login = function(){
-        if ($scope.signIn.email != null && $scope.signIn.password != null) {
-          	authService.Login($scope.signIn).then(function(response){
+        if ($scope.username != null && $scope.password != null) {
+            UserData = {
+              username: $scope.username,
+              password: $scope.password
+            }
+            authService.Login(UserData).then(function(response){
+                if(response.data != "error"){
+                    console.log(response.data)
+                    console.log($sessionStorage)
+                    $sessionStorage.currentUser = response.data
+                    if(!$sessionStorage.currentUser.employee_type){
+                      $state.go("home")
+                    }else{
+                        console.log("aqui van a ir los empleados")
+                    }
+                }
+
+            })
+          	/*authService.Login($scope.signIn).then(function(response){
             	if (response.data=='error') {
               		BootstrapDialog.alert({
                 		title: 'ERROR',
@@ -39,7 +60,7 @@ angular.module('AngularScaffold.Controllers')
                 		$state.go('estudiante_main');
               		}
             	}
-          	})
+          	})*/
         }else{
           	BootstrapDialog.alert({
           	  	title: 'ERROR',
