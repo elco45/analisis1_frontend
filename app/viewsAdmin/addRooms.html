@@ -42,63 +42,14 @@
    <div class="habs">
       <h1>Habitaciones</h1>
       <div class="row" >
-            <button type="button" class="btn btn-default col-md-1">101</button>
-            <button type="button" class="btn btn-default col-md-1">102</button>
-            <button type="button" class="btn btn-default col-md-1">103</button>
-            <button type="button" class="btn btn-default col-md-1">104</button>
-            <button type="button" class="btn btn-default col-md-1">105</button>
-            <button type="button" class="btn btn-default col-md-1">106</button>
-            <button type="button" class="btn btn-default col-md-1">107</button>
-            <button type="button" class="btn btn-default col-md-1">108</button>
-            <button type="button" class="btn btn-default col-md-1">109</button>
-            <button type="button" class="btn btn-default col-md-1">110</button>
-            <button type="button" class="btn btn-default col-md-1">111</button>
-            <button type="button" class="btn btn-default col-md-1">112</button>
-      </div>
-      <div class="row">
-            <button type="button" class="btn btn-default col-md-1">113</button>
-            <button type="button" class="btn btn-default col-md-1">114</button>
-            <button type="button" class="btn btn-default col-md-1">115</button>
-            <button type="button" class="btn btn-default col-md-1">116</button>
-            <button type="button" class="btn btn-default col-md-1">117</button>
-            <button type="button" class="btn btn-default col-md-1">118</button>
-            <button type="button" class="btn btn-default col-md-1">119</button>
-            <button type="button" class="btn btn-default col-md-1">120</button>
-            <button type="button" class="btn btn-default col-md-1">121</button>
-            <button type="button" class="btn btn-default col-md-1">122</button>
-            <button type="button" class="btn btn-default col-md-1">123</button>
-            <button type="button" class="btn btn-default col-md-1">124</button>
-      </div>
-      <div class="row">
-            <button type="button" class="btn btn-default col-md-1">125</button>
+            <button type="button" class="btn col-md-1 btn-default" ng-repeat="f in firstfloorMock" ng-class="{'room-selected': f.selected}" ng-click="selectRoom(f)"> {{f.name}} </button>
       </div><br>
       <div class="row">
-            <button type="button" class="btn btn-default col-md-1">201</button>
-            <button type="button" class="btn btn-default col-md-1">202</button>
-            <button type="button" class="btn btn-default col-md-1">203</button>
-            <button type="button" class="btn btn-default col-md-1">204</button>
-            <button type="button" class="btn btn-default col-md-1">205</button>
-            <button type="button" class="btn btn-default col-md-1">206</button>
-            <button type="button" class="btn btn-default col-md-1">207</button>
-            <button type="button" class="btn btn-default col-md-1">208</button> 
-            <button type="button" class="btn btn-default col-md-1">209</button>
-            <button type="button" class="btn btn-default col-md-1">210</button>
-            <button type="button" class="btn btn-default col-md-1">211</button>
-            <button type="button" class="btn btn-default col-md-1">212</button>
-      </div>
-       <div class="row">
-            <button type="button" class="btn btn-default col-md-1">213</button>
-            <button type="button" class="btn btn-default col-md-1">214</button>
-            <button type="button" class="btn btn-default col-md-1">215</button>
-            <button type="button" class="btn btn-default col-md-1">216</button>
-            <button type="button" class="btn btn-default col-md-1">217</button>
-            <button type="button" class="btn btn-default col-md-1">218</button>
-            <button type="button" class="btn btn-default col-md-1">219</button>
-            <button type="button" class="btn btn-default col-md-1">220</button>
+            <button type="button" class="btn col-md-1 btn-default" ng-repeat="s in secondfloorMock" ng-class="{'room-selected': s.selected}" ng-click="selectRoom(s)"> {{s.name}} </button>
       </div>
    </div>
 
-   <!-- Pagination (boton de next), deberia solo aparecer si la lista está -->
+   <!-- Pagination (boton de next) -->
    <div class="container bod">
       <nav aria-label="...">
         <ul class="pager">
