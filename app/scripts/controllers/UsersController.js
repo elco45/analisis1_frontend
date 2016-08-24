@@ -41,7 +41,18 @@ angular.module('AngularScaffold.Controllers')
       console.log("david");
       console.log("Entre");
       console.log($scope.usuarioSeleccionado);
-      UserService.UpdateUser($scope.usuarioSeleccionado).then(function(algo){
+      console.log($scope.usuarioSeleccionado.name)
+      var temp = {
+        password : $scope.usuarioSeleccionado.password,
+        username : $scope.usuarioSeleccionado.username,
+        nombre : $scope.usuarioSeleccionado.name,
+        employee_type : $scope.usuarioSeleccionado.employee_type,
+        status:$scope.usuarioSeleccionado.status,
+        role: $scope.usuarioSeleccionado.role
+      }
+
+
+      UserService.UpdateUser(temp).then(function(algo){
         console.log("Guardado con exito");
         $scope.usuarioSeleccionado = " ";
       }).catch(function(err){
