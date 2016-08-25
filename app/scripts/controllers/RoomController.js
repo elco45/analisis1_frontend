@@ -32,7 +32,7 @@ angular.module('AngularScaffold.Controllers')
         });
     }
 
-  	$scope.selectRoom = (room) => {
+  	$scope.selectRoom = function(room) {
       var index = $scope.selectedRooms.indexOf(room.room_id);
       if(index !== -1) {
         $scope.selectedRooms.splice(index, 1);

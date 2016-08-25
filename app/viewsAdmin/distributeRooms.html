@@ -56,14 +56,12 @@
 
 <div class="col-md-2">
   <ul ng-repeat = "n in display_distribution ">
-      <li class="c ab-bg">{{n.worker.name}}</li>
+      <li class="d ab-bg">{{n.worker.name}}</li>
       <ul ng-repeat = "x in n.rooms track by $index">
-        <li class = "c ab-bg">{{x.room_id}}</li>
+        <li class="c ab-bg">{{x.room_id}}</li>
       </ul>
   </ul>
 </div>
-
-
 
 <!--<div class="col-md-2">
   <table class="tableizer-table table_in">

@@ -79,3 +79,31 @@ h1{
 .room-selected{
 	background-color: #e1e1e1!important;
 }
+
+.rcorners {
+    border-radius: 25px;
+    border: 2px solid #gray;
+    padding: 20px; 
+    width: 200px;
+    height: 150px; 
+}
+
+.c {
+  display: block;
+  width: 50px;
+  height: 35px;
+  margin: 10px;
+  background: lightgray;
+  text-align: center;
+  padding-top: 10%;
+}
+
+.d {
+  display: block;
+  width: 90px;
+  height: 35px;
+  margin: 10px;
+  background: gray;
+  text-align: center;
+  padding-top: 5%;
+}
