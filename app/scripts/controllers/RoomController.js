@@ -77,29 +77,40 @@ angular.module('AngularScaffold.Controllers')
       $scope.rooms_selected_distribution = $stateParams.content.roomsSelected
       var cantidad = $scope.rooms_selected_distribution.length / $scope.working_employee_distribution.length
       var temporal = 0
-      var cont = 0
-      for (var i = 0; i < $scope.working_employee_distribution.length; i++) {
+      var cont_cuarto= 0
+      var cont_worker = 0
+      var cont_rooms = $scope.rooms_selected_distribution.length
 
-        if (i < $scope.working_employee_distribution.length -1) {
-          temporal = Math.round(cantidad)
+      for (var i = $scope.working_employee_distribution.length; i >= 1; i--) {
+
+        if (cont_rooms%i != 0) {
+          temporal = Math.ceil(cantidad)
         }else{
-          temporal = Math.floor(cantidad)
+          temporal = cantidad
         }
+
+        
 
         var arreglo_room = []
 
         for (var j = 0; j < temporal ; j++) {
-          arreglo_room.push($scope.rooms_selected_distribution[cont])
-          cont++;
+          arreglo_room.push($scope.rooms_selected_distribution[cont_cuarto])
+          cont_cuarto++;
         };
 
+        cont_rooms -= temporal
+        cantidad = cont_rooms / (i-1)
+
         var distribution = {
-          worker:$scope.working_employee_distribution[i],
+          worker:$scope.working_employee_distribution[cont_worker],
           rooms: arreglo_room
         }
 
+        cont_worker++
+
         $scope.display_distribution.push(distribution);
       };
+      console.log($scope.display_distribution)
     }
 
     $scope.getRooms = function(){
@@ -132,3 +143,9 @@ angular.module('AngularScaffold.Controllers')
     }
 
 }]);
+
+app.filter('slice', function() {
+      return function(arr, start, end) {
+        return arr.slice(start, end);
+      };
+    });
