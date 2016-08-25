@@ -22,25 +22,23 @@ h1{
 	padding-bottom: 48px!important;
 }
 
-.clearfix{
-	float: left;
-}
-.fix{
-	float: left;
-	margin-left: 60px!important;
+.main-manage {
+	padding-left: 27%;
+	padding-top: 2%;
 }
 .type-user{
 	float: left;
-	margin-left: 10px!important;
+	margin-left: 80px!important;
 }
 .role-user{
 	float: left;
-	margin-left: 80px!important;
+	margin-left: 10px!important;
 }
 .state-user{
 	float: left;
 	margin-left: 80px!important;
 }
+
 
 .btn-group {
 	width: 100%!important;

@@ -7,7 +7,6 @@ angular.module('AngularScaffold.Controllers')
     $scope.working_employee = [];
     $scope.firstfloor = [];
     $scope.secondfloor = [];
-
     $scope.working_employee_distribution = [];
     $scope.rooms_selected_distribution = [];
 
@@ -74,7 +73,6 @@ angular.module('AngularScaffold.Controllers')
     }*/
 
     $scope.tryout = function(){
-      console.log($stateParams)
       $scope.working_employee_distribution = $stateParams.content.workingEmployee
       $scope.rooms_selected_distribution = $stateParams.content.roomsSelected
     }
@@ -91,11 +89,9 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.changeChooseEmps =function(params){
-
       $state.go("choose", {content:{
         selectedRoomsv1: $scope.selectedRooms
       }})
-
     }
 
     $scope.changeDist = function(habitaciones,empleados){

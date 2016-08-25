@@ -29,9 +29,14 @@
   <div class="container extra">
   </div>
 
-  <div class="main-manage">
+  <ul class="nav nav-tabs" ng-init="tab = 1">
+    <li role="presentation" class="tab" ng-class="{active: tab==1}" ng-click="tab = 1" ><a>Crear Usuarios</a></li>
+    <li role="presentation" class="tab" ng-class="{active: tab==2}" ng-click="tab = 2"><a>Modificar Usuarios</a></li>
+  </ul>
+
+  <div class="main-manage" >
     <!-- Agregar Usuarios form -->
-    <form class = "fix" >
+    <form class = "fix " ng-show="tab == 1">
 
       <h1>Crear un Nuevo Usuario</h1>
 
@@ -44,15 +49,16 @@
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="user_password" ng-model ="usuario.password">
-        <div class="type-user">
-          <label>Tipo:</label> <br>
-          <input type="radio" id="perm"  value="0" name="user_type" ng-model ="usuario.employee_type"><label for="perm" class="light" > Permanente</label><br>
-          <input type="radio" id="temp" value="1" name="user_type" ng-model ="usuario.employee_type"><label for="temp" class="light" > Temporal</label>
-        </div>
+
         <div class="role-user">
           <label>Rol:</label> <br>
-          <input type="radio" id="adm" value="0" name="user_role" ng-model ="usuario.role"><label for="adm" class="light" > Administrador</label><br>
-          <input type="radio" id="emp"  value="1" name="user_role" ng-model ="usuario.role"><label for="emp" class="light" > Empleado</label>
+          <input type="radio" id="adm" value="0" name="user_role" ng-model ="usuario.role" ><label for="adm" class="light" > Administrador</label><br>
+          <input type="radio" id="emp"  value="1" name="user_role" ng-model ="usuario.role" ><label for="emp" class="light" > Empleado</label>
+        </div>
+        <div class="type-user">
+          <label>Tipo:</label> <br>
+          <input type="radio" id="perm"  value="0" name="user_type" ng-model ="usuario.employee_type" ><label for="perm" class="light" > Permanente</label><br>
+          <input type="radio" id="temp" value="1" name="user_type" ng-model ="usuario.employee_type" ng-disabled="usuario.role == '0' "><label for="temp" class="light" > Temporal</label>
         </div>
         
       </fieldset>
@@ -61,7 +67,7 @@
     </form>
 
     <!-- Modificar Usuarios form--> 
-    <form class="clearfix" >
+    <form ng-show="tab == 2">
 
       <h1>Modificar Usuarios</h1>
 
@@ -74,25 +80,26 @@
         <label >Nombre:</label>
         <input type="text" id="name" name="user_name" ng-model="usuarioSeleccionado.name">
 
-        <!--<label >Usuario:</label> 
+        <label >Usuario:</label> 
         <input type="text" id="name" name="user_username" ng-model="usuarioSeleccionado.username">
--->
+
         <label >Password:</label>
         <input type="password" id="password" name="user_password" ng-model="usuarioSeleccionado.password">
+
+        <div class="role-user">
+          <label>Rol:</label> <br>
+          <input type="radio" id="adm" value="0" name="user_role" ng-model="usuarioSeleccionado.role" ><label  class="light" > Administrador</label><br>
+          <input type="radio" id="emp" value="1" name="user_role" ng-model="usuarioSeleccionado.role" ><label  class="light" > Empleado</label>
+        </div>
         <div class="type-user">
           <label>Tipo:</label> <br>
           <input type="radio" id="perm" value="0" name="user_type" ng-model="usuarioSeleccionado.employee_type"><label class="light" > Permanente</label><br>
-          <input type="radio" id="temp" value="1" name="user_type" ng-model="usuarioSeleccionado.employee_type"><label  class="light" > Temporal</label>
-        </div>
-        <div class="role-user">
-          <label>Rol:</label> <br>
-          <input type="radio" id="adm" value="0" name="user_role" ng-model="usuarioSeleccionado.role"><label  class="light" > Administrador</label><br>
-          <input type="radio" id="emp" value="1" name="user_role" ng-model="usuarioSeleccionado.role"><label  class="light" > Empleado</label>
+          <input type="radio" id="temp" value="1" name="user_type" ng-model="usuarioSeleccionado.employee_type" ng-disabled="usuario.role == '0' "><label  class="light" > Temporal</label>
         </div>
         <div class="state-user">
           <label>Estado:</label> <br>
-          <input type="radio" id="act" value="1" name="user_state" ng-model="usuarioSeleccionado.status"><label  class="light"  > Activo</label><br>
-          <input type="radio" id="inact" value="0" name="user_state" ng-model="usuarioSeleccionado.status"><label  class="light" > Inactivo</label>
+          <input type="radio" id="inact" value="0" name="user_state" ng-model="usuarioSeleccionado.status" ><label  class="light" > Inactivo</label><br>
+          <input type="radio" id="act" value="1" name="user_state" ng-model="usuarioSeleccionado.status" ><label  class="light"  > Activo</label>
         </div>
         </fieldset>
       <p></p>
