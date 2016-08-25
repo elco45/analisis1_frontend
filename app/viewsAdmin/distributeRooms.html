@@ -1,4 +1,4 @@
-<div class="container" ng-controller="RoomController" ng-init = "tryout()">
+<div class="container" ng-controller="RoomController" ng-init = "getParameters()">
  <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
    <div class="navbar-header">
@@ -45,10 +45,10 @@
 
 <!-- Va un ngrepeat de headers para la empleadas disponibles, esto solo es un ejemplo -->
 <div class="col-md-2">
-  <ul>
-      <li class="c ab-bg" ng-repeat = "n in working_employee_distribution" >{{n.name}}</li>
-        <ul>
-        <li class="c ab-bg" ng-repeat="f in rooms_selected_distribution">{{f.room_id}}</li>
+  <ul ng-repeat = "n in display_distribution">
+      <li class="c ab-bg">{{n.worker.name}}</li>
+      <ul ng-repeat = "x in n.rooms track by $index">
+        <li class = "c ab-bg">{{x.room_id}}</li>
       </ul>
   </ul>
 </div>

@@ -9,6 +9,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.secondfloor = [];
     $scope.working_employee_distribution = [];
     $scope.rooms_selected_distribution = [];
+    $scope.display_distribution = [];
 
     if($state.params.content){
       $scope.roomSelected = $state.params.content.selectedRoomsv1;
@@ -41,7 +42,6 @@ angular.module('AngularScaffold.Controllers')
         room.status = 1;
       }
       //$scope.selectedRooms.sort()
-      console.log($scope.selectedRooms)
     };
 
     /*$scope.createAllRooms = function (){
@@ -72,9 +72,34 @@ angular.module('AngularScaffold.Controllers')
       }
     }*/
 
-    $scope.tryout = function(){
+    $scope.getParameters = function(){
       $scope.working_employee_distribution = $stateParams.content.workingEmployee
       $scope.rooms_selected_distribution = $stateParams.content.roomsSelected
+      var cantidad = $scope.rooms_selected_distribution.length / $scope.working_employee_distribution.length
+      var temporal = 0
+      var cont = 0
+      for (var i = 0; i < $scope.working_employee_distribution.length; i++) {
+
+        if (i < $scope.working_employee_distribution.length -1) {
+          temporal = Math.round(cantidad)
+        }else{
+          temporal = Math.floor(cantidad)
+        }
+
+        var arreglo_room = []
+
+        for (var j = 0; j < temporal ; j++) {
+          arreglo_room.push($scope.rooms_selected_distribution[cont])
+          cont++;
+        };
+
+        var distribution = {
+          worker:$scope.working_employee_distribution[i],
+          rooms: arreglo_room
+        }
+
+        $scope.display_distribution.push(distribution);
+      };
     }
 
     $scope.getRooms = function(){
