@@ -5,10 +5,9 @@ angular.module('AngularScaffold.Controllers')
   	$scope.title = "Login";
     $scope.username = "";
     $scope.password = "";
-  	$scope.usuario ={};
+  	$scope.usuario = { employee_type:"0", role:"0"};
     $scope.lisUsuario = []; 
-    $scope.usuarioSeleccionado;
-    
+    $scope.usuarioSeleccionado ={ employee_type:"0", role:"0", status:"0" };
 
     $scope.getUser = function(){
      
@@ -111,6 +110,7 @@ angular.module('AngularScaffold.Controllers')
    	$scope.signUp =function(){
         $state.go("signUp")
    	}
+
    	
   }]);
 
