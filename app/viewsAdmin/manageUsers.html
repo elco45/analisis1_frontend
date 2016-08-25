@@ -38,6 +38,7 @@
     <!-- Agregar Usuarios form -->
     <form class = "fix " ng-show="tab == 1">
 
+
       <h1>Crear un Nuevo Usuario</h1>
 
       <fieldset>
@@ -49,6 +50,91 @@
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="user_password" ng-model ="usuario.password">
+
+
+        <label for="name">Celular:</label>
+        <input type="tel" id="name" name="user_username" ng-model ="usuario.cel">
+
+        <label for="name">Telefono Fijo:</label>
+        <input type="tel" id="name" name="user_username" ng-model ="usuario.tel">
+
+        <label for="name">Direccion:</label>
+        <input type="text" id="name" name="user_username" ng-model ="usuario.direction">
+
+        <label for="name"># Identidad:</label>
+        <input type="text" id="name" name="user_username" ng-model ="usuario.id">
+
+        <label for="name">Fecha de Nacimiento:</label>
+        <input type="date" name="usuario.birth_date">
+
+        <label for="name">Estado Civil:</label>
+        <select ng-model="usuario.civil_status">
+          <option value="Soltero">Soltero(a)</option>
+          <option value="Casado">Casado(a)</option>
+          <option value="Viudo">Viudo(a)</option>
+        </select>
+
+        <label for="name">Hijos:</label>
+        <input type="number" id="name" name="user_children" ng-model ="usuario.children">
+
+
+        <label for="name">Foto:</label>
+        <input type="file" name="usuario.photo">
+
+
+          <!--
+          <select ng-model="usuario.day">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+          </select>
+
+          <select ng-model="usuario.month">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+          </select> -->
+
+          <button ng-click = "upload()"> ph</button>
+
+        <label for="name">Usuario:</label>
+        <input type="text" id="name" name="user_username" ng-model ="usuario.username">
 
         <div class="role-user">
           <label>Rol:</label> <br>

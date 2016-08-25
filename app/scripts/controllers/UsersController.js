@@ -16,25 +16,57 @@ angular.module('AngularScaffold.Controllers')
        
         console.log($scope.lisUsuario)
       });
-
-
     }
+
     $scope.mostraUsuario = function(){
           console.log($scope.usuarioSeleccionado);
     }
     $scope.crear_usuario = function(){
-      console.log("david");
-      console.log("Entre");
-      console.log($scope.usuario);
-      console.log($scope.usuario.rol);
-      console.log($scope.usuario.tipo);
-      UserService.Register($scope.usuario).then(function(algo){
-        console.log("Guardado con exito");
-        $scope.usuario="";
-      }).catch(function(err){
+      console.log("entro")
+      var file = document.querySelector('input[type=file]').files[0];
+      var reader  = new FileReader();
+      reader.readAsDataURL(file)
+      console.log(reader)
+      console.log(file)
+      reader.addEventListener("load" , function(){
+        console.log(reader.result)
+        $scope.usuario.photo = reader.result
+        UserService.Register($scope.usuario).then(function(algo){
+          console.log("Guardado con exito");
+          $scope.usuario="";
+        }).catch(function(err){
+        
+      },false)
+      
        
       });
     };
+
+
+    $scope.decode = function(file,fileName){
+      var byteString;
+      console.log("----decode---")
+      console.log(file)
+      if (file.split(',')[0].indexOf('base64') >= 0){
+          byteString = atob(file.split(',')[1]);
+      }else{
+          byteString = unescape(file.split(',')[1]);
+      }
+      console.log(file)
+      var mimeString = file.split(',')[0].split(':')[1].split(';')[0];
+      /*var element = document.createElement('a');
+      element.setAttribute('href', 'data:' + mimeString + ';base64,' + btoa(byteString));
+      element.setAttribute('download', fileName);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+      console.log(byteString)
+      console.log(mimeString)
+      console.log(element)*/
+
+
+    }//fin decode
 
     $scope.modificar_usuario = function(){
       console.log("david");

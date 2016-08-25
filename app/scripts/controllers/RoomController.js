@@ -75,6 +75,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.getParameters = function(){
       $scope.working_employee_distribution = $stateParams.content.workingEmployee
       $scope.rooms_selected_distribution = $stateParams.content.roomsSelected
+      console.log($sessionStorage.currentUser)
       var cantidad = $scope.rooms_selected_distribution.length / $scope.working_employee_distribution.length
       var temporal = 0
       var cont_cuarto= 0
