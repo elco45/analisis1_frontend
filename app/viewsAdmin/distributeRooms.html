@@ -1,42 +1,43 @@
-<div class="container" ng-controller="RoomController" ng-init = "getParameters()">
- <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-   <div class="navbar-header">
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-     <span class="sr-only">Toggle Navigation</span>
-     <span class="icon-bar"></span>
-     <span class="icon-bar"></span>
-     <span class="icon-bar"></span>
-   </button>
-   <a class="navbar-brand" href="#"> 
-     <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
-     width: 8em;
-     height: 2.8em;
-     padding-top: 0.2em;
-     ">
-   </a>
- </div>
- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-  <ul class="nav navbar-nav navbar-right">
-    <li><a href="#">Manejar Habitaciones</a></li>
-    <li><a href="#">Manejar Usuarios</a></li>
-  </ul>
-</div>
-</div>
-</nav>
+<div class="container" ng-controller="RoomController" ng-init = "tryout()">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+               <span class="sr-only">Toggle Navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> 
+              <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
+                   width: 8em;
+                   height: 2.8em;
+                   padding-top: 0.2em;
+               ">
+            </a>
+        </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active"><a href="/#/home">Manejar Habitaciones</a></li>
+          <li><a href="/#/manage">Manejar Usuarios</a></li>
+          <li ng-click="logout()"><a href="">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
 <div class="container extra">
 </div>
 
 <!-- Breadcrumbs -->
 <div class="container bod">
-  <ul class="breadcrumb">
-   <li><a href="#">Agregar Habitaciones</a></li>
-   <li><a href="#">Empleados</a></li>
-   <li><a href="#">Repartición</a></li>
-   <li><a href="#">Final</a></li>
- </ul>
-</div>
+    <ul class="breadcrumb">
+     <li><a href="/#/home">Agregar Habitaciones</a></li>
+     <li><a href="/#/choose">Empleados</a></li>
+     <li class="active"><a href="/#/dist">Repartición</a></li>
+     <li><a href="/#/home">Final</a></li>
+   </ul>
+  </div>
 
 <!-- Reparticion de Habitaciones -->
 <div class="jumbotron">

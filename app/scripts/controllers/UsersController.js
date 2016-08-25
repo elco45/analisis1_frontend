@@ -1,14 +1,13 @@
 angular.module('AngularScaffold.Controllers')
   .controller('UsersController', ['AuthService','UserService' , '$scope', '$state', '$rootScope', '$sessionStorage',
-    function (authService,UserService, $scope, $state, $rootScope, $sessionStorage) {
-    $scope.$sessionStorage = $sessionStorage;
-    $scope.title = "Login";
+  	function (authService,UserService, $scope, $state, $rootScope, $sessionStorage) {
+  	$scope.$sessionStorage = $sessionStorage;
+  	$scope.title = "Login";
     $scope.username = "";
     $scope.password = "";
-    $scope.usuario ={};
+  	$scope.usuario = { employee_type:"0", role:"0"};
     $scope.lisUsuario = []; 
-    $scope.usuarioSeleccionado;
-    
+    $scope.usuarioSeleccionado ={ employee_type:"0", role:"0", status:"0" };
 
     $scope.getUser = function(){
      
@@ -61,24 +60,24 @@ angular.module('AngularScaffold.Controllers')
     }
 
 
-        
+      	
     $scope.logout = function(){
         console.log($sessionStorage.currentUser);
         authService.Logout().then(function(response){
-            $sessionStorage.$reset();
-            $state.go("login");
+          	$sessionStorage.$reset();
+          	$state.go("login");
         }).catch(function(err){
-            BootstrapDialog.alert({
-                title: 'ERROR',
-                message: 'Sesión expirado, vuelva a conectarse',
-                type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-                closable: true, // <-- Default value is false
-                buttonLabel: 'Cerrar', // <-- Default value is 'OK',
-            });
+          	BootstrapDialog.alert({
+              	title: 'ERROR',
+              	message: 'Sesión expirado, vuelva a conectarse',
+              	type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+              	closable: true, // <-- Default value is false
+              	buttonLabel: 'Cerrar', // <-- Default value is 'OK',
+          	});
         })
     }
 
-    $scope.login = function(){
+   	$scope.login = function(){
         if ($scope.username != null && $scope.password != null) {
             UserData = {
               username: $scope.username,
@@ -98,19 +97,20 @@ angular.module('AngularScaffold.Controllers')
 
             })
         }else{
-            BootstrapDialog.alert({
-                title: 'ERROR',
-              message: 'Porfavor ingrese un usuario y contraseña valido.',
-              type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-              closable: true, // <-- Default value is false
-              buttonLabel: 'Cerrar', // <-- Default value is 'OK',
-          });
+          	BootstrapDialog.alert({
+          	  	title: 'ERROR',
+	            message: 'Porfavor ingrese un usuario y contraseña valido.',
+	            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+	            closable: true, // <-- Default value is false
+	            buttonLabel: 'Cerrar', // <-- Default value is 'OK',
+	       	});
         }
-    }
+   	}
 
-    $scope.signUp =function(){
+   	$scope.signUp =function(){
         $state.go("signUp")
-    }
-    
+   	}
+
+   	
   }]);
 
