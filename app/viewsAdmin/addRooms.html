@@ -1,4 +1,4 @@
-<div class="container" ng-controller="RoomController">
+<div class="container" ng-controller="RoomController" ng-init="getRooms()">
    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
          <div class="navbar-header">
@@ -43,10 +43,10 @@
    <div class="habs">
       <h1>Habitaciones</h1>
       <div class="row" >
-            <button type="button" class="btn col-md-1 btn-default" ng-repeat="f in firstfloorMock" ng-class="{'room-selected': f.selected}" ng-click="selectRoom(f)"> {{f.name}} </button>
+            <button type="button" class="btn col-md-1 btn-default" ng-repeat="f in firstfloor" ng-class="{'room-selected': f.status}" ng-click="selectRoom(f)"> {{f.room_id}} </button>
       </div><br>
       <div class="row">
-            <button type="button" class="btn col-md-1 btn-default" ng-repeat="s in secondfloorMock" ng-class="{'room-selected': s.selected}" ng-click="selectRoom(s)"> {{s.name}} </button>
+            <button type="button" class="btn col-md-1 btn-default" ng-repeat="s in secondfloor" ng-class="{'room-selected': s.status}" ng-click="selectRoom(s)"> {{s.room_id}} </button>
       </div>
    </div>
 

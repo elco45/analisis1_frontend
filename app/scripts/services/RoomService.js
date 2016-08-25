@@ -6,6 +6,12 @@ angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
 		return {
 			GetEmpleado: function(){
 	      		return $http.get(baseUrl + "v1/getEmployees");
+      		},
+			CreateRoom: function(payload){
+	      		return $http.post(baseUrl + "v1/registerRoom",payload);
+      		},
+			GetRooms: function(){
+	      		return $http.get(baseUrl + "v1/getAllRooms");
       		}
       	}
       	
