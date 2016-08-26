@@ -11,6 +11,45 @@ angular.module('AngularScaffold.Controllers')
     $scope.rooms_selected_distribution = [];
     $scope.display_distribution = [];
     $scope.dragged_Employee ={};
+    $scope.menuWasOpened = false;
+    //--------
+    $scope.menuOptions = [
+        ['Reservar por 1 dia', function (object) {
+              $scope.menuWasOpened = true;
+            console.log("1day")
+            console.log(object.s)
+            if(typeof object.s === "undefined"){
+              object.f.time_reserved = "1day"
+              $scope.selectRoom(object.f) 
+              console.log(object.f)
+            }
+            else if(typeof object.f === "undefined"){    
+              object.s.time_reserved = "1day"  
+              $scope.selectRoom(object.s)         
+              console.log(object.s)
+            }
+        }],
+        null,
+        ['Reservar por 2 dias', function (object) {
+              $scope.menuWasOpened = true;
+            console.log("2days")
+            if(typeof object.s === "undefined"){
+              object.f.time_reserved = "2day"                
+              $scope.selectRoom(object.f) 
+              console.log(object.f)
+            }
+            else if(typeof object.f === "undefined"){              
+              object.s.time_reserved = "2day"  
+              $scope.selectRoom(object.s) 
+              console.log(object.s)
+            }
+        }],
+        null,
+        ['Cancel', function () {
+            
+        }]
+    ];
+    //--
 
     if($state.params.content){
       $scope.roomSelected = $state.params.content.selectedRoomsv1;
@@ -86,12 +125,28 @@ angular.module('AngularScaffold.Controllers')
   	$scope.selectRoom = function(room) {
       var index = $scope.selectedRooms.indexOf(room.room_id);
       if(index !== -1) {
-        $scope.selectedRooms.splice(index, 1);
-        room.status = 0;
+        $scope.selectedRooms.splice(index, 1);        
       } else {
         $scope.selectedRooms.push(room);
-        room.status = 1;
       }
+      if(room.status){
+        if(!$scope.menuWasOpened){
+          room.status = 0
+          room.time_reserved = "0hr"          
+        }else{
+          room.status = 1
+          room.time_reserved = room.time_reserved
+        }
+        $scope.menuWasOpened = false;
+      }
+      else{
+        room.status = 1
+        if($scope.menuWasOpened){
+          room.time_reserved = room.time_reserved
+        }else
+          room.time_reserved = "1day"
+      }
+      console.log(room)
       RoomService.UpdateRoom(room).then(function(response){
         console.log(response.data)
       })
@@ -104,9 +159,10 @@ angular.module('AngularScaffold.Controllers')
         var room_id = {
           status: 0,
           room_id:i +100,
-          idUser: "",
+          idUser: [],
           priority: 0,
-          observation: ""
+          observation: "",
+          time_reserved: "0hr"
         }
         RoomService.CreateRoom(room_id).then(function(response){
           console.log(response.data)
@@ -116,9 +172,10 @@ angular.module('AngularScaffold.Controllers')
         var room_id = {
           status: 0,
           room_id:i +200,
-          idUser: "",
+          idUser: [],
           priority: 0,
-          observation: ""
+          observation: "",
+          time_reserved: "0hr"
         }
         RoomService.CreateRoom(room_id).then(function(response){
           console.log(response.data)
@@ -200,8 +257,9 @@ angular.module('AngularScaffold.Controllers')
     }
 
 
-    $scope.list1 = {title: 'AngularJS - Drag Me'};
-    $scope.list2 = {};
+
+    //---------------
+   
 
 
 }]);

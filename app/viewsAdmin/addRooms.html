@@ -1,4 +1,4 @@
-<div class="container" ng-controller="RoomController" ng-init="getRooms()">
+<div class="container" ng-controller="RoomController"  ng-init= "getRooms()"> <!-- ng-init= "getRooms()">-->
    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
          <div class="navbar-header">
@@ -42,11 +42,17 @@
    <!-- Grid de habitaciones -->
    <div class="habs">
       <h1>Habitaciones</h1>
-      <div class="row" >
-            <button type="button" class="btn col-md-1 btn-default" ng-repeat="f in firstfloor" ng-class="{'room-selected': f.status}" ng-click="selectRoom(f)"> {{f.room_id}} </button>
+      <div class="row list-group" >
+            <span type="button" class="room_square btn col-md-1 btn-default" ng-repeat="f in firstfloor" ng-class="{'room-selected': f.status}"  
+             context-menu="menuOptions" ng-click="selectRoom(f)"> {{f.room_id}}    
+              <div  ng-hide="f.time_reserved == '0hr'"><span class="badge">{{f.time_reserved}}</span></div>
+             </span>
       </div><br>
       <div class="row">
-            <button type="button" class="btn col-md-1 btn-default" ng-repeat="s in secondfloor" ng-class="{'room-selected': s.status}" ng-click="selectRoom(s)"> {{s.room_id}} </button>
+            <span type="button" class="btn col-md-1 btn-default" ng-repeat="s in secondfloor" ng-class="{'room-selected': s.status}" 
+            context-menu="menuOptions" ng-click="selectRoom(s)"> {{s.room_id}}            
+             <div  ng-hide="s.time_reserved == '0hr'"><span class="badge">{{s.time_reserved}}</span></div> 
+            </span>
       </div>
    </div>
 
