@@ -1,5 +1,5 @@
 angular.module('AngularScaffold.Controllers')
-  .controller('RoomController', ['RoomService' , '$scope', '$state', '$stateParams','$rootScope', '$sessionStorage',
+  .controller('RoomController', ['RoomService' ,  '$scope', '$state', '$stateParams','$rootScope', '$sessionStorage',
   	function (RoomService, $scope, $state, $stateParams,$rootScope, $sessionStorage) {
   	$scope.$sessionStorage = $sessionStorage;
   	$scope.selectedRooms = [];
@@ -10,14 +10,65 @@ angular.module('AngularScaffold.Controllers')
     $scope.working_employee_distribution = [];
     $scope.rooms_selected_distribution = [];
     $scope.display_distribution = [];
+    $scope.dragged_Employee ={};
 
     if($state.params.content){
       $scope.roomSelected = $state.params.content.selectedRoomsv1;
     }
 
-    $scope.chooseEmployee = function(params,index){
-      $scope.empleados.splice(index,1);
-      $scope.working_employee.push(params);
+
+    $scope.startCallback = function(event, ui, employee) {
+      //console.log('You started draggin: ' + employee.name);
+      $scope.dragged_Employee = employee;
+    };
+    $scope.stopCallback = function(event, ui) {
+      console.log('--------------------------');
+    };
+    $scope.dropCallback = function(event, ui, type) {
+      console.log(type)
+      var index;
+
+      console.log($scope.dragged_Employee)
+      if(type == 0){
+        for (var i = 0; i < $scope.empleados.length; i++) {
+          if($scope.empleados[i].username == $scope.dragged_Employee.username){
+            index = i
+            break;
+          }
+        }
+        $scope.empleados.splice(index,1);
+        $scope.working_employee.push($scope.dragged_Employee);
+
+      }/*else {
+        for (var i = 0; i < $scope.working_employee.length; i++) {
+          if($scope.working_employee[i].username == $scope.dragged_Employee.username){
+            index = i
+            break;
+          }
+        }
+        $scope.working_employee.splice(index,1)
+        $scope.empleados.push($scope.dragged_Employee)
+      }
+    */
+      console.log($scope.empleados)
+      console.log($scope.working_employee)
+
+      
+    };
+
+
+
+
+
+    $scope.dragingEmployee = function(employee){
+      $scope.draging_Employee = employee
+      conslose.log($scope.draging_Employee)
+    }
+
+    $scope.chooseEmployee = function(){
+      console.log("asd"); 
+      var temp = $scope.empleados.splice(index,1);
+      $scope.working_employee.push(temp[0]);
       
     }//pasa empleadas que van a trabajar hoy
     
@@ -41,6 +92,9 @@ angular.module('AngularScaffold.Controllers')
         $scope.selectedRooms.push(room);
         room.status = 1;
       }
+      RoomService.UpdateRoom(room).then(function(response){
+        console.log(response.data)
+      })
       //$scope.selectedRooms.sort()
     };
 
@@ -121,6 +175,8 @@ angular.module('AngularScaffold.Controllers')
             $scope.firstfloor.push(response.data[i])
           else
             $scope.secondfloor.push(response.data[i])
+          if(response.data[i].status == 1)
+            $scope.selectedRooms.push(response.data[i])
         }
       })
     }
@@ -142,6 +198,11 @@ angular.module('AngularScaffold.Controllers')
     $scope.changeAddRooms = function(){
       $state.go("home")
     }
+
+
+    $scope.list1 = {title: 'AngularJS - Drag Me'};
+    $scope.list2 = {};
+
 
 }]);
 

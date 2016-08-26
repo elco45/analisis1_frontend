@@ -12,6 +12,9 @@ angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
       		},
 			GetRooms: function(){
 	      		return $http.get(baseUrl + "v1/getAllRooms");
+      		},
+			UpdateRoom: function(payload){
+	      		return $http.post(baseUrl + "v1/updateRoom",payload);
       		}
       	}
       	
