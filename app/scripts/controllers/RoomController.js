@@ -97,14 +97,7 @@ angular.module('AngularScaffold.Controllers')
 
 
 
-
-
-    $scope.dragingEmployee = function(employee){
-      $scope.draging_Employee = employee
-      conslose.log($scope.draging_Employee)
-    }
-
-    $scope.chooseEmployee = function(){
+.chooseEmployee = function(){
       console.log("asd"); 
       var temp = $scope.empleados.splice(index,1);
       $scope.working_employee.push(temp[0]);
@@ -123,7 +116,14 @@ angular.module('AngularScaffold.Controllers')
     }
 
   	$scope.selectRoom = function(room) {
-      var index = $scope.selectedRooms.indexOf(room.room_id);
+      var index = -1
+      $scope.selectedRooms.indexOf(room.room_id);
+      for (var i =0; i < $scope.selectedRooms.lengths; i++) {
+        if(room.room_id == $scope.selectedRooms[i].room_id){          
+          index = i;
+          break;          
+        }
+      }
       if(index !== -1) {
         $scope.selectedRooms.splice(index, 1);        
       } else {
