@@ -136,13 +136,14 @@ angular.module('AngularScaffold.Controllers')
         }else{
           room.status = 1
           room.time_reserved = room.time_reserved
-        }
         $scope.menuWasOpened = false;
+        }
       }
       else{
         room.status = 1
         if($scope.menuWasOpened){
           room.time_reserved = room.time_reserved
+          $scope.menuWasOpened = false;
         }else
           room.time_reserved = "1day"
       }
