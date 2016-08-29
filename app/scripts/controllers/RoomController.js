@@ -10,6 +10,9 @@ angular.module('AngularScaffold.Controllers')
     $scope.working_employee_distribution = [];
     $scope.rooms_selected_distribution = [];
     $scope.display_distribution = [];
+    $scope.dropdownStatus = false;
+    $scope.showList = false;
+    $scope.showProblems = false;
 
     if($state.params.content){
       $scope.roomSelected = $state.params.content.selectedRoomsv1;
@@ -140,6 +143,9 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.changeAddRooms = function(){
       $state.go("home")
+    }
+    $scope.changeMainEmployee = function(){
+      $state.go("emp")
     }
 
 }]);

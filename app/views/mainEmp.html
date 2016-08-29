@@ -1,0 +1,114 @@
+<div class="container" ng-controller="RoomController">
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+     <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+       <span class="sr-only">Toggle Navigation</span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+     </button>
+     <a class="navbar-brand" href="#"> 
+       <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
+       width: 8em;
+       height: 2.8em;
+       padding-top: 0.2em;
+       ">
+     </a>
+   </div>
+   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+     <li><a href="#">Manejar Habitaciones</a></li>
+     <li><a href="#">Manejar Usuarios</a></li>
+   </ul>
+ </div>
+</div>
+</nav>
+
+<div class="container extra">
+</div>
+
+<!-- Grid de habitaciones -->
+<div class="jumbotron col-md-12">
+  <h1>Habitaciones</h1>
+  <table class=col-md-12 style="margin-top: 25px;">
+    <!-- ngrepeat para las habitaciones que le toca limpiar a la empleada -->
+    <td>
+      <div class="dropdown">
+        <button class="dropbtn">101</button>
+        <div class="dropdown-content">
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="dropdownStatus = true">Empezar a limpiar</p>
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="showList = true">No se pudo limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus">Terminar de limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus" ng-click="showProblems = true">Terminar de limpiar y reportar problema</p>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="dropdown">
+        <button class="dropbtn">103</button>
+        <div class="dropdown-content">
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="dropdownStatus = true">Empezar a limpiar</p>
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="showList = true">No se pudo limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus">Terminar de limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus" ng-click="showProblems = true">Terminar de limpiar y reportar problema</p>
+        </div>
+      </div>
+    </td>
+   <td>
+      <div class="dropdown">
+        <button class="dropbtn">104</button>
+        <div class="dropdown-content">
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="dropdownStatus = true">Empezar a limpiar</p>
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="showList = true">No se pudo limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus">Terminar de limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus" ng-click="showProblems = true">Terminar de limpiar y reportar problema</p>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="dropdown">
+        <button class="dropbtn">107</button>
+        <div class="dropdown-content">
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="dropdownStatus = true">Empezar a limpiar</p>
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="showList = true">No se pudo limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus">Terminar de limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus" ng-click="showProblems = true">Terminar de limpiar y reportar problema</p>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="dropdown">
+        <button class="dropbtn">110</button>
+        <div class="dropdown-content">
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="dropdownStatus = true">Empezar a limpiar</p>
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="showList = true">No se pudo limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus">Terminar de limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus" ng-click="showProblems = true">Terminar de limpiar y reportar problema</p>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="dropdown">
+        <button class="dropbtn">112</button>
+        <div class="dropdown-content">
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="dropdownStatus = true">Empezar a limpiar</p>
+          <p ng-show="!dropdownStatus" ng-hide="dropdownStatus" ng-click="showList = true">No se pudo limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus">Terminar de limpiar</p>
+          <p ng-show="dropdownStatus" ng-hide="!dropdownStatus" ng-click="showProblems = true">Terminar de limpiar y reportar problema</p>
+        </div>
+      </div>
+    </td>
+  </table> 
+  <ul ng-show="showList" class=col-md-12>
+    <li class="c2">El cliente no quiso</li>
+    <li class="c2">Estaba cerrada la habitación</li>
+    <li class="c2">Otro: <input type="text" name=""></li>
+  </ul> 
+  <ul ng-show="showProblems" class="col-md-12">
+    <li class="c2">Cama quebrada</li>
+    <li class="c2">Falta control de TV</li>
+    <li class="c2">Etc</li>
+  </ul> 
+  </div>
+</div>

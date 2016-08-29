@@ -9,31 +9,36 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		.state('home', {
             url: '/home',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/addRooms.html'
+            templateUrl: '/views/addRooms.html'
         })
         .state('login', {
             url: '/login',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/loginAdmin.html'
+            templateUrl: '/views/login.html'
         })
         .state('addRoom', {
             url: '/addRooms',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/addRooms.html'
+            templateUrl: '/views/addRooms.html'
         })
         .state('manage', {
             url: '/manage',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/manageUsers.html'
+            templateUrl: '/views/manageUsers.html'
         })
         .state('choose', {
             url: '/choose',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/chooseEmps.html'
+            templateUrl: '/views/chooseEmps.html'
         })
         .state('dist', {
             url: '/dist',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/distributeRooms.html'
+            templateUrl: '/views/distributeRooms.html'
+        })
+        .state('emp', {
+            url: '/emp',
+            params: {content:undefined},
+            templateUrl: '/views/mainEmp.html'
         });
 }])

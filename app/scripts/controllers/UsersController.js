@@ -91,7 +91,7 @@ angular.module('AngularScaffold.Controllers')
                     if(!$sessionStorage.currentUser.employee_type){
                       $state.go("home")
                     }else{
-                        console.log("aqui van a ir los empleados")
+                        $state.go("emp")
                     }
                 }
 
