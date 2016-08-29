@@ -39,7 +39,6 @@ h1{
 	margin-left: 80px!important;
 }
 
-
 .btn-group {
 	width: 100%!important;
 	font-size: 14px!important;
@@ -63,10 +62,27 @@ h1{
 }
 
 .habs{
-  margin: 20px 20px;
-  padding: 40px;
+  /*margin: 20px 20px;*/
+  margin-left: 5px!important;
+  padding: 20px;
   background: #f4f7f8;
   border-radius: 8px;
+  float: left;
+}
+.emps{
+  /*margin: 5px 5px;*/
+  margin-left: -5px!important;
+  padding: 20px;
+  background: #f4f7f8;
+  border-radius: 8px;
+  float: left;
+}
+.grid {
+	width: 60px;
+	height: 60px;
+}
+.grids {
+	padding: 10px;
 }
 
 .sel-empl{
@@ -108,6 +124,4 @@ h1{
   padding-top: 5%;
 }
 
-.room_square{
-	max-width: 100px;
-}
+

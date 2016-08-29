@@ -1,4 +1,4 @@
-<div class="container" ng-controller="RoomController"  ng-init= "getRooms()"> <!-- ng-init= "getRooms()">-->
+<div class="container" ng-controller="RoomController"  ng-init= "init()"> <!-- ng-init= "getRooms()">-->
    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
          <div class="navbar-header">
@@ -39,14 +39,101 @@
       </ul>
    </div>
 
+
+    <div class="row">
+
+
+
+
+
+      <div>
+      <ul dnd-list="models">
+                  <!-- The dnd-draggable directive makes an element draggable and will
+                       transfer the object that was assigned to it. If an element was
+                       dragged away, you have to remove it from the original list
+                       yourself using the dnd-moved attribute -->
+                  <li ng-repeat="item in lists"
+                      dnd-draggable="item"
+                      dnd-moved="lists.splice($index, 1)"
+                      dnd-effect-allowed="move"
+                      dnd-selected="models.selected = item"
+                      ng-class="{'selected': models.selected === item}"
+                      >
+                      {{item}}
+                  </li>
+              </ul>
+
+      </div>
+
+      <!-- Seleccion de Empleadas -->
+     <div class="emps col-md-4">
+        <h1>Empleadas</h1>
+         <!--AQUI ARREGLEN QUE SE MIRE WONITO POR QUE DICE DARIO QUE LE VALE PIJA -->
+           <table >
+            <tr ng-click="chooseEmployee($index)" ng-repeat = "n in empleados track by $index" class="" >
+              <td   data-drag="true" 
+                    data-jqyoui-options="{revert: 'invalid'}" 
+                    ng-model="firstfloor" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback(n)', onStop:'stopCallback(n)'}" class="glyphicon glyphicon-move"  >
+              </td>
+              <td>{{n.username}}</td>
+            </tr>
+           </table>
+     </div>
+   
+     <!-- Grid de habitaciones -->
+     <div class="habs col-md-8">
+        <h1>Habitaciones</h1>
+        <div class="row grids">
+              
+                <div>
+                <span 
+                 data-drop="true"
+                 data-drag = "false"
+                 data-jqyoui-options
+                 stack = "true"
+                 jqyoui-droppable="{animate:true, multiple:true,onOver:'room_hover(s)', onDrop:'dropCallback(s)'}"
+                 ng-repeat = "s in firstfloor"  class="grid btn btn-default"   
+                 ng-class="{'room-selected': s.status}" 
+                 ng-model="firstfloor">{{s.room_id}}
+                </span>
+                <div>
+             <!-- 
+               jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback(s)', onStop: 'stopCallback(s)'}" 
+             <button type="button" class="grid btn btn-default" ng-repeat="f in firstfloor" ng-class="{'room-selected': f.status}" ng-click="selectRoom(f)"> {{f.room_id}} </button> -->
+        </div><br>
+        <div class="row grids">
+                <div>
+                <span 
+                 data-drop="true"
+                 data-drag = "false"
+                 data-jqyoui-options
+                 stack = "true"
+                 jqyoui-droppable="{animate:true, multiple:true,onOver:'room_hover(s)', onDrop:'dropCallback(s)'}"
+                 ng-repeat = "s in secondfloor"  class="grid btn btn-default"   
+                 ng-class="{'room-selected': s.status}" 
+                 ng-model="secondfloor">{{s.room_id}}
+                </span>
+                <div>
+        </div>
+     </div>
+
+     
+
+   </div>
+
+
    <!-- Grid de habitaciones -->
+
+
    <div class="habs">
       <h1>Habitaciones</h1>
       <div class="row list-group" >
-            <span type="button" class="room_square btn col-md-1 btn-default" ng-repeat="f in firstfloor" ng-class="{'room-selected': f.status}"  
-             context-menu="menuOptions" ng-click="selectRoom(f)"> {{f.room_id}}    
-              <div  ng-hide="f.time_reserved == '0hr'"><span class="badge">{{f.time_reserved}}</span></div>
-             </span>
+             <span ng-model="empleados" class="thumbnail" data-drop="true"
+              data-jqyoui-options jqyoui-droppable="{onDrop:'dropCallback(0)'}"
+              type="button" class="btn col-md-1 btn-default" ng-repeat="f in firstfloor" ng-class="{'room-selected': s.status}" 
+              context-menu="menuOptions" ng-click="selectRoom(f)"> {{f.room_id}}            
+                <div  ng-hide="f.time_reserved == '0hr'"><span class="badge">{{f.time_reserved}}</span></div> 
+            </span>
       </div><br>
       <div class="row">
             <span type="button" class="btn col-md-1 btn-default" ng-repeat="s in secondfloor" ng-class="{'room-selected': s.status}" 
@@ -66,3 +153,4 @@
       </nav>
    </div>
 </div>
+

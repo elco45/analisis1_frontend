@@ -43,17 +43,6 @@
 
 
   <div class="sel-empl row">
-    <h1>Selección de Empleadas</h1>
-    <div class="col-md-5">
-
-      <div ng-model="empleados" class="thumbnail" data-drop="true"
-       data-jqyoui-options jqyoui-droppable="{onDrop:'dropCallback(1)'}" style='height:50px;width: 15em;'> <!-- aquui se hace drop-->
-        <div class="list-group" ng-repeat = "n in empleados track by $index">
-          <div onStart="startCallback(n)" class="btn btn-primary  btn-draggable" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" 
-          ng-model="empleados" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback(n, $index)', onStop: 'stopCallback'}" ng-hide="!n.name">{{n.name}}</div>
-        </div>
-      </div>
-    </div>
     <div class="col-md-2">
 
     </div>
@@ -62,7 +51,7 @@
         <a class="list-group-item" ng-click = "no_longer_working_employee(n,$index)">{{n.name}}</a>
       </div>-->
         <div ng-model="empleados" class="thumbnail" data-drop="true"
-         data-jqyoui-options jqyoui-droppable="{onDrop:'dropCallback(0)'}" style='height:50px;width: 15em;'> <!-- aquui se hace drop-->
+         data-jqyoui-options jqyoui-droppable="{onDrop:'dropCallback(0,$index)'}" style='height:50px;width: 15em;'> <!-- aquui se hace drop-->
 
               <div class="list-group" ng-repeat = "s in working_employee track by $index">
                 <div onStart="startCallback(n)" class="btn btn-primary btn-draggable" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" 
