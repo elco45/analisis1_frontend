@@ -1,4 +1,4 @@
-<div class="container" ng-controller="RoomController" ng-init = "getParameters()">
+<div class="container" ng-controller="RoomController" ng-init = "getParameters()" > <!-- ng-init = "distribute()"-->
   <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
          <div class="navbar-header">
@@ -45,23 +45,26 @@
 </div>
 
 <!-- Va un ngrepeat de headers para la empleadas disponibles, esto solo es un ejemplo -->
-<!--<div class="col-md-2">
-  <ul ng-repeat = "n in display_distribution">
-      <li class="c ab-bg">{{n.worker.name}}</li>
-      <ul ng-repeat = "x in n.rooms track by $index">
-        <li class = "c ab-bg">{{x.room_id}}</li>
-      </ul>
-  </ul>
-</div>-->
+ <div>
+  <span 
+   ng-repeat = "e in employeeWithRooms track by $index"  class="grid btn-default"  
+   ng-model="employeeWithRooms"    data-drop="true"
+                 jqyoui-options="{revertDuration: 1000}"
+                 jqyoui-droppable="{multiple:true,onOver:'room_hover(e)',onOut:'room_hover_out(e)'}"
+   >{{e.empleado.username}}
+   <br>
+    <span 
+      data-drag="true" 
+      data-jqyoui-options="{revert: 'invalid'}" 
+      ng-repeat = "h in e.habitacion track by $index">{{h.room_id}} 
+     <br>
+    </span>
+  
+  </span>
 
-<div class="col-md-2">
-  <ul ng-repeat = "n in display_distribution ">
-      <li class="d ab-bg">{{n.worker.name}}</li>
-      <ul ng-repeat = "x in n.rooms track by $index">
-        <li class="c ab-bg">{{x.room_id}}</li>
-      </ul>
-  </ul>
-</div>
+
+  </div>
+
 
 <!--<div class="col-md-2">
   <table class="tableizer-table table_in">
