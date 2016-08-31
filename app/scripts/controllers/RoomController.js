@@ -239,6 +239,9 @@ angular.module('AngularScaffold.Controllers')
       }else{
         room.status = !room.status
       }
+      if(room.status == 0){
+        room.idUser = []
+      }
       /*if(room.status){
         if(!$scope.menuWasOpened){
           room.status = 0
@@ -257,9 +260,9 @@ angular.module('AngularScaffold.Controllers')
         }else
           room.time_reserved = "1day"
       }*/
-      /*RoomService.UpdateRoom(room).then(function(response){
+      RoomService.UpdateRoom(room).then(function(response){
         
-      })*/
+      })
       //$scope.selectedRooms.sort()
     };
 

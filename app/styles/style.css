@@ -62,24 +62,25 @@ h1{
 }
 
 .habs{
-  /*margin: 20px 20px;*/
+  /*margin: 20px 20px;
+  float: left;*/
   margin-left: 5px!important;
   padding: 20px;
   background: #f4f7f8;
   border-radius: 8px;
-  float: left;
 }
 .emps{
-  /*margin: 5px 5px;*/
+  /*margin: 5px 5px;
+  float: left;*/
   margin-left: -5px!important;
   padding: 20px;
   background: #f4f7f8;
   border-radius: 8px;
-  float: left;
 }
-.grid {
-	width: 60px;
-	height: 60px;
+#grid {
+	width: 60px!important;
+	height: 60px!important;
+  border-radius: 8px;
 }
 .grids {
 	padding: 10px;
