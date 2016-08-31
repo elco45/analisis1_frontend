@@ -52,32 +52,32 @@
       </td>   
     </tr>
     <tr>
-      <ul ng-show="showList">
+      <ul class="checkboxList" ng-show="showList">
         <li>
-          <label for=""> <input type="checkbox" name=""> El cliente no quiso </label>
+          <input id="opt1" type="checkbox" name=""> <label for="opt1"> El cliente no quiso </label>
         </li>
         <li>
-          <label for=""> <input type="checkbox" name=""> El cliente no se ha ido </label>
+          <input id="opt2" type="checkbox" name=""> <label for="opt2"> El cliente no se ha ido </label>
         </li>
         <li>
-          <label for=""> <input type="checkbox" name=""> Otro: <input type="text" name=""></label>
+          <input id="opt3" type="checkbox" name=""> <label for="opt3"> Otro: <input type="text" name=""></label>
         </li>
-      </ul> 
+      </ul>
       <button ng-click="changeMainEmployee()" ng-show="showList" class="mybtn2 col-md-3"> Finalizar </button>
     </tr>
     <tr>
-      <ul ng-show="showListProblems">
+      <ul id="problem" class="checkboxList" ng-show="showListProblems">
         <li>
-          <label for=""> <input type="checkbox" name=""> Falta TV </label>
+          <input id="opt1" type="checkbox" name=""> <label for="opt1"> La cortina estaba rota </label>
         </li>
         <li>
-          <label for=""> <input type="checkbox" name=""> Espejo quebrado </label>
+          <input id="opt2" type="checkbox" name=""> <label for="opt2"> Vidrio roto </label>
         </li>
         <li>
-          <label for=""> <input type="checkbox" name=""> Otro: <input type="text" name=""></label>
+          <input id="opt3" type="checkbox" name=""> <label for="opt3"> Otro: <input type="text" name=""></label>
         </li>
-        <button ng-click="changeMainEmployee()" ng-show="showListProblems" class="mybtn2 col-md-3">Finalizar</button>
       </ul> 
+      <button ng-click="changeMainEmployee()" ng-show="showListProblems" class="mybtn2 col-md-3">Finalizar</button>
     </tr>
   </table> 
   </div>

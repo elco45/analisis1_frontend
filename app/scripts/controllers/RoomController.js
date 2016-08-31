@@ -13,6 +13,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.start = false;
     $scope.showList = false;
     $scope.showListProblems = false;
+    $scope.currentEmpRooms = []
 
     if($state.params.content){
       $scope.roomSelected = $state.params.content.selectedRoomsv1;
@@ -123,6 +124,18 @@ angular.module('AngularScaffold.Controllers')
             $scope.firstfloor.push(response.data[i])
           else
             $scope.secondfloor.push(response.data[i])
+        }
+      })
+    }
+
+    $scope.getEmpRooms = function(){
+      RoomService.GetRooms().then(function(response){
+        var count = 0;
+        for (var i = 0; i <response.data.length; i++) {
+          if($sessionStorage.currentUser.idUser == response.data[i].idUser){
+            $scope.currentEmpRooms.push(response.data[count])
+            count++;
+          }
         }
       })
     }
