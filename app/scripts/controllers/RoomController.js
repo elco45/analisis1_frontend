@@ -61,7 +61,6 @@ angular.module('AngularScaffold.Controllers')
     $scope.init = function() {
       $scope.getRooms();
       $scope.llenarEmpleado();
-      console.log($scope.empleados)
       
 
     }
@@ -129,7 +128,8 @@ angular.module('AngularScaffold.Controllers')
       if(!already_on_the_list){
         var empleado_con_su_habitacion = {
           empleado : {},
-          habitacion : []          
+          habitacion : [],
+          contador: 0          
         }
         empleado_con_su_habitacion.empleado = $scope.dragged_Employee
         empleado_con_su_habitacion.habitacion.push(room)
@@ -138,6 +138,7 @@ angular.module('AngularScaffold.Controllers')
       }else{
         $scope.employeeWithRooms[index_on_the_list].habitacion.push(room)
       }
+
       for (var i = 0; i < $scope.selectedRooms.length; i++) {
         if($scope.selectedRooms[i].room_id ==room.room_id){
           $scope.selectedRooms.splice(i,1)
@@ -191,50 +192,6 @@ angular.module('AngularScaffold.Controllers')
       } 
 
     }
-    $scope.sortRoomsFF= function(){
-      var j;
-     var flag = true;   // set flag to true to begin first pass
-     var temp;   //holding variable
-
-     while ( flag )
-     {
-            flag= false;    //set flag to false awaiting a possible swap
-            for( j=0;  j < $scope.firstfloor.length -1;  j++ )
-            {
-                   if ( $scope.firstfloor[ j ].room_id > $scope.firstfloor[j+1].room_id )   // change to > for ascending sort
-                   {
-                           temp = $scope.firstfloor[ j ];                //swap elements
-                           $scope.firstfloor[ j ] = $scope.firstfloor[ j+1 ];
-                           $scope.firstfloor[ j+1 ] = temp;
-                          flag = true;              //shows a swap occurred  
-                  } 
-            } 
-      } 
-
-    }
-    $scope.sortRoomsSF= function(){
-
-     var j;
-     var flag = true;   // set flag to true to begin first pass
-     var temp;   //holding variable
-
-     
-     while ( flag )
-     {
-            flag= false;    //set flag to false awaiting a possible swap
-            for( j=0;  j < $scope.secondfloor.length -1;  j++ )
-            {
-                   if ( $scope.secondfloor[ j ].room_id > $scope.secondfloor[j+1].room_id )   // change to > for ascending sort
-                   {
-                           temp = $scope.secondfloor[ j ];                //swap elements
-                           $scope.secondfloor[ j ] = $scope.secondfloor[ j+1 ];
-                           $scope.secondfloor[ j+1 ] = temp;
-                          flag = true;              //shows a swap occurred  
-                  } 
-            } 
-      } 
-
-     }
 
 
      $scope.check = function(){
@@ -246,7 +203,8 @@ angular.module('AngularScaffold.Controllers')
       //console.log(temp)
       var empleado_con_su_habitacion = {
         empleado : employee,
-        habitacion : []          
+        habitacion : [],
+        contador: 0          
       }
       $scope.employeeWithRooms.push(empleado_con_su_habitacion);
       
@@ -299,10 +257,9 @@ angular.module('AngularScaffold.Controllers')
         }else
           room.time_reserved = "1day"
       }*/
-      console.log(room)
-      RoomService.UpdateRoom(room).then(function(response){
-        console.log(response.data)
-      })
+      /*RoomService.UpdateRoom(room).then(function(response){
+        
+      })*/
       //$scope.selectedRooms.sort()
     };
 
@@ -379,6 +336,9 @@ angular.module('AngularScaffold.Controllers')
     }*/
 
     $scope.distribute = function(){
+      var rooms_repartidos = 0;
+      var cont = -1;
+
       for (var i = 0; i < $scope.employeeWithRooms.length; i++) { // por todos los empleados
         for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length -1; j++) {//por cada habitacion de cada empleado
           for (var k = 0; k < $scope.employeeWithRooms[i].habitacion.length; k++) {
@@ -390,26 +350,46 @@ angular.module('AngularScaffold.Controllers')
           }
         }
       }//fin fors para ordernar las habitaciones
+
+      for (var i = 0; i < $scope.selectedRooms.length; i++) {
+        for (var j = 0; j < $scope.employeeWithRooms.length; j++) {
+          if ($scope.employeeWithRooms[j].contador == rooms_repartidos) {
+            $scope.employeeWithRooms[j].contador++;
+            cont++;
+             if (cont == $scope.selectedRooms.length-1) {
+              break;
+            }
+          }
+        }
+        rooms_repartidos++;
+        if (cont == $scope.selectedRooms.length-1) {
+          break;
+        }
+      } // fin for de selected rooms
+
+      var contador_room_repartido = 0;
+      for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
+        for (var j = 0; j < $scope.employeeWithRooms[i].contador; j++) {
+          $scope.employeeWithRooms[i].habitacion.push($scope.selectedRooms[contador_room_repartido]);
+          contador_room_repartido++;
+        };
+      }//TERMINADO
       console.log($scope.employeeWithRooms)
+      /*enviar $scope.employeeWithRooms al siguiente view, tbn falta hacer los updates en el db y poner el contador a 0*/
 
       
-
-
-
-
-
     }
 
     $scope.getRooms = function(){
       RoomService.GetRooms().then(function(response){
         for (var i = 0; i <response.data.length; i++) {
             $scope.floors.push(response.data[i])
-          if(i < 25){
+          /*if(i < 25){
             $scope.firstfloor.push(response.data[i])
           }
           else{
             $scope.secondfloor.push(response.data[i])
-          }
+          }*/
           if(response.data[i].status == 1){
             for (var j = 0; j < response.data[i].idUser.length; j++) {
               var existia_empleado = false
@@ -424,14 +404,15 @@ angular.module('AngularScaffold.Controllers')
               if(!existia_empleado){                
                 var empleado_con_su_habitacion = {
                   empleado : {},
-                  habitacion : []          
+                  habitacion : [],
+                  contador: 0          
                 }
                 empleado_con_su_habitacion.empleado = response.data[i].idUser[j];
                 empleado_con_su_habitacion.habitacion.push(response.data[i])
                 $scope.employeeWithRooms.push(empleado_con_su_habitacion)
               }         
             }//for
-            $scope.selectedRooms.push(response.data[i])
+            //$scope.selectedRooms.push(response.data[i])
           }//fin if
 
         }
@@ -440,8 +421,6 @@ angular.module('AngularScaffold.Controllers')
 
 
         $scope.sortRooms();
-        $scope.sortRoomsFF();
-        $scope.sortRoomsSF();
       })
     }
 
