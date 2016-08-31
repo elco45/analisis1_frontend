@@ -31,40 +31,12 @@
 <div class="jumbotron col-md-12">
   <h1>Habitaciones</h1>
   <table class=col-md-12 style="margin-top: 25px;">
-    <!-- ngrepeat para las habitaciones que le toca limpiar a la empleada -->
-    <td>
+    <td ng-repeat="r in currentEmpRooms">
       <div class="roombutton">
-        <button ng-click="changeRoomEmp()" class="mybtn">101</button>
+        <button ng-click="changeRoomEmp()" class="mybtn">{{r.room_id}}</button>
       </div>
     </td>
     <td>
-      <div class="roombutton">
-        <button ng-click="changeRoomEmp()" class="mybtn">103</button>
-      </div>
-    </td>
-   <td>
-      <div class="roombutton">
-        <button ng-click="changeRoomEmp()" class="mybtn">104</button>
-      </div>
-    </td>
-    <td>
-      <div class="roombutton">
-        <button ng-click="changeRoomEmp()" class="mybtn">107</button>
-        </div>
-      </div>
-    </td>
-    <td>
-      <div class="roombutton">
-        <button ng-click="changeRoomEmp()" class="mybtn">110</button>
-        </div>
-      </div>
-    </td>
-    <td>
-      <div class="roombutton">
-        <button ng-click="changeRoomEmp()" class="mybtn">112</button>
-        </div>
-      </div>
-    </td>
   </table>
   </div>
 </div>

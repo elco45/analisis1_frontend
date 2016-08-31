@@ -88,10 +88,14 @@ angular.module('AngularScaffold.Controllers')
                     console.log(response.data)
                     console.log($sessionStorage)
                     $sessionStorage.currentUser = response.data
+                    console.log("__________________________");
+                    console.log($sessionStorage.currentUser.employee_type);
                     if(!$sessionStorage.currentUser.employee_type){
-                      $state.go("home")
-                    }else{
+                     
                         $state.go("emp")
+                    }else{
+                         $state.go("home")
+                        
                     }
                 }
 

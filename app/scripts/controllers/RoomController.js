@@ -14,7 +14,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.showList = false;
     $scope.showListProblems = false;
     $scope.currentEmpRooms = []
-
+    
     if($state.params.content){
       $scope.roomSelected = $state.params.content.selectedRoomsv1;
     }
@@ -164,6 +164,21 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.changeRoomEmp = function(){
       $state.go("roomemp")
+    }
+   
+
+    $scope.getEmpRooms = function() {
+      console.log("xcadc  "+$sessionStorage.currentUser.username)
+        RoomService.GetEmpRooms($sessionStorage.currentUser).then(function(response){
+          for(var i =0; i<response.data.length;i++){
+              for(var j=0;j<response.data[i].idUser.length; j++){
+                 if($sessionStorage.currentUser.username == response.data[i].idUser[j].username){
+                    $scope.currentEmpRooms.push(response.data[i]);
+                 }
+              }
+          }
+          console.log($scope.currentEmpRooms)
+        });  
     }
 
 }]);
