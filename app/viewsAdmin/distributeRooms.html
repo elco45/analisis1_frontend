@@ -96,12 +96,6 @@
       ng-repeat = "h in e.habitacion track by $index">{{h.room_id}} 
      
     </span>
-    <span 
-       data-drag="true" data-jqyoui-options="{revert: 'invalid'}" data-id ="{{e.empleado}}" ng-model="employeeWithRooms.habitacion" jqyoui-draggable="{index:{{$index}},animate:false,
-       onStart:'startCallBack_distribucion(h)'}" 
-        ng-repeat = "h in employeeWithRooms.habitacion track by $index">{{h.room_id}} 
-       
-    </span>
     
     <br>
   </span>

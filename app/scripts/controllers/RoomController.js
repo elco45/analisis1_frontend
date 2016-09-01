@@ -65,26 +65,6 @@ angular.module('AngularScaffold.Controllers')
 
     //---------------------------------------
 
-$(".droppable").droppable({
-    accept: function(d) { 
-        if((d.attr("id")=="room_id")){ 
-            return true;
-        }
-    }
-});
-
- $('.abs:not(.outside)').droppable({
-        accept: '.abs:not(.outside)',
-        hoverClass: "drop-hover",
-        tolerance: "pointer",
-        greedy: true,
-        drop: function () {
-            alert('drop');
-        }
-    });
-
-
-
     //------------------------- 
 
     $scope.room_hover = function(event, ui, room){
@@ -222,38 +202,50 @@ $(".droppable").droppable({
 
 
      $scope.sortRooms= function(){
-      var j;
-     var flag = true;   // set flag to true to begin first pass
-     var temp;   //holding variable
+       var j;
+       var flag = true;   // set flag to true to begin first pass
+       var temp;   //holding variable
 
-     while ( flag )
-     {
-            flag= false;    //set flag to false awaiting a possible swap
-            for( j=0;  j < $scope.floors.length -1;  j++ )
-            {
-                   if ( $scope.floors[ j ].room_id > $scope.floors[j+1].room_id )   // change to > for ascending sort
-                   {
-                           temp = $scope.floors[ j ];                //swap elements
-                           $scope.floors[ j ] = $scope.floors[ j+1 ];
-                           $scope.floors[ j+1 ] = temp;
-                          flag = true;              //shows a swap occurred  
-                  } 
-            } 
-      } 
-
-    }
-
-
-    $scope.check = function(){
+       while ( flag )
+       {
+              flag= false;    //set flag to false awaiting a possible swap
+              for( j=0;  j < $scope.floors.length -1;  j++ )
+              {
+                     if ( $scope.floors[ j ].room_id > $scope.floors[j+1].room_id )   // change to > for ascending sort
+                     {
+                             temp = $scope.floors[ j ];                //swap elements
+                             $scope.floors[ j ] = $scope.floors[ j+1 ];
+                             $scope.floors[ j+1 ] = temp;
+                            flag = true;              //shows a swap occurred  
+                    } 
+              } 
+        } 
 
     }
 
 
 
     $scope.submitEmployee = () => {
-      if (!containsObject($scope.n, $scope.working_employee)) {
-        $scope.working_employee.push($scope.n);
+      var index = -1
+      for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
+        if($scope.employeeWithRooms[i].empleado.username === $scope.n.username){
+          index = i;
+          break;
+        }
       }
+      if(index === -1){
+
+          var empleado_con_su_habitacion = {
+            empleado : $scope.n,
+            habitacion : [],
+            contador: 0          
+          }
+          $scope.employeeWithRooms.push(empleado_con_su_habitacion)
+      }
+      console.log($scope.employeeWithRooms)
+      /*if (!containsObject($scope.n, $scope.employeeWithRooms)) {
+        $scope.employeeWithRooms.push($scope.n);
+      }*/
     }
 
     function containsObject(obj, list) {
@@ -277,6 +269,7 @@ $(".droppable").droppable({
         contador: 0          
       }
       $scope.employeeWithRooms.push(empleado_con_su_habitacion);
+      console.log($scope.employeeWithRooms)
       
     }//pasa empleadas que van a trabajar hoy
     
@@ -416,119 +409,123 @@ $(".droppable").droppable({
     }*/
 
     $scope.distribute = function(selectedRooms,employee){
-
-      for (var i = 0; i < $scope.employeeWithRooms.length; i++) { // por todos los empleados
-        for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length -1; j++) {//por cada habitacion de cada empleado
-          for (var k = 0; k < $scope.employeeWithRooms[i].habitacion.length; k++) {
-            if ( $scope.employeeWithRooms[i].habitacion[ j ].room_id > $scope.employeeWithRooms[i].habitacion[j+1].room_id ){
-             temp = $scope.employeeWithRooms[i].habitacion[ j ];
-             $scope.employeeWithRooms[i].habitacion[ j ] = $scope.employeeWithRooms[i].habitacion[ j+1 ];
-             $scope.employeeWithRooms[i].habitacion[ j+1 ] = temp;
-            }
-          }
-        }
-      }//fin fors para ordernar las habitaciones 
-      var temp;
-      for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
-        for (var j = 0; j <$scope.employeeWithRooms.length - 1; j++) {
-            if ( $scope.employeeWithRooms[j].habitacion.length < 
-              $scope.employeeWithRooms[j+1].habitacion.length ){
-             temp = $scope.employeeWithRooms[j];
-             $scope.employeeWithRooms[j] = $scope.employeeWithRooms[j+1];
-             $scope.employeeWithRooms[j+1] = temp;
-            }
-        }
-      } 
-      var temp;
-      for (var i = 0; i < selectedRooms.length ; i++) {
-        for (var j = 0; j <selectedRooms.length - 1; j++) {
-            if ( selectedRooms[j].room_id >selectedRooms[j+1].room_id ){
-             temp = selectedRooms[j];
-             selectedRooms[j] = selectedRooms[j+1];
-             selectedRooms[j+1] = temp;
-            }
-        }
-      }
-      for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
-        $scope.employeeWithRooms[i].contador = $scope.employeeWithRooms[i].habitacion.length
-        $scope.employeeWithRooms[i].contador2 = $scope.employeeWithRooms[i].habitacion.length
-      }
-      var rooms_repartidos = 0;
-      var cont = 0;
-      var encontro = false
-      while (true) {
-        for (var j = 0; j < $scope.employeeWithRooms.length; j++) {
-          if ($scope.employeeWithRooms[j].contador == rooms_repartidos) {
-            encontro = true
-            $scope.employeeWithRooms[j].contador= $scope.employeeWithRooms[j].contador+1;
-            cont++; 
-            if (cont >=selectedRooms.length) {
-              break;
-            }            
-          }          
-        }
-        //if(!encontro)
-        rooms_repartidos++;
-
-        if (cont >=selectedRooms.length) {
-          break;
-        }
-      } // fin for de selected rooms
-      for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
-        $scope.employeeWithRooms[i].contador = $scope.employeeWithRooms[i].contador - $scope.employeeWithRooms[i].contador2 
-      }
-
-
-      var contador_room_repartido = 0;
-      var temp;
-      var index = 0
-      for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
-        for (var j = 0; j < $scope.employeeWithRooms[i].contador; j++) {
-          if($scope.employeeWithRooms[i].habitacion.length >0 ){
-            var num_menor = $scope.employeeWithRooms[i].habitacion[0]
-            var habia = false
-            for (var k = 0; k < selectedRooms.length; k++) {
-              if(selectedRooms[k].room_id > (num_menor-25)){
-                index = k
-                habia = true;
-                break;
+      if($scope.selectedRooms.length !== 0){
+        for (var i = 0; i < $scope.employeeWithRooms.length; i++) { // por todos los empleados
+          for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length -1; j++) {//por cada habitacion de cada empleado
+            for (var k = 0; k < $scope.employeeWithRooms[i].habitacion.length; k++) {
+              if ( $scope.employeeWithRooms[i].habitacion[ j ].room_id > $scope.employeeWithRooms[i].habitacion[j+1].room_id ){
+               temp = $scope.employeeWithRooms[i].habitacion[ j ];
+               $scope.employeeWithRooms[i].habitacion[ j ] = $scope.employeeWithRooms[i].habitacion[ j+1 ];
+               $scope.employeeWithRooms[i].habitacion[ j+1 ] = temp;
               }
             }
-            if(habia){  
-              temp = selectedRooms[index]  
-              $scope.employeeWithRooms[i].habitacion.push(selectedRooms[index]);
-              selectedRooms.splice(index,1)
-            }else{
-              temp = selectedRooms[0]
-              $scope.employeeWithRooms[i].habitacion.push(selectedRooms[0])
-              selectedRooms.splice(0,1)
-            }
+          }
+        }//fin fors para ordernar las habitaciones 
+        var temp;
+        for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
+          for (var j = 0; j <$scope.employeeWithRooms.length - 1; j++) {
+              if ( $scope.employeeWithRooms[j].habitacion.length < 
+                $scope.employeeWithRooms[j+1].habitacion.length ){
+               temp = $scope.employeeWithRooms[j];
+               $scope.employeeWithRooms[j] = $scope.employeeWithRooms[j+1];
+               $scope.employeeWithRooms[j+1] = temp;
+              }
+          }
+        } 
+        var temp;
+        for (var i = 0; i < selectedRooms.length ; i++) {
+          for (var j = 0; j <selectedRooms.length - 1; j++) {
+              if ( selectedRooms[j].room_id >selectedRooms[j+1].room_id ){
+               temp = selectedRooms[j];
+               selectedRooms[j] = selectedRooms[j+1];
+               selectedRooms[j+1] = temp;
+              }
+          }
+        }
+        for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
+          $scope.employeeWithRooms[i].contador = $scope.employeeWithRooms[i].habitacion.length
+          $scope.employeeWithRooms[i].contador2 = $scope.employeeWithRooms[i].habitacion.length
+        }
+        var rooms_repartidos = 0;
+        var cont = 0;
+        var encontro = false
+        while (true) {
+          for (var j = 0; j < $scope.employeeWithRooms.length; j++) {
+            if ($scope.employeeWithRooms[j].contador == rooms_repartidos) {
+              encontro = true
+              $scope.employeeWithRooms[j].contador= $scope.employeeWithRooms[j].contador+1;
+              cont++; 
+              if (cont >=selectedRooms.length) {
+                break;
+              }            
+            }          
+          }
+          //if(!encontro)
+          rooms_repartidos++;
 
-          }else{
-            temp = selectedRooms[0]            
-            $scope.employeeWithRooms[i].habitacion.push(selectedRooms[contador_room_repartido]);
-            //aqui es cuando hayan sin habitacion
+          if (cont >=selectedRooms.length) {
+            break;
           }
-            //guardarlo
-          var room_with_employee = {
-            employee : $scope.employeeWithRooms[i].empleado,
-            room_id : temp.room_id
-          }
-          RoomService.SaveDistributedRooms(room_with_employee).then(function(response){
+        } // fin for de selected rooms
+        for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
+          $scope.employeeWithRooms[i].contador = $scope.employeeWithRooms[i].contador - $scope.employeeWithRooms[i].contador2 
+        }
+
+
+        var contador_room_repartido = 0;
+        var temp;
+        var index = 0
+        for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
+          for (var j = 0; j < $scope.employeeWithRooms[i].contador; j++) {
+            if($scope.employeeWithRooms[i].habitacion.length >0 ){
+              var num_menor = $scope.employeeWithRooms[i].habitacion[0]
+              var habia = false
+              for (var k = 0; k < selectedRooms.length; k++) {
+                if(selectedRooms[k].room_id > (num_menor-25)){
+                  index = k
+                  habia = true;
+                  break;
+                }
+              }
+              if(habia){  
+                temp = selectedRooms[index]  
+                $scope.employeeWithRooms[i].habitacion.push(selectedRooms[index]);
+                selectedRooms.splice(index,1)
+              }else{
+                temp = selectedRooms[0]
+                $scope.employeeWithRooms[i].habitacion.push(selectedRooms[0])
+                selectedRooms.splice(0,1)
+              }
+
+            }else{
+              temp = selectedRooms[0]            
+              $scope.employeeWithRooms[i].habitacion.push(selectedRooms[contador_room_repartido]);
+              //aqui es cuando hayan sin habitacion
+            }
+              //guardarlo
+            var room_with_employee = {
+              employee : $scope.employeeWithRooms[i].empleado,
+              room_id : temp.room_id
+            }
+            RoomService.SaveDistributedRooms(room_with_employee).then(function(response){
+              console.log(response.data)
+            })
+            contador_room_repartido++;
+          };
+        }//TERMINADO
+        /*enviar $scope.employeeWithRooms al siguiente view, tbn falta hacer los updates en el db y poner el contador a 0*/
+        /*RoomService.SaveDistributedRooms($scope.employeeWithRooms).then(function(response){
+
+        })
+        for (var i = 0; i < $scope.employeeWithRooms.length; i++) {          
+          RoomService.SaveDistributedRooms($scope.employeeWithRooms[i]).then(function(response){
             console.log(response.data)
           })
-          contador_room_repartido++;
-        };
-      }//TERMINADO
-      /*enviar $scope.employeeWithRooms al siguiente view, tbn falta hacer los updates en el db y poner el contador a 0*/
-      /*RoomService.SaveDistributedRooms($scope.employeeWithRooms).then(function(response){
+        }*/
 
-      })
-      for (var i = 0; i < $scope.employeeWithRooms.length; i++) {          
-        RoomService.SaveDistributedRooms($scope.employeeWithRooms[i]).then(function(response){
-          console.log(response.data)
-        })
-      }*/
+      }else{
+        console.log("no hay habitaciones para repartir")
+      }
         
     }
 
@@ -585,12 +582,33 @@ $(".droppable").droppable({
     }
 
     $scope.changeChooseEmps =function(params){
-      $state.go("dist", {content:{
-        //selectedRoomsv1: $scope.selectedRooms
-        selectedRooms: params,
-        //workingEmployee: $scope.working_employee,
-        room_distributed: $scope.employeeWithRooms
-      }})/*.then(function(err){
+      if($scope.selectedRooms.length === 0){
+        swal({
+          title: "Esta seguro?",
+          text: "No ha seleccionado habitaciones para repartir",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "Continuar!",
+          closeOnConfirm: true
+        },
+        function(){
+            $state.go("dist", {content:{
+              //selectedRoomsv1: $scope.selectedRooms
+              selectedRooms: params,
+              //workingEmployee: $scope.working_employee,
+              room_distributed: $scope.employeeWithRooms
+            }})
+        });
+      }else{
+        $state.go("dist", {content:{
+              //selectedRoomsv1: $scope.selectedRooms
+              selectedRooms: params,
+              //workingEmployee: $scope.working_employee,
+              room_distributed: $scope.employeeWithRooms
+            }})
+      }
+      /*.then(function(err){
        
         $scope.distribute(params, $scope.employeeWithRooms)
       })
@@ -598,6 +616,7 @@ $(".droppable").droppable({
 */
 
     }
+    
 
 
 

@@ -68,12 +68,12 @@
           </div>
 
           <ul class="list-group">
-            <li ng-click="chooseEmployee(n)" ng-repeat = "n in working_employee track by $index" class="list-group-item" >
+            <li ng-click="chooseEmployee(n)" ng-repeat = "n in employeeWithRooms track by $index" class="list-group-item" >
               <span data-drag="true" 
                     data-jqyoui-options="{revert: 'invalid'}" 
                     ng-model="firstfloor" jqyoui-draggable="{index: {{$index}}, animate:true, onStart:'startCallback(n)', onStop:'stopCallback(n)'}" class="glyphicon glyphicon-hand-up badge">
               </span>
-              {{n.username}}
+              {{n.empleado.username}}
             </li>
           </ul>
 
