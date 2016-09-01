@@ -13,8 +13,6 @@ angular.module('AngularScaffold.Controllers')
      
       UserService.GetUser().then(function(response){
       $scope.lisUsuario = response.data
-       
-        console.log($scope.lisUsuario)
       });
     }
 
@@ -26,10 +24,7 @@ angular.module('AngularScaffold.Controllers')
       var file = document.querySelector('input[type=file]').files[0];
       var reader  = new FileReader();
       reader.readAsDataURL(file)
-      console.log(reader)
-      console.log(file)
       reader.addEventListener("load" , function(){
-        console.log(reader.result)
         $scope.usuario.photo = reader.result
         UserService.Register($scope.usuario).then(function(algo){
           console.log("Guardado con exito");
@@ -46,7 +41,6 @@ angular.module('AngularScaffold.Controllers')
     $scope.decode = function(file,fileName){
       var byteString;
       console.log("----decode---")
-      console.log(file)
       if (file.split(',')[0].indexOf('base64') >= 0){
           byteString = atob(file.split(',')[1]);
       }else{
@@ -69,10 +63,6 @@ angular.module('AngularScaffold.Controllers')
     }//fin decode
 
     $scope.modificar_usuario = function(){
-      console.log("david");
-      console.log("Entre");
-      console.log($scope.usuarioSeleccionado);
-      console.log($scope.usuarioSeleccionado.name)
       var temp = {
         password : $scope.usuarioSeleccionado.password,
         username : $scope.usuarioSeleccionado.username,
@@ -94,7 +84,6 @@ angular.module('AngularScaffold.Controllers')
 
       	
     $scope.logout = function(){
-        console.log($sessionStorage.currentUser);
         authService.Logout().then(function(response){
           	$sessionStorage.$reset();
           	$state.go("login");
@@ -117,13 +106,11 @@ angular.module('AngularScaffold.Controllers')
             }
             authService.Login(UserData).then(function(response){
                 if(response.data != "error"){
-                    console.log(response.data)
-                    console.log($sessionStorage)
                     $sessionStorage.currentUser = response.data
                     if(!$sessionStorage.currentUser.employee_type){
                       $state.go("home")
                     }else{
-                        console.log("aqui van a ir los empleados")
+                        $state.go("emp")
                     }
                 }
 
@@ -145,4 +132,3 @@ angular.module('AngularScaffold.Controllers')
 
    	
   }]);
-

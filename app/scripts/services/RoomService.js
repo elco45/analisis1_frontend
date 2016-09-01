@@ -21,6 +21,9 @@ angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
       		},
       		SwapDistributedRooms: function(payload){
       			return $http.post(baseUrl + "v1/swapDistributedRooms",payload);
+      		},
+      		GetEmpRooms: function(payload){
+	      		return $http.post(baseUrl + "v1/getRoomEmpleado",payload);
       		}
       	}
       	

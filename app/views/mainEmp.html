@@ -1,0 +1,42 @@
+<div class="container" ng-controller="RoomController" ng-init="getEmpRooms()">
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+     <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+       <span class="sr-only">Toggle Navigation</span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+     </button>
+     <a class="navbar-brand" href="#"> 
+       <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
+       width: 8em;
+       height: 2.8em;
+       padding-top: 0.2em;
+       ">
+     </a>
+   </div>
+   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+      <li ng-click="logout()"><a href="">Logout</a></li>
+    </ul>
+   </div>
+</div>
+</nav>
+
+<div class="container extra">
+</div>
+
+<!-- Grid de habitaciones -->
+<div class="jumbotron col-md-12">
+  <h1>Habitaciones</h1>
+  <table class=col-md-12 style="margin-top: 25px;">
+    <td ng-repeat="r in currentEmpRooms">
+      <div class="roombutton">
+        <button ng-click="changeRoomEmp()" class="mybtn">{{r.room_id}}</button>
+      </div>
+    </td>
+    <td>
+  </table>
+  </div>
+</div>

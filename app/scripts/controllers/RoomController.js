@@ -21,36 +21,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.employeeWithRooms =  []
     $scope.dragged_Room ={}
     $scope.room_dragged_from = {}
-    //--------
-    $scope.menuOptions = [
-        ['Reservar por 1 dia', function (object) {
-              $scope.menuWasOpened = true;
-            if(typeof object.s === "undefined"){
-              object.f.time_reserved = "1day"
-              $scope.selectRoom(object.f) 
-            }
-            else if(typeof object.f === "undefined"){    
-              object.s.time_reserved = "1day"  
-              $scope.selectRoom(object.s)         
-            }
-        }],
-        null,
-        ['Reservar por 2 dias', function (object) {
-              $scope.menuWasOpened = true;
-            if(typeof object.s === "undefined"){
-              object.f.time_reserved = "2day"                
-              $scope.selectRoom(object.f) 
-            }
-            else if(typeof object.f === "undefined"){              
-              object.s.time_reserved = "2day"  
-              $scope.selectRoom(object.s) 
-            }
-        }],
-        null,
-        ['Cancel', function () {
-            
-        }]
-    ];
+    
     //--lo que hizo elena ---
 
     $scope.init = function() {
@@ -632,6 +603,46 @@ angular.module('AngularScaffold.Controllers')
       $state.go("home")
     }
 
+    $scope.getEmpRooms = function(){
+      RoomService.GetRooms().then(function(response){
+        var count = 0;
+        for (var i = 0; i <response.data.length; i++) {
+          if($sessionStorage.currentUser.idUser == response.data[i].idUser){
+            $scope.currentEmpRooms.push(response.data[count])
+            count++;
+          }
+        }
+      })
+    }
+
+    $scope.changeChooseEmps =function(params){
+      $state.go("choose", {content:{
+        selectedRoomsv1: $scope.selectedRooms
+      }})
+    }
+
+    $scope.changeMainEmployee = function(){
+      $state.go("emp")
+    }
+
+    $scope.changeRoomEmp = function(){
+      $state.go("roomemp")
+    }
+   
+
+    $scope.getEmpRooms = function() {
+      console.log("xcadc  "+$sessionStorage.currentUser.username)
+        RoomService.GetEmpRooms($sessionStorage.currentUser).then(function(response){
+          for(var i =0; i<response.data.length;i++){
+              for(var j=0;j<response.data[i].idUser.length; j++){
+                 if($sessionStorage.currentUser.username == response.data[i].idUser[j].username){
+                    $scope.currentEmpRooms.push(response.data[i]);
+                 }
+              }
+          }
+          console.log($scope.currentEmpRooms)
+        });  
+    }
 
 
     //---------------

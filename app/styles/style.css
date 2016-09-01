@@ -132,3 +132,99 @@ h1{
 }
 
 
+
+.c2 {
+  display: block;
+  padding: 10px;
+  width: 30%;
+  margin: 10px;
+  background: lightgray;
+  text-align: center;
+}
+
+.d {
+  display: block;
+  width: 90px;
+  height: 35px;
+  margin: 10px;
+  background: gray;
+  text-align: center;
+  padding-top: 5%;
+}
+
+/**** Select Room button Employee ****/
+
+.mybtn {
+    background-color: gray;
+    color: white;
+    padding: 22px;
+    margin: 0;
+    font-size: 24px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    width: 85px;
+    height: 75px;
+}
+
+.roombutton {
+	  padding: 5px;
+    position: relative;
+    display: inline-block;
+}
+
+.roombutton:hover .mybtn {
+    background-color: lightgray;
+}
+
+/***** Room start/end button *****/
+
+.mybtn2 {
+    background-color: gray;
+    color: white;
+    padding: 22px;
+    margin: 0;
+    font-size: 24px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+.roombutton2 {
+    padding: 5px;
+    position: relative;
+    display: inline-block;
+}
+
+.roombutton2:hover .mybtn2 {
+    background-color: lightgray;
+}
+
+.checkboxList{
+    list-style-type: none;
+}
+
+.checkboxdemoBasicUsage div.flex-xs {
+  min-height: 40px; }
+
+.checkboxdemoBasicUsage .checkboxDemo1 div {
+  clear: both; }
+
+.checkboxdemoBasicUsage p {
+  padding-left: 8px; }
+
+.checkboxdemoBasicUsage fieldset.standard {
+  border-style: solid;
+  border-width: 1px; }
+
+.checkboxdemoBasicUsage legend {
+  color: #3F51B5; }
+
+.checkboxdemoBasicUsage legend code {
+  color: #3F51B5;
+  font-weight: normal; }
+
+.checkboxdemoBasicUsage .ipsum {
+  color: saddlebrown; }
