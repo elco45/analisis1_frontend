@@ -39,7 +39,6 @@ h1{
 	margin-left: 80px!important;
 }
 
-
 .btn-group {
 	width: 100%!important;
 	font-size: 14px!important;
@@ -63,10 +62,28 @@ h1{
 }
 
 .habs{
-  margin: 20px 20px;
-  padding: 40px;
+  /*margin: 20px 20px;
+  float: left;*/
+  margin-left: 5px!important;
+  padding: 20px;
   background: #f4f7f8;
   border-radius: 8px;
+}
+.emps{
+  /*margin: 5px 5px;
+  float: left;*/
+  margin-left: -5px!important;
+  padding: 20px;
+  background: #f4f7f8;
+  border-radius: 8px;
+}
+#grid {
+	width: 60px!important;
+	height: 60px!important;
+  border-radius: 8px;
+}
+.grids {
+	padding: 10px;
 }
 
 .sel-empl{
@@ -75,9 +92,15 @@ h1{
   background: #f4f7f8;
   border-radius: 8px;
 }
+.glyphicon.glyphicon-move.list-group-item{
+  width: 20px;
+}
 
 .room-selected{
 	background-color: #e1e1e1!important;
+}
+.room-hover {
+    background-color: #9f9 !important;
 }
 
 .rcorners {
@@ -107,3 +130,5 @@ h1{
   text-align: center;
   padding-top: 5%;
 }
+
+

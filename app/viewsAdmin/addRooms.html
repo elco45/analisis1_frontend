@@ -1,4 +1,4 @@
-<div class="container" ng-controller="RoomController" ng-init="getRooms()">
+<div class="container" ng-controller="RoomController"  ng-init= "init()"> <!-- ng-init= "createAllRooms()">-->
    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
          <div class="navbar-header">
@@ -39,16 +39,84 @@
       </ul>
    </div>
 
-   <!-- Grid de habitaciones -->
-   <div class="habs">
-      <h1>Habitaciones</h1>
-      <div class="row" >
-            <button type="button" class="btn col-md-1 btn-default" ng-repeat="f in firstfloor" ng-class="{'room-selected': f.status}" ng-click="selectRoom(f)"> {{f.room_id}} </button>
-      </div><br>
-      <div class="row">
-            <button type="button" class="btn col-md-1 btn-default" ng-repeat="s in secondfloor" ng-class="{'room-selected': s.status}" ng-click="selectRoom(s)"> {{s.room_id}} </button>
+
+    <div class="row">
+      <!-- Seleccion de Empleadas -->
+      <div class="emps col-md-4">
+        <h1>Empleados</h1>
+
+          
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Seleccione Empleados</h4>
+                </div>
+                <div class="modal-body">
+                  <select ng-options="employee as employee.username for employee in empleados" ng-model="n">
+                  </select>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" ng-click="submitEmployee(n)">Agregar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="list-group">
+            <li ng-click="chooseEmployee(n)" ng-repeat = "n in employeeWithRooms track by $index" class="list-group-item" >
+              <span data-drag="true" 
+                    data-jqyoui-options="{revert: 'invalid'}" 
+                    ng-model="firstfloor" jqyoui-draggable="{index: {{$index}}, animate:true, onStart:'startCallback(n)', onStop:'stopCallback(n)'}" class="glyphicon glyphicon-hand-up badge">
+              </span>
+              {{n.empleado.username}}
+            </li>
+          </ul>
+
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal" ></button>
+
+      </div>
+   
+     <!-- Grid de habitaciones -->
+      <div class="habs col-md-8">
+        <h1>Habitaciones</h1>
+        <div class="row grids">
+              <div>
+                <span ng-repeat = "f in floors track by $index">
+                  <div id="grid" ng-if="(f.room_id <= 125)" class="btn btn-default" data-drop="true"
+                     jqyoui-options="{revertDuration: 1000}"
+                     jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
+                     ng-click = "selectRoom(false,f)"                 
+                     ng-class="{'room-selected': f.status}" 
+                     ng-model="floors">
+                    {{f.room_id}}
+                    <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
+                  </div>
+                  <div id="grid" ng-if="(f.room_id > 125)" class="btn btn-default" data-drop="true"
+                     jqyoui-options="{revertDuration: 1000}"
+                     jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
+                     ng-click = "selectRoom(false,f)"                 
+                     ng-class="{'room-selected': f.status}" 
+                     ng-model="floors">
+                    {{f.room_id}}
+                    <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
+                  </div>
+                  
+                  <br class="container extra" ng-show = "f.room_id%10 == 0 || $index == 24">
+                  <br class="container extra" ng-show = "$index == 24">
+                </span>
+
+              </div>
+        </div>
       </div>
    </div>
+  
+  <button ng-click= "distribute()">---- </button>
 
    <!-- Pagination (boton de next) -->
    <div class="container bod">
@@ -60,3 +128,4 @@
       </nav>
    </div>
 </div>
+
