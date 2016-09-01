@@ -19,6 +19,8 @@ angular.module('AngularScaffold.Controllers')
     $scope.Room_hovered = -1;
     $scope.hasHovered = false;
     $scope.employeeWithRooms =  []
+    $scope.dragged_Room ={}
+    $scope.room_dragged_from = {}
     //--------
     $scope.menuOptions = [
         ['Reservar por 1 dia', function (object) {
@@ -54,6 +56,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.init = function() {
       $scope.getRooms();
       $scope.llenarEmpleado();
+      //$scope.createAllRooms();
       
 
     }
@@ -84,7 +87,23 @@ angular.module('AngularScaffold.Controllers')
       $scope.isDragged = true;
     };
     $scope.stopCallback = function(event, ui, employee) {
+    }; 
+
+    //para la segunda view
+    $scope.startCallback_distribution = function(event, ui, room, dragged_from) {
+      $scope.dragged_Room = room
+      $scope.room_dragged_from = dragged_from
     };
+    $scope.stopCallback_distribution = function(event, ui, room) {
+
+
+    };
+    $scope.dropCallback = function(event, ui,index,employee) {
+        console.log(employee)
+        console.log($scope.dragged_Room)
+        console.log($scope.dragged_from)
+    }
+
     $scope.dropCallback = function(event, ui,room) {
       $scope.floors.pop();
       /*if(room.room_id  < 200)
@@ -242,7 +261,7 @@ angular.module('AngularScaffold.Controllers')
       //$scope.selectedRooms.sort()
     };
 
-    /*$scope.createAllRooms = function (){
+    $scope.createAllRooms = function (){
      
       for (var i = 1; i < 26; i++) {
         var room_id = {
@@ -270,7 +289,7 @@ angular.module('AngularScaffold.Controllers')
           console.log(response.data)
         })
       }
-    }*/
+    }
 
     $scope.getParameters = function(){
       $scope.employeeWithRooms = $stateParams.content.room_distributed
@@ -386,12 +405,13 @@ angular.module('AngularScaffold.Controllers')
 
 
       var contador_room_repartido = 0;
+      var temp;
+      var index = 0
       for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
         for (var j = 0; j < $scope.employeeWithRooms[i].contador; j++) {
           if($scope.employeeWithRooms[i].habitacion.length >0 ){
             var num_menor = $scope.employeeWithRooms[i].habitacion[0]
             var habia = false
-            var index = 0
             for (var k = 0; k < selectedRooms.length; k++) {
               if(selectedRooms[k].room_id > (num_menor-25)){
                 index = k
@@ -399,25 +419,42 @@ angular.module('AngularScaffold.Controllers')
                 break;
               }
             }
-            if(habia){              
+            if(habia){  
+              temp = selectedRooms[index]  
               $scope.employeeWithRooms[i].habitacion.push(selectedRooms[index]);
               selectedRooms.splice(index,1)
             }else{
+              temp = selectedRooms[0]
               $scope.employeeWithRooms[i].habitacion.push(selectedRooms[0])
               selectedRooms.splice(0,1)
             }
 
           }else{
+            temp = selectedRooms[0]            
             $scope.employeeWithRooms[i].habitacion.push(selectedRooms[contador_room_repartido]);
             //aqui es cuando hayan sin habitacion
-            
           }
+            //guardarlo
+          var room_with_employee = {
+            employee : $scope.employeeWithRooms[i].empleado,
+            room_id : temp.room_id
+          }
+          RoomService.SaveDistributedRooms(room_with_employee).then(function(response){
+            console.log(response.data)
+          })
           contador_room_repartido++;
         };
       }//TERMINADO
       /*enviar $scope.employeeWithRooms al siguiente view, tbn falta hacer los updates en el db y poner el contador a 0*/
+      /*RoomService.SaveDistributedRooms($scope.employeeWithRooms).then(function(response){
 
-      
+      })
+      for (var i = 0; i < $scope.employeeWithRooms.length; i++) {          
+        RoomService.SaveDistributedRooms($scope.employeeWithRooms[i]).then(function(response){
+          console.log(response.data)
+        })
+      }*/
+        
     }
 
     $scope.getRooms = function(){
@@ -466,6 +503,7 @@ angular.module('AngularScaffold.Controllers')
 
         }
         $scope.sortRooms();
+        
         
       })
     }

@@ -49,17 +49,17 @@
   <span 
    ng-repeat = "e in employeeWithRooms track by $index"  class="grid btn-default"  
    ng-model="employeeWithRooms"    data-drop="true"
-                 jqyoui-options="{revertDuration: 1000}"
-                 jqyoui-droppable="{multiple:true,onOver:'room_hover(e)',onOut:'room_hover_out(e)'}"
-   >{{e.empleado.username}}
-   <br>
+   jqyoui-options="{revert: 'invalid'}"
+   jqyoui-droppable="{multiple:true,onOver:'room_hover(e)',onOut:'room_hover_out(e)', onDrop: 'dropCallback_distribution( e)'}">
+   {{e.empleado.username}}
     <span 
       data-drag="true" 
       data-jqyoui-options="{revert: 'invalid'}" 
+      ng-model="firstfloor" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback_distribution(h,e)', onStop:'startCallback_distribution(h,e)'}"
       ng-repeat = "h in e.habitacion track by $index">{{h.room_id}} 
-     <br>
+     
     </span>
-  
+    <br>
   </span>
 
 
