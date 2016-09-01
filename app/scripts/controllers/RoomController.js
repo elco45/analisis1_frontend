@@ -118,7 +118,7 @@ angular.module('AngularScaffold.Controllers')
       angular.element(event.target).removeClass("room-hover"); 
       var already_on_the_list = false;
       var index_on_the_list 
-     for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
+      for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
           if($scope.employeeWithRooms[i].empleado.username === $scope.dragged_Employee.username) {
             already_on_the_list = true
             index_on_the_list = i;
@@ -194,9 +194,29 @@ angular.module('AngularScaffold.Controllers')
     }
 
 
-     $scope.check = function(){
+    $scope.check = function(){
 
-     }
+    }
+
+
+
+    $scope.submitEmployee = () => {
+      if (!containsObject($scope.n, $scope.working_employee)) {
+        $scope.working_employee.push($scope.n);
+      }
+    }
+
+    function containsObject(obj, list) {
+        var i;
+        for (i = 0; i < list.length; i++) {
+            if (list[i] === obj) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     $scope.chooseEmployee = function(employee){
       //console.log("asd"); 
       //var temp = $scope.empleados.splice(index,1);
@@ -221,7 +241,7 @@ angular.module('AngularScaffold.Controllers')
         });
     }
 
-  	$scope.selectRoom = function(dragged,room) {
+    $scope.selectRoom = function(dragged,room) {
       var index = -1;
       for (i =0; i < $scope.selectedRooms.lengths; i++) {
         if(room.room_id === $scope.selectedRooms[i].room_id){          
@@ -397,7 +417,6 @@ angular.module('AngularScaffold.Controllers')
             for (var j = 0; j < response.data[i].idUser.length; j++) {
               var existia_empleado = false
               for (var k = 0; k< $scope.employeeWithRooms.length; k++) {
-
                 if($scope.employeeWithRooms[k].empleado.username === response.data[i].idUser[j].username ){
                   existia_empleado = true;
                   $scope.employeeWithRooms[k].habitacion.push(response.data[i])
@@ -419,8 +438,6 @@ angular.module('AngularScaffold.Controllers')
           }//fin if
 
         }
-
-        console.log($scope.employeeWithRooms)
 
 
         $scope.sortRooms();

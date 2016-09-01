@@ -92,6 +92,9 @@ h1{
   background: #f4f7f8;
   border-radius: 8px;
 }
+.glyphicon.glyphicon-move.list-group-item{
+  width: 20px;
+}
 
 .room-selected{
 	background-color: #e1e1e1!important;
