@@ -65,15 +65,30 @@ angular.module('AngularScaffold.Controllers')
 
     //---------------------------------------
 
+$(".droppable").droppable({
+    accept: function(d) { 
+        if((d.attr("id")=="room_id")){ 
+            return true;
+        }
+    }
+});
 
-
+ $('.abs:not(.outside)').droppable({
+        accept: '.abs:not(.outside)',
+        hoverClass: "drop-hover",
+        tolerance: "pointer",
+        greedy: true,
+        drop: function () {
+            alert('drop');
+        }
+    });
 
 
 
     //------------------------- 
 
     $scope.room_hover = function(event, ui, room){
-
+        //console.log(room)
         angular.element(event.target).addClass("room-hover");
     }
 
@@ -84,6 +99,7 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.startCallback = function(event, ui, employee) {
       $scope.dragged_Employee = employee
+
       $scope.isDragged = true;
     };
     $scope.stopCallback = function(event, ui, employee) {
@@ -92,17 +108,56 @@ angular.module('AngularScaffold.Controllers')
     //para la segunda view
     $scope.startCallback_distribution = function(event, ui, room, dragged_from) {
       $scope.dragged_Room = room
+      //console.log(room)
       $scope.room_dragged_from = dragged_from
+        console.log(room)
+        console.log($scope.room_dragged_from)
     };
-    $scope.stopCallback_distribution = function(event, ui, room) {
+    $scope.stopCallback_distribution = function(event, ui, employee) {
+        
+        console.log(employee)// el room a quien le debe ir
+        console.log($scope.dragged_Room)// el room que se tomo
+        console.log($scope.room_dragged_from)// de quien se tomo el room
+        var cont_succeeded_operations = 0;
+        for(var i =0; i < $scope.employeeWithRooms.length; i++){//lo eliminaremos del que lo tenia antes
+          if($scope.employeeWithRooms[i].empleado.username == $scope.room_dragged_from.empleado.username){
+            var index = -1;
+            for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length; j++) {
+              if($scope.employeeWithRooms[i].habitacion[j].room_id == $scope.dragged_Room.room_id){//encontramos el room
+                  index = j
+                  cont_succeeded_operations++;
+                  break
+              } 
+            }
+            $scope.employeeWithRooms[i].habitacion.splice(index,1)
+            break;
+          }
+      }
+      for(var i =0; i < $scope.employeeWithRooms.length; i++){//lo agregamos al nuevo en donde se dropeo
+        if($scope.employeeWithRooms[i].empleado.username == employee.empleado.username){
+          $scope.employeeWithRooms[i].habitacion.push($scope.dragged_Room)
+          cont_succeeded_operations++;
+          console.log("entro")
+          console.log($scope.employeeWithRooms[i])
+          break;
+        }
+      }
+
+      if(cont_succeeded_operations>= 2){
+        var swap_iduser_element = {//estructura para guardado
+          previous_user: $scope.room_dragged_from.empleado.username,
+          next_user: employee.empleado,
+          room_id: $scope.dragged_Room.room_id
+        }
+
+        RoomService.SwapDistributedRooms(swap_iduser_element).then(function(response){
+          console.log(response.data);
+        })
+
+      }
 
 
     };
-    $scope.dropCallback = function(event, ui,index,employee) {
-        console.log(employee)
-        console.log($scope.dragged_Room)
-        console.log($scope.dragged_from)
-    }
 
     $scope.dropCallback = function(event, ui,room) {
       $scope.floors.pop();
