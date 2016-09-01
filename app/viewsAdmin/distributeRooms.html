@@ -1,4 +1,4 @@
-<div class="container" ng-controller="RoomController" ng-init = "getParameters()">
+<div class="container" ng-controller="RoomController" ng-init = "getParameters()" > <!-- ng-init = "distribute()"-->
   <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
          <div class="navbar-header">
@@ -44,25 +44,82 @@
   <h1>Repartición de Habitaciones</h1>
 </div>
 
-<!-- Va un ngrepeat de headers para la empleadas disponibles, esto solo es un ejemplo -->
-<!--<div class="col-md-2">
-  <ul ng-repeat = "n in display_distribution">
-      <li class="c ab-bg">{{n.worker.name}}</li>
-      <ul ng-repeat = "x in n.rooms track by $index">
-        <li class = "c ab-bg">{{x.room_id}}</li>
-      </ul>
-  </ul>
-</div>-->
+<!-- Va un ngrepeat de headers para la empleadas disponibles, esto solo es un ejemplo
 
-<div class="col-md-2">
-  <ul ng-repeat = "n in display_distribution ">
-      <li class="d ab-bg">{{n.worker.name}}</li>
-      <ul ng-repeat = "x in n.rooms track by $index">
-        <li class="c ab-bg">{{x.room_id}}</li>
-      </ul>
-  </ul>
-</div>
+        <div ng-repeat="item in list" class="well span3 drop-zone" data-drop="true" ng-model="item.children" jqyoui-droppable="{multiple:true}" data-jqyoui-options="{accept:'.item:not([data-id={{item.id}}])', hoverClass: 'highlight', greedy: true}">
+          <div class="btn btn-info item" data-drag="true" ng-model="list"  data-jqyoui-options="{revert: 'invalid'}" data-id="{{item.id}}" jqyoui-draggable="{index: {{$index}},animate:false}">
+            {{item.title}}
+            <br /><button class="btn">{{item.children.length}}</button>
+          </div>
+        </div>
 
+        <div>
+  <span 
+   ng-repeat = "e in employeeWithRooms track by $index"  class="grid btn-default"  
+   ng-model="employeeWithRooms"    data-drop="true"
+   jqyoui-options="{accept: '.habitaciones' ,hoverClass: 'highlight', greedy: 'true'}"
+   jqyoui-droppable="{multiple:true, onOver:'room_hover(e)',onOut:'room_hover_out(e)', onDrop: 'dropCallback_distribution( e)'}">
+   {{e.empleado.username}}
+    <span 
+      data-drag="true" 
+      data-jqyoui-options="{revert: 'invalid'}" 
+      data-id="{{h.room_id}}" 
+      class = "habitaciones"
+      ng-model="eployeeWithRooms.habitacion" jqyoui-draggable="{index: {{$index}},animate:false,onStart:'startCallback_distribution(h,e)',
+       onStop:'startCallback_distribution(h,e)',onDrop:'dropCallback_distribution(e)'}"
+      ng-repeat = "h in e.habitacion track by $index">{{h.room_id}} 
+     
+    </span>
+    <br>
+  </span>
+  <span 
+      data-drag="true" 
+      data-jqyoui-options="{revert: 'invalid'}" 
+      class = "habitaciones"
+      jqyoui-draggable="{animate:'true',onStart:'startCallback_distribution(1,1)'}">
+  pull me baby!
+  </span>
+
+  </div>
+ -->
+ <div>
+  <span 
+   ng-repeat = "e in employeeWithRooms track by $index"  class="grid btn-default"  
+   ng-model="employeeWithRooms.habitacion" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true,onOver:'room_hover(e)',onDrop:'stopCallback_distribution(e)'}">
+   {{e.empleado.username}}
+   <span 
+      data-drag="true" 
+      data-jqyoui-options="{revert: 'invalid'}" 
+      data-id="{{h.room_id}}" 
+      ng-model="eployeeWithRooms.habitacion" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback_distribution(h,e)',
+       onStop:'startCallback_distribution(h,e)',onDrop:'dropCallback_distribution(e)'}"
+      ng-repeat = "h in e.habitacion track by $index">{{h.room_id}} 
+     
+    </span>
+    <span 
+       data-drag="true" data-jqyoui-options="{revert: 'invalid'}" data-id ="{{e.empleado}}" ng-model="employeeWithRooms.habitacion" jqyoui-draggable="{index:{{$index}},animate:false,
+       onStart:'startCallBack_distribucion(h)'}" 
+        ng-repeat = "h in employeeWithRooms.habitacion track by $index">{{h.room_id}} 
+       
+    </span>
+    
+    <br>
+  </span>
+  <span 
+      data-drag="true" 
+      data-jqyoui-options="{revert: 'invalid'}" 
+      class = "habitaciones"
+      jqyoui-draggable="{animate:'true',onStart:'startCallback_distribution(1,1)'}">
+  pull me baby!
+  </span>
+
+  </div>
+
+<!-- data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="list1" jqyoui-draggable="{animate:true}"'
+
+ data-drop="true" data-jqyoui-options ng-model="list2" jqyoui-droppable
+
+'  -->
 <!--<div class="col-md-2">
   <table class="tableizer-table table_in">
     <tr class="tableizer-firstrow">
