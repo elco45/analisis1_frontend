@@ -251,6 +251,7 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.selectRoom = function(dragged,room) {
       var index = -1;
+      console.log(room)
       for (i =0; i < $scope.selectedRooms.length; i++) {
         if(room.room_id == $scope.selectedRooms[i].room_id){          
           index = i;
@@ -293,11 +294,15 @@ angular.module('AngularScaffold.Controllers')
 
 
       }
-
+      console.log(room)
+      var room_data = {
+        room : room
+      }
+      console.log(room_data)
       $sessionStorage.currentUser.paramsDistribution = $scope.selectedRooms
       console.log($scope.selectedRooms)
      
-      RoomService.UpdateRoom(room).then(function(response){
+      RoomService.UpdateRoom(room_data).then(function(response){
         
       })
       //$scope.selectedRooms.sort()
