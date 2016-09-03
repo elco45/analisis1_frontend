@@ -14,7 +14,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         .state('login', {
             url: '/login',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/loginAdmin.html'
+            templateUrl: '/viewsAdmin/login.html'
         })
         .state('addRoom', {
             url: '/addRooms',
@@ -34,16 +34,17 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         .state('dist', {
             url: '/dist',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/distributeRooms.html'
+            templateUrl: '/viewsAdmin/distributeRooms.html',
+            
         })
         .state('emp', {
             url: '/emp',
             params: {content:undefined},
-            templateUrl: '/views/mainEmp.html'
+            templateUrl: '/viewsAdmin/mainEmp.html'
         })
         .state('roomemp', {
             url: '/roomemp',
             params: {content:undefined},
-            templateUrl: '/views/roomEmp.html'
+            templateUrl: '/viewsAdmin/roomEmp.html'
         });
 }])

@@ -49,7 +49,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.startCallback = function(event, ui, employee) {
-      $scope.dragged_Employee = employee
+      $scope.dragged_Employee = employee.empleado
 
       $scope.isDragged = true;
     };
@@ -61,14 +61,8 @@ angular.module('AngularScaffold.Controllers')
       $scope.dragged_Room = room
       //console.log(room)
       $scope.room_dragged_from = dragged_from
-        console.log(room)
-        console.log($scope.room_dragged_from)
     };
-    $scope.stopCallback_distribution = function(event, ui, employee) {
-        
-        console.log(employee)// el room a quien le debe ir
-        console.log($scope.dragged_Room)// el room que se tomo
-        console.log($scope.room_dragged_from)// de quien se tomo el room
+    $scope.stopCallback_distribution = function(event, ui, employee) {    
         var cont_succeeded_operations = 0;
         for(var i =0; i < $scope.employeeWithRooms.length; i++){//lo eliminaremos del que lo tenia antes
           if($scope.employeeWithRooms[i].empleado.username == $scope.room_dragged_from.empleado.username){
@@ -83,31 +77,29 @@ angular.module('AngularScaffold.Controllers')
             $scope.employeeWithRooms[i].habitacion.splice(index,1)
             break;
           }
-      }
-      for(var i =0; i < $scope.employeeWithRooms.length; i++){//lo agregamos al nuevo en donde se dropeo
-        if($scope.employeeWithRooms[i].empleado.username == employee.empleado.username){
-          $scope.employeeWithRooms[i].habitacion.push($scope.dragged_Room)
-          cont_succeeded_operations++;
-          console.log("entro")
-          console.log($scope.employeeWithRooms[i])
-          break;
         }
-      }
-
-      if(cont_succeeded_operations>= 2){
-        var swap_iduser_element = {//estructura para guardado
-          previous_user: $scope.room_dragged_from.empleado.username,
-          next_user: employee.empleado,
-          room_id: $scope.dragged_Room.room_id
+        for(var i =0; i < $scope.employeeWithRooms.length; i++){//lo agregamos al nuevo en donde se dropeo
+          if($scope.employeeWithRooms[i].empleado.username == employee.empleado.username){
+            $scope.employeeWithRooms[i].habitacion.push($scope.dragged_Room)
+            cont_succeeded_operations++;
+            console.log("entro")
+            console.log($scope.employeeWithRooms[i])
+            break;
+          }
         }
 
-        RoomService.SwapDistributedRooms(swap_iduser_element).then(function(response){
-          console.log(response.data);
-        })
+        if(cont_succeeded_operations>= 2){
+          var swap_iduser_element = {//estructura para guardado
+            previous_user: $scope.room_dragged_from.empleado.username,
+            next_user: employee.empleado,
+            room_id: $scope.dragged_Room.room_id
+          }
 
-      }
+          RoomService.SwapDistributedRooms(swap_iduser_element).then(function(response){
+            console.log(response.data);
+          })
 
-
+        }
     };
 
     $scope.dropCallback = function(event, ui,room) {
@@ -166,13 +158,10 @@ angular.module('AngularScaffold.Controllers')
         $scope.floors[index].idUser.push($scope.dragged_Employee)
       }
       $scope.selectRoom(true, $scope.floors[index]);
-
-
-      
     };
 
 
-     $scope.sortRooms= function(){
+    $scope.sortRooms= function(){
        var j;
        var flag = true;   // set flag to true to begin first pass
        var temp;   //holding variable
@@ -257,14 +246,18 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.selectRoom = function(dragged,room) {
       var index = -1;
-      for (i =0; i < $scope.selectedRooms.lengths; i++) {
-        if(room.room_id === $scope.selectedRooms[i].room_id){          
+      for (i =0; i < $scope.selectedRooms.length; i++) {
+        if(room.room_id == $scope.selectedRooms[i].room_id){          
           index = i;
           break;          
         }
       }
-      if(index !== -1 || dragged) {
-        $scope.selectedRooms.splice(index, 1);        
+      if(index >-1 || dragged) {
+        if(index === 0){
+          $scope.selectedRooms.shift()
+        }else{
+          $scope.selectedRooms.splice(index, 1);        
+        }
       } else {
         $scope.selectedRooms.push(room);
       }
@@ -275,25 +268,30 @@ angular.module('AngularScaffold.Controllers')
       }
       if(room.status == 0){
         room.idUser = [];
-      }
-      /*if(room.status){
-        if(!$scope.menuWasOpened){
-          room.status = 0
-          room.time_reserved = "0hr"          
-        }else{
-          room.status = 1
-          room.time_reserved = room.time_reserved
-        $scope.menuWasOpened = false;
+        for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
+          for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length; j++) {
+            if($scope.employeeWithRooms[i].habitacion[j].room_id === room.room_id){
+              $scope.employeeWithRooms[i].habitacion.splice(j,1)
+            }
+          }
         }
+        index = -1;
+        for (i =0; i < $scope.selectedRooms.length; i++) {
+          if(room.room_id == $scope.selectedRooms[i].room_id){          
+            index = i;
+            break;          
+          }
+        }
+        if(index != -1) {
+          $scope.selectedRooms.splice(index, 1);        
+        }
+
+
       }
-      else{
-        room.status = 1
-        if($scope.menuWasOpened){
-          room.time_reserved = room.time_reserved
-          $scope.menuWasOpened = false;
-        }else
-          room.time_reserved = "1day"
-      }*/
+
+      $sessionStorage.currentUser.paramsDistribution = $scope.selectedRooms
+      console.log($scope.selectedRooms)
+     
       RoomService.UpdateRoom(room).then(function(response){
         
       })
@@ -331,10 +329,13 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.getParameters = function(){
-      $scope.employeeWithRooms = $stateParams.content.room_distributed
-      $scope.selectedRooms = $stateParams.content.selectedRooms
-      $scope.distribute($scope.selectedRooms,$scope.employeeWithRooms);
-
+      console.log("--------------------getParameters") 
+      console.log($stateParams )
+      /*$scope.employeeWithRooms = $stateParams.content.param.room_distributed
+      $scope.selectedRooms = $stateParams.content.param.rooms
+     
+      $scope.distribute( $scope.selectedRooms,$scope.employeeWithRooms);*/
+      $scope.distribute();
     }
     /*
     $scope.getParameters = function(){
@@ -379,8 +380,16 @@ angular.module('AngularScaffold.Controllers')
       console.log($scope.display_distribution)
     }*/
 
-    $scope.distribute = function(selectedRooms,employee){
-      if($scope.selectedRooms.length !== 0){
+    
+    //$scope.distribute = function(selectedRooms,employee){
+    $scope.distribute = function(){
+      console.log("---------------------distribute-------------------")
+      //console.log(selectedRooms)
+      console.log($stateParams)
+      $scope.employeeWithRooms = $stateParams.content.param.room_distributed
+      console.log($scope.employeeWithRooms)
+      var selectedRooms = $stateParams.content.param.rooms
+      if(selectedRooms.length !== 0){
         for (var i = 0; i < $scope.employeeWithRooms.length; i++) { // por todos los empleados
           for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length -1; j++) {//por cada habitacion de cada empleado
             for (var k = 0; k < $scope.employeeWithRooms[i].habitacion.length; k++) {
@@ -392,6 +401,9 @@ angular.module('AngularScaffold.Controllers')
             }
           }
         }//fin fors para ordernar las habitaciones 
+        
+        
+       
         var temp;
         for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
           for (var j = 0; j <$scope.employeeWithRooms.length - 1; j++) {
@@ -402,7 +414,9 @@ angular.module('AngularScaffold.Controllers')
                $scope.employeeWithRooms[j+1] = temp;
               }
           }
-        } 
+        } //ordena los employees por length de su arreglo de habitaciones
+
+        
         var temp;
         for (var i = 0; i < selectedRooms.length ; i++) {
           for (var j = 0; j <selectedRooms.length - 1; j++) {
@@ -413,6 +427,9 @@ angular.module('AngularScaffold.Controllers')
               }
           }
         }
+
+        
+        
         for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
           $scope.employeeWithRooms[i].contador = $scope.employeeWithRooms[i].habitacion.length
           $scope.employeeWithRooms[i].contador2 = $scope.employeeWithRooms[i].habitacion.length
@@ -438,12 +455,13 @@ angular.module('AngularScaffold.Controllers')
             break;
           }
         } // fin for de selected rooms
+
         for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
           $scope.employeeWithRooms[i].contador = $scope.employeeWithRooms[i].contador - $scope.employeeWithRooms[i].contador2 
         }
 
 
-        var contador_room_repartido = 0;
+        //el error esta aqui
         var temp;
         var index = 0
         for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
@@ -470,7 +488,8 @@ angular.module('AngularScaffold.Controllers')
 
             }else{
               temp = selectedRooms[0]            
-              $scope.employeeWithRooms[i].habitacion.push(selectedRooms[contador_room_repartido]);
+              $scope.employeeWithRooms[i].habitacion.push(selectedRooms[0]);
+              selectedRooms.splice(0,1)
               //aqui es cuando hayan sin habitacion
             }
               //guardarlo
@@ -481,22 +500,12 @@ angular.module('AngularScaffold.Controllers')
             RoomService.SaveDistributedRooms(room_with_employee).then(function(response){
               console.log(response.data)
             })
-            contador_room_repartido++;
           };
         }//TERMINADO
-        /*enviar $scope.employeeWithRooms al siguiente view, tbn falta hacer los updates en el db y poner el contador a 0*/
-        /*RoomService.SaveDistributedRooms($scope.employeeWithRooms).then(function(response){
-
-        })
-        for (var i = 0; i < $scope.employeeWithRooms.length; i++) {          
-          RoomService.SaveDistributedRooms($scope.employeeWithRooms[i]).then(function(response){
-            console.log(response.data)
-          })
-        }*/
-
       }else{
         console.log("no hay habitaciones para repartir")
       }
+      //console.log($scope.employeeWithRooms)
         
     }
 
@@ -553,7 +562,16 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.changeChooseEmps =function(params){
+      console.log("-------------selectedrooms size: " + $scope.selectedRooms.length)
+      console.log(params)
+      console.log($scope.selectedRooms)
+      var object_param = {
+        rooms: params,
+        room_distributed: $scope.employeeWithRooms
+      }
+      console.log(  object_param)
       if($scope.selectedRooms.length === 0){
+       
         swal({
           title: "Esta seguro?",
           text: "No ha seleccionado habitaciones para repartir",
@@ -562,22 +580,15 @@ angular.module('AngularScaffold.Controllers')
           confirmButtonClass: "btn-danger",
           confirmButtonText: "Continuar!",
           closeOnConfirm: true
-        },
+        }, 
+        
         function(){
-            $state.go("dist", {content:{
-              //selectedRoomsv1: $scope.selectedRooms
-              selectedRooms: params,
-              //workingEmployee: $scope.working_employee,
-              room_distributed: $scope.employeeWithRooms
-            }})
+            $state.go("dist", {  content: object_param})
         });
       }else{
         $state.go("dist", {content:{
-              //selectedRoomsv1: $scope.selectedRooms
-              selectedRooms: params,
-              //workingEmployee: $scope.working_employee,
-              room_distributed: $scope.employeeWithRooms
-            }})
+            param:object_param
+        }})
       }
       /*.then(function(err){
        
@@ -614,13 +625,6 @@ angular.module('AngularScaffold.Controllers')
         }
       })
     }
-
-    $scope.changeChooseEmps =function(params){
-      $state.go("choose", {content:{
-        selectedRoomsv1: $scope.selectedRooms
-      }})
-    }
-
     $scope.changeMainEmployee = function(){
       $state.go("emp")
     }

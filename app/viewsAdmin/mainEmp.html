@@ -1,0 +1,19 @@
+<div class="container" ng-controller="RoomController" ng-init="getEmpRooms()">
+  
+
+<div class="container extra">
+</div>
+
+<!-- Grid de habitaciones -->
+<div class="jumbotron col-md-12">
+  <h1>Habitaciones</h1>
+  <table class=col-md-12 style="margin-top: 25px;">
+    <td ng-repeat="r in currentEmpRooms">
+      <div class="roombutton">
+        <button ng-click="changeRoomEmp()" class="mybtn">{{r.room_id}}</button>
+      </div>
+    </td>
+    <td>
+  </table>
+  </div>
+</div>

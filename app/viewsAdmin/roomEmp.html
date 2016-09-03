@@ -1,0 +1,84 @@
+<div class="container" ng-controller="RoomController" >
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+     <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+       <span class="sr-only">Toggle Navigation</span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+     </button>
+     <a class="navbar-brand" href="#"> 
+       <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
+       width: 8em;
+       height: 2.8em;
+       padding-top: 0.2em;
+       ">
+     </a>
+   </div>
+</div>
+</nav>
+
+<div class="container extra">
+</div>
+
+<!-- Grid de habitaciones -->
+<div class="jumbotron col-md-12">
+  <h1>Habitación 101</h1>
+  <table class="col-md-offset-3 col-md-6 col-md-offset-3" style="margin-top: 25px;">
+    <!-- ngrepeat para las habitaciones que le toca limpiar a la empleada -->
+    <tr ng-show="!start" ng-hide="showList">
+      <td>
+        <div class="roombutton2">
+          <button ng-click="start = true" class="mybtn2">Empezar a limpiar</button>
+        </div>
+      </td>
+      <td>
+        <div class="roombutton2">
+          <button ng-click="showList = true" class="mybtn2">No se pudo limpiar</button>
+        </div>
+      </td>
+    </tr>
+    <tr ng-show="start">
+      <td ng-hide="showListProblems">
+        <div class="roombutton2">
+          <button ng-click="changeMainEmployee()" class="mybtn2">Terminar de limpiar</button>
+        </div>
+      </td>
+      <td ng-hide="showListProblems">
+        <div class="roombutton2">
+          <button ng-click="showListProblems = true" class="mybtn2">Terminar de limpiar y reportar problema</button>
+        </div>
+      </td>   
+    </tr>
+    <tr>
+      <ul class="checkboxList" ng-show="showList">
+        <li>
+          <input id="opt1" type="checkbox" name=""> <label for="opt1"> El cliente no quiso </label>
+        </li>
+        <li>
+          <input id="opt2" type="checkbox" name=""> <label for="opt2"> El cliente no se ha ido </label>
+        </li>
+        <li>
+          <input id="opt3" type="checkbox" name=""> <label for="opt3"> Otro: <input type="text" name=""></label>
+        </li>
+      </ul>
+      <button ng-click="changeMainEmployee()" ng-show="showList" class="mybtn2 col-md-3"> Finalizar </button>
+    </tr>
+    <tr>
+      <ul id="problem" class="checkboxList" ng-show="showListProblems">
+        <li>
+          <input id="opt1" type="checkbox" name=""> <label for="opt1"> La cortina estaba rota </label>
+        </li>
+        <li>
+          <input id="opt2" type="checkbox" name=""> <label for="opt2"> Vidrio roto </label>
+        </li>
+        <li>
+          <input id="opt3" type="checkbox" name=""> <label for="opt3"> Otro: <input type="text" name=""></label>
+        </li>
+      </ul> 
+      <button ng-click="changeMainEmployee()" ng-show="showListProblems" class="mybtn2 col-md-3">Finalizar</button>
+    </tr>
+  </table> 
+  </div>
+</div>

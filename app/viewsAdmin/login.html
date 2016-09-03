@@ -1,0 +1,22 @@
+<div class="container" ng-controller="UsersController">
+   
+   <div class="container extra">
+   </div>
+
+   <div class="main-login">
+      <form>
+
+         <h1>Iniciar Sesión</h1>
+
+         <fieldset>
+           <label for="mail">Usuario:</label>
+           <input  ng-model="username" type="text" id="username" name="user_email">
+
+           <label for="password">Password:</label>
+           <input  ng-model="password"  type="password" id="password" name="user_password">
+         </fieldset>
+         <p></p>
+         <button ng-click= "login()"  class="bform" type="submit">Ingresar</button>
+      </form>
+   </div>
+</div>

@@ -82,8 +82,16 @@ angular.module('AngularScaffold.Controllers')
     }
 
 
+    $scope.isLogged = function(){
+
+      if(typeof($sessionStorage.currentUser) === "undefined" ){
+        return false
+      }
+      return true;
+    }
+
       	
-    $scope.logout = function(){
+    $scope.logout = function(){ 
         authService.Logout().then(function(response){
           	$sessionStorage.$reset();
           	$state.go("login");
