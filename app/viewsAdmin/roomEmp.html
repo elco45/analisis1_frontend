@@ -1,4 +1,4 @@
-<div class="container" ng-controller="RoomController" >
+<div class="container" ng-controller="RoomController"  ng-init="recargar()" >
    <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
      <div class="navbar-header">
@@ -24,7 +24,7 @@
 
 <!-- Grid de habitaciones -->
 <div class="jumbotron col-md-12">
-  <h1>Habitación 101</h1>
+  <h1>Habitación {{room.room_id}}</h1>
   <table class="col-md-offset-3 col-md-6 col-md-offset-3" style="margin-top: 25px;">
     <!-- ngrepeat para las habitaciones que le toca limpiar a la empleada -->
     <tr ng-show="!start" ng-hide="showList">
@@ -42,42 +42,57 @@
     <tr ng-show="start">
       <td ng-hide="showListProblems">
         <div class="roombutton2">
-          <button ng-click="changeMainEmployee()" class="mybtn2">Terminar de limpiar</button>
+          <button ng-click="cambioEstados(2)" class="mybtn2">Terminar de limpiar</button>
         </div>
       </td>
       <td ng-hide="showListProblems">
         <div class="roombutton2">
-          <button ng-click="showListProblems = true" class="mybtn2">Terminar de limpiar y reportar problema</button>
+          <button ng-click="showListProblems=true" class="mybtn2">Terminar de limpiar y reportar problema</button>
         </div>
       </td>   
     </tr>
     <tr>
       <ul class="checkboxList" ng-show="showList">
         <li>
-          <input id="opt1" type="checkbox" name=""> <label for="opt1"> El cliente no quiso </label>
+          <input id="opt1" type="radio" ng-click="setText('El cliente no queria: ')" name="notCleaned"> 
+          <label for="opt1"> El cliente no queria. </label>
         </li>
         <li>
-          <input id="opt2" type="checkbox" name=""> <label for="opt2"> El cliente no se ha ido </label>
+          <input id="opt2" type="radio" ng-click="setText('No hay tiempo suficiente: ')" name="notCleaned">
+          <label for="opt2"> No hay tiempo suficiente. </label>
         </li>
         <li>
-          <input id="opt3" type="checkbox" name=""> <label for="opt3"> Otro: <input type="text" name=""></label>
+          <input id="opt3" type="radio" ng-click="setText('No hay materiales: ')" name="notCleaned">
+          <label for="opt3"> No hay materiales. </label>
+        </li>
+        <li>
+          <input id="opt4" type="radio" ng-click="setText('Otro motivo: ')" name="notCleaned">
+          <label for="opt4"> Otro motivo. </label>
+        </li>
+        <li>
+          <label for = "commentbox"> Escriba su comentario: <input id = "commentbox" type="text" name=""></label>
         </li>
       </ul>
-      <button ng-click="changeMainEmployee()" ng-show="showList" class="mybtn2 col-md-3"> Finalizar </button>
+      <button ng-click="cambioEstados(4)" ng-show="showList" class="mybtn2 col-md-3"> Finalizar </button>
     </tr>
     <tr>
       <ul id="problem" class="checkboxList" ng-show="showListProblems">
         <li>
-          <input id="opt1" type="checkbox" name=""> <label for="opt1"> La cortina estaba rota </label>
+          <label for="texta"> Escriba los problemas encontrados en la habitación: 
+            <textarea id="texta" rows="4" cols="50"></textarea> 
+          </label>
         </li>
         <li>
-          <input id="opt2" type="checkbox" name=""> <label for="opt2"> Vidrio roto </label>
-        </li>
-        <li>
-          <input id="opt3" type="checkbox" name=""> <label for="opt3"> Otro: <input type="text" name=""></label>
+          Ejemplos:
+          <ul>
+            <li> No funciona el TV. </li>
+            <li> Faltan toallas. </li>
+            <li> Se quebró una lámpara. </li>
+            <li> Etc. </li>
+          </ul>
         </li>
       </ul> 
-      <button ng-click="changeMainEmployee()" ng-show="showListProblems" class="mybtn2 col-md-3">Finalizar</button>
+      <button ng-click="cambioEstados(3)" ng-show="showListProblems" class="mybtn2 col-md-3">Finalizar</button>
     </tr>
   </table> 
   </div>

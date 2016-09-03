@@ -115,7 +115,7 @@ angular.module('AngularScaffold.Controllers')
             authService.Login(UserData).then(function(response){
                 if(response.data != "error"){
                     $sessionStorage.currentUser = response.data
-                    if(!$sessionStorage.currentUser.employee_type){
+                    if($sessionStorage.currentUser.employee_type){
                       $state.go("home")
                     }else{
                         $state.go("emp")
