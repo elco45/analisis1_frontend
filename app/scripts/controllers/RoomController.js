@@ -181,7 +181,7 @@ angular.module('AngularScaffold.Controllers')
       } 
     }
 
-    $scope.close = (index) => {
+    $scope.close = function(index) {
       if ($scope.employeeWithRooms[index].habitacion.length === 0) {
         $scope.employeeWithRooms.splice(index,1);
       }else{
@@ -196,7 +196,7 @@ angular.module('AngularScaffold.Controllers')
       }
     }
 
-    $scope.submitEmployee = () => {
+    $scope.submitEmployee = function() {
       var index = -1
       for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
         if($scope.employeeWithRooms[i].empleado.username === $scope.n.username){
