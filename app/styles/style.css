@@ -11,17 +11,12 @@ h1{
 	padding-top: 30px!important;
 	padding-bottom: 30px!important;
 }
-
+/*pagination*/
 .container.bod {
 	padding-top: 48px!important;
 	padding-bottom: 48px!important;
 }
-
-.jumbotron {
-	padding-top: 48px!important;
-	padding-bottom: 48px!important;
-}
-
+/*manage users*/
 .main-manage {
 	padding-left: 27%;
 	padding-top: 2%;
@@ -48,30 +43,20 @@ h1{
 	width: 100%!important;
 }
 
-.col-md-1{
-	border: solid #e8e8e8;
-	border-radius: 8px;
-	border-spacing: 1px;
-	text-align: center;
-	height: 74px!important;
-}
-
+/*login*/
 .main-login{
 	padding-left: 25%;
 	padding-top: 5%;
 }
 
+/*add Rooms*/
 .habs{
-  /*margin: 20px 20px;
-  float: left;*/
   margin-left: 5px!important;
   padding: 20px;
   background: #f4f7f8;
   border-radius: 8px;
 }
 .emps{
-  /*margin: 5px 5px;
-  float: left;*/
   margin-left: -5px!important;
   padding: 20px;
   background: #f4f7f8;
@@ -84,14 +69,24 @@ h1{
 }
 .grids {
 	padding: 10px;
+  margin: 10px;
+}
+.fa-remove{
+    font-size:22px;
+    padding-left:10px;
+    margin-top:3px;
 }
 
-.sel-empl{
-  margin: 20px 20px;
-  padding: 10px 20px;
-  background: #f4f7f8;
-  border-radius: 8px;
+/*distribute Rooms*/
+.repart{
+  border: solid;
+  padding: 10px;
 }
+.repart-name{
+  text-align: center;
+}
+
+/*Employees*/
 .glyphicon.glyphicon-move.list-group-item{
   width: 20px;
 }

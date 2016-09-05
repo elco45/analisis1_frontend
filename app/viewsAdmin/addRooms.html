@@ -1,17 +1,7 @@
 <div class="container" ng-controller="RoomController"  ng-init= "init()"> <!-- ng-init= "createAllRooms()">-->
-   
-
    <div class="container extra">
    </div>
-
-   <!-- Breadcrumbs -->
-   <div class="container bod">
-      <ul class="breadcrumb">
-         <li class="active"><a href="/#/home">Agregar Habitaciones</a></li>
-         <li><a href="/#/choose">Empleados</a></li>
-         <li><a href="/#/dist">Repartición</a></li>
-         <li><a href="/#/home">Final</a></li>
-      </ul>
+   <div class="container extra">
    </div>
 
 
@@ -19,9 +9,6 @@
       <!-- Seleccion de Empleadas -->
       <div class="emps col-md-4">
         <h1>Empleados</h1>
-
-          
-
           <!-- Modal -->
           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  >
             <div class="modal-dialog" role="document">
@@ -35,7 +22,7 @@
                   </select>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                   <button type="button" class="btn btn-primary" ng-click="submitEmployee(n)">Agregar</button>
                 </div>
               </div>
@@ -43,12 +30,13 @@
           </div>
 
           <ul class="list-group">
-            <li ng-click="chooseEmployee(n)" ng-repeat = "n in employeeWithRooms track by $index" class="list-group-item" >
+            <li ng-repeat = "n in employeeWithRooms track by $index" class="list-group-item" >
+              {{n.empleado.username}}
+              <a ng-click="close($index)" class="fa fa-remove fa-times fa-lg pull-right" style="color: gray;"></a>
               <span data-drag="true" 
                     data-jqyoui-options="{revert: 'invalid'}" 
                     ng-model="firstfloor" jqyoui-draggable="{index: {{$index}}, animate:true, onStart:'startCallback(n)', onStop:'stopCallback(n)'}" class="glyphicon glyphicon-hand-up badge">
               </span>
-              {{n.empleado.username}}
             </li>
           </ul>
 
@@ -61,32 +49,29 @@
       <div class="habs col-md-8">
         <h1>Habitaciones</h1>
         <div class="row grids">
-              <div>
-                <span ng-repeat = "f in floors track by $index">
-                  <div id="grid" ng-if="(f.room_id <= 125)" class="btn btn-default" data-drop="true"
-                     jqyoui-options="{revertDuration: 1000}"
-                     jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
-                     ng-click = "selectRoom(false,f)"                 
-                     ng-class="{'room-selected': f.status}" 
-                     ng-model="floors">
-                    {{f.room_id}}
-                    <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
-                  </div>
-                  <div id="grid" ng-if="(f.room_id > 125)" class="btn btn-default" data-drop="true"
-                     jqyoui-options="{revertDuration: 1000}"
-                     jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
-                     ng-click = "selectRoom(false,f)"                 
-                     ng-class="{'room-selected': f.status}" 
-                     ng-model="floors">
-                    {{f.room_id}}
-                    <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
-                  </div>
-                  
-                  <br class="container extra" ng-show = "f.room_id%10 == 0 || $index == 24">
-                  <br class="container extra" ng-show = "$index == 24">
-                </span>
-
-              </div>
+          <span ng-repeat = "f in floors track by $index">
+            <div id="grid" ng-if="(f.room_id <= 125)" class="btn btn-default" data-drop="true"
+               jqyoui-options="{revertDuration: 1000}"
+               jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
+               ng-click = "selectRoom(false,f)"                 
+               ng-class="{'room-selected': f.status}" 
+               ng-model="floors">
+              {{f.room_id}}
+              <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
+            </div>
+            <div id="grid" ng-if="(f.room_id > 125)" class="btn btn-default" data-drop="true"
+               jqyoui-options="{revertDuration: 1000}"
+               jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
+               ng-click = "selectRoom(false,f)"                 
+               ng-class="{'room-selected': f.status}" 
+               ng-model="floors">
+              {{f.room_id}}
+              <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
+            </div>
+            
+            <br class="container extra" ng-show = "f.room_id%10 == 0 || $index == 24">
+            <br class="container extra" ng-show = "$index == 24">
+          </span>
         </div>
       </div>
    </div>
@@ -97,7 +82,6 @@
    <div class="container bod">
       <nav aria-label="...">
         <ul class="pager">
-          <!--li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li-->
           <li class="next" ng-click="changeChooseEmps(selectedRooms)"><span aria-hidden="true">Siguiente &rarr;</span></li>
         </ul>
       </nav>

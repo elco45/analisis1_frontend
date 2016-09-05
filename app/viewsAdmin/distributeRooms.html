@@ -1,61 +1,41 @@
 <div class="container" ng-controller="RoomController" ng-init = "getParameters()" > <!-- ng-init = "distribute()"-->
   
 
-<div class="container extra">
-</div>
-
-<!-- Breadcrumbs -->
-<div class="container bod">
-    <ul class="breadcrumb">
-     <li><a href="/#/home">Agregar Habitaciones</a></li>
-     <li><a href="/#/choose">Empleados</a></li>
-     <li class="active"><a href="/#/dist">Repartición</a></li>
-     <li><a href="/#/home">Final</a></li>
-   </ul>
+  <div class="container extra">
+  </div>
+  <div class="container extra">
   </div>
 
-<!-- Reparticion de Habitaciones -->
-<div class="jumbotron">
-  <h1>Repartición de Habitaciones</h1>
-</div>
+  <!-- Reparticion de Habitaciones -->
+  <div class="habs">
+    <h1>Repartición de Habitaciones</h1>
 
-
- <div>
-  <span 
-   ng-repeat = "e in employeeWithRooms track by $index"  class="grid btn-default"  
-   ng-model="employeeWithRooms.habitacion" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true,onOver:'room_hover(e)',
-   onOut:'room_hover_out(e)',onDrop:'stopCallback_distribution(e)'}">
-   {{e.empleado.username}}
-   <span 
-      data-drag="true" 
-      data-jqyoui-options="{revert: 'invalid'}" 
-      data-id="{{h.room_id}}" 
-      ng-model="eployeeWithRooms.habitacion" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback_distribution(h,e)',
-       onStop:'startCallback_distribution(h,e)',onDrop:'dropCallback_distribution(e)'}"
-      ng-repeat = "h in e.habitacion track by $index">{{h.room_id}} 
-     
-    </span>
-    
-    <br>
-  </span>
-  <span 
-      data-drag="true" 
-      data-jqyoui-options="{revert: 'invalid'}" 
-      class = "habitaciones"
-      jqyoui-draggable="{animate:'true',onStart:'startCallback_distribution(1,1)'}">
-  pull me baby!
-  </span>
-
+    <div class="row">
+      <div class="repart col-md-3" ng-repeat = "e in employeeWithRooms track by $index"
+           ng-model="employeeWithRooms.habitacion" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true,onOver:'room_hover(e)',
+           onOut:'room_hover_out(e)',onDrop:'stopCallback_distribution(e)'}">
+        <h4 class="repart-name" >
+          {{e.empleado.username}}
+        </h4>
+        <ul class="list-group" >
+          <li class="list-group-item" data-drag="true" 
+              data-jqyoui-options="{revert: 'invalid'}" 
+              data-id="{{h.room_id}}" 
+              ng-model="eployeeWithRooms.habitacion" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback_distribution(h,e)',
+               onStop:'startCallback_distribution(h,e)',onDrop:'dropCallback_distribution(e)'}"
+              ng-repeat = "h in e.habitacion track by $index"> {{h.room_id}} </li>
+        </ul>
+      </div>
+    </div>
   </div>
 
-
-<!-- Pagination -->
-<div class="container bod col-md-12">
-  <nav aria-label="...">
-    <ul class="pager">
-      <li class="previous"><a ng-click = "changeAddRooms()"><span aria-hidden="true">&larr;</span> </a></li>
-      <li class="next"><a href="#">Siguiente <span aria-hidden="true">&rarr;</span></a></li>
-    </ul>
-  </nav>
-</div>
+  <!-- Pagination -->
+  <div class="container bod col-md-12">
+    <nav aria-label="...">
+      <ul class="pager">
+        <li class="previous"><a ng-click = "changeAddRooms()"><span aria-hidden="true">&larr;</span> </a></li>
+        <li class="next"><a ng-click="changeAddRooms()">Terminar <span aria-hidden="true">&rarr;</span></a></li>
+      </ul>
+    </nav>
+  </div>
 </div>
