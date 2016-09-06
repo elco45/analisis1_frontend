@@ -295,8 +295,8 @@ label {
 }
 
 /* Base styles for spans */
-.container span::before,
-.container span::after {
+.contain span::before,
+.contain span::after {
   content: '';
   position: absolute;
   top: 0;
@@ -305,7 +305,7 @@ label {
 }
 
 /* Radio buttons */
-.container span.radio::before {
+.contain span.radio::before {
   width: 27px;
   height: 27px;
   background-color: #fff;
@@ -314,10 +314,10 @@ label {
   border: 3px solid transparent;
   transition: border-color .2s;
 }
-.container span.radio:hover::before {
+.contain span.radio:hover::before {
   border: 3px solid #B5E5A4;
 }
-.container span.radio::after {
+.contain span.radio::after {
   content: '\f00c';
   font-family: 'FontAwesome';
   left: -29px;
