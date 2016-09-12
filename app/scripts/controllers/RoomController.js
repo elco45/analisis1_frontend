@@ -340,6 +340,7 @@ angular.module('AngularScaffold.Controllers')
       console.log($stateParams )
       $scope.distribute();
     }
+    
     $scope.distribute = function(){
       
       var selectedRooms = $scope.selectedRooms
@@ -355,8 +356,6 @@ angular.module('AngularScaffold.Controllers')
             }
           }
         }//fin fors para ordernar las habitaciones 
-        
-        
        
         var temp;
         for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
@@ -381,8 +380,6 @@ angular.module('AngularScaffold.Controllers')
               }
           }
         }
-
-        
         
         for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
           $scope.employeeWithRooms[i].contador = $scope.employeeWithRooms[i].habitacion.length
@@ -551,9 +548,6 @@ angular.module('AngularScaffold.Controllers')
       }
 
     }
-    
-
-
 
     $scope.changeDist = function(habitaciones,empleados){
 
@@ -633,8 +627,6 @@ angular.module('AngularScaffold.Controllers')
           console.log($scope.currentEmpRooms)
         });  
     }
-
-
     //---------------
    
 
