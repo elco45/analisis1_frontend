@@ -353,49 +353,6 @@ angular.module('AngularScaffold.Controllers')
       $scope.distribute( $scope.selectedRooms,$scope.employeeWithRooms);*/
       $scope.distribute();
     }
-    /*
-    $scope.getParameters = function(){
-      $scope.working_employee_distribution = $stateParams.content.workingEmployee
-      $scope.rooms_selected_distribution = $stateParams.content.roomsSelected
-      console.log($sessionStorage.currentUser)
-      var cantidad = $scope.rooms_selected_distribution.length / $scope.working_employee_distribution.length
-      var temporal = 0
-      var cont_cuarto= 0
-      var cont_worker = 0
-      var cont_rooms = $scope.rooms_selected_distribution.length
-
-      for (var i = $scope.working_employee_distribution.length; i >= 1; i--) {
-
-        if (cont_rooms%i != 0) {
-          temporal = Math.ceil(cantidad)
-        }else{
-          temporal = cantidad
-        }
-
-        
-
-        var arreglo_room = []
-
-        for (var j = 0; j < temporal ; j++) {
-          arreglo_room.push($scope.rooms_selected_distribution[cont_cuarto])
-          cont_cuarto++;
-        };
-
-        cont_rooms -= temporal
-        cantidad = cont_rooms / (i-1)
-
-        var distribution = {
-          worker:$scope.working_employee_distribution[cont_worker],
-          rooms: arreglo_room
-        }
-
-        cont_worker++
-
-        $scope.display_distribution.push(distribution);
-      };
-      console.log($scope.display_distribution)
-    }*/
-
     
     //$scope.distribute = function(selectedRooms,employee){
     $scope.distribute = function(){
@@ -417,8 +374,6 @@ angular.module('AngularScaffold.Controllers')
             }
           }
         }//fin fors para ordernar las habitaciones 
-        
-        
        
         var temp;
         for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
@@ -443,8 +398,6 @@ angular.module('AngularScaffold.Controllers')
               }
           }
         }
-
-        
         
         for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
           $scope.employeeWithRooms[i].contador = $scope.employeeWithRooms[i].habitacion.length
@@ -612,9 +565,6 @@ angular.module('AngularScaffold.Controllers')
 */
 
     }
-    
-
-
 
     $scope.changeDist = function(habitaciones,empleados){
 
@@ -694,8 +644,6 @@ angular.module('AngularScaffold.Controllers')
           console.log($scope.currentEmpRooms)
         });  
     }
-
-
     //---------------
    
 

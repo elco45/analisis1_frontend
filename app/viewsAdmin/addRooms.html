@@ -1,7 +1,7 @@
 <div class="container" ng-controller="RoomController"  ng-init= "init()"> <!-- ng-init= "createAllRooms()">-->
-   <div class="container extra">
+   <div class="container-extra">
    </div>
-   <div class="container extra">
+   <div class="container-extra">
    </div>
 
 
@@ -48,38 +48,48 @@
      <!-- Grid de habitaciones -->
       <div class="habs col-md-8">
         <h1>Habitaciones</h1>
-        <div class="row grids">
-          <span ng-repeat = "f in floors track by $index">
-            <div id="grid" ng-if="(f.room_id <= 125)" class="btn btn-default" data-drop="true"
+        <div class="grids">
+          <span>
+            <div id="grid" ng-repeat = "f in floors track by $index" ng-if="(f.room_id <= 125)" class="btn btn-default" data-drop="true"
                jqyoui-options="{revertDuration: 1000}"
                jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
                ng-click = "selectRoom(false,f)"                 
-               ng-class="{'room-selected': f.status}" 
+               ng-class="{'room-selected': f.status == 1, 'room-clean': f.status == 2, 'room-clean-w-prob': f.status ==3,       'room-not-clean': f.status == 4}" 
                ng-model="floors">
               {{f.room_id}}
               <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
             </div>
-            <div id="grid" ng-if="(f.room_id > 125)" class="btn btn-default" data-drop="true"
+            <br>
+            <br>
+            <div id="grid" ng-repeat = "f in floors track by $index" ng-if="(f.room_id > 125)" class="btn btn-default" data-drop="true"
                jqyoui-options="{revertDuration: 1000}"
                jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
                ng-click = "selectRoom(false,f)"                 
-               ng-class="{'room-selected': f.status}" 
+               ng-class="{'room-selected': f.status == 1, 'room-clean': f.status == 2, 'room-clean-w-prob': f.status ==3,       'room-not-clean': f.status == 4}"
                ng-model="floors">
               {{f.room_id}}
               <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
             </div>
-            
-            <br class="container extra" ng-show = "f.room_id%10 == 0 || $index == 24">
-            <br class="container extra" ng-show = "$index == 24">
+          
           </span>
         </div>
+        <!-- Simbología -->
+        <div class="simb">
+          <span class="label label-default">Sin Seleccionar</span>
+          <span class="label label-primary">Seleccionada</span>
+          <span class="label label-success">Limpia</span>
+          <span class="label label-warning">Limpia con Problema</span>
+          <span class="label label-danger">No Limpia</span>
+        </div>
+
       </div>
+
+      
+
    </div>
-  
-  <button ng-click= "distribute()">---- </button>
 
    <!-- Pagination (boton de next) -->
-   <div class="container bod">
+   <div class="container-bod">
       <nav aria-label="...">
         <ul class="pager">
           <li class="next" ng-click="changeChooseEmps(selectedRooms)"><span aria-hidden="true">Siguiente &rarr;</span></li>
