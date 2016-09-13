@@ -185,34 +185,62 @@ angular.module('AngularScaffold.Controllers')
         $scope.employeeWithRooms.splice(index,1);
       }else{
         swal({
-          title: "No Se Puede Eliminar",
-          text: "Ese empleado ya tiene una habitación asignada!",
-          type: "info",
-          showCancelButton: false,
-          confirmButtonText: "OK",
+          title: "Esta seguro?",
+          text: "Este empleado tiene habitaciones asignadas, si se elimina las habitaciones tambien sera eliminad@ de las habitaciones en las que se encuentre asignado",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "Continuar!",
           closeOnConfirm: true
+        }, 
+        function(){
+            console.log("entro")
+           for (var i = 0; i < $scope.employeeWithRooms[index].habitacion.length; i++) {
+            for (var j = 0; j < $scope.floors.length; j++) {
+              if($scope.employeeWithRooms[index].habitacion[i].room_id === $scope.floors[j].room_id){
+                for (var k = 0; k < $scope.floors[j].idUser.length; k++) {
+                  if($scope.floors[j].idUser[k].username === $scope.employeeWithRooms[index].empleado.username){
+                    $scope.floors[j].idUser.splice(k,1);
+                    console.log($scope.floors[j])
+                    var param_modif = {
+                      room: $scope.floors[j]
+                    }
+                    RoomService.UpdateRoom(param_modif).then(function(response){
+
+                    });
+                  }
+                }
+              }              
+            }
+           }
+
+          $scope.employeeWithRooms.splice(index,1);
         });
       }
     }
 
     $scope.submitEmployee = function() {
-      var index = -1
-      for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
-        if($scope.employeeWithRooms[i].empleado.username === $scope.n.username){
-          index = i;
-          break;
-        }
-      }
-      if(index === -1){
-
-          var empleado_con_su_habitacion = {
-            empleado : $scope.n,
-            habitacion : [],
-            contador: 0          
+      if(typeof $scope.n !== "undefined"){
+        var index = -1
+        for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
+          if($scope.employeeWithRooms[i].empleado.username === $scope.n.username){
+            index = i;
+            break;
           }
-          $scope.employeeWithRooms.push(empleado_con_su_habitacion);
+        }
+        console.log($scope.n)
+        if(index === -1){
+
+            var empleado_con_su_habitacion = {
+              empleado : $scope.n,
+              habitacion : [],
+              contador: 0          
+            }
+            $scope.employeeWithRooms.push(empleado_con_su_habitacion);
+        }
+        console.log($scope.employeeWithRooms);
+        
       }
-      console.log($scope.employeeWithRooms);
     }
 
     function containsObject(obj, list) {
@@ -300,9 +328,12 @@ angular.module('AngularScaffold.Controllers')
       //$sessionStorage.currentUser.paramsDistribution = $scope.selectedRooms
      
       RoomService.UpdateRoom(room_data).then(function(response){
+       if ($scope.employeeWithRooms.length>0) {
+        $scope.distribute(); 
+       }
         
       })
-      $scope.distribute();  
+       
       //$scope.selectedRooms.sort()
     };
 
@@ -509,8 +540,8 @@ angular.module('AngularScaffold.Controllers')
                 $scope.employeeWithRooms.push(empleado_con_su_habitacion)
               }         
             }//for
-            /*if(response.data[i].idUser.length == 0)
-              $scope.selectedRooms.push(response.data[i])*/
+            if(response.data[i].idUser.length == 0)
+              $scope.selectedRooms.push(response.data[i])
           }//fin if
 
         }
@@ -628,7 +659,11 @@ angular.module('AngularScaffold.Controllers')
         });  
     }
     //---------------
-   
+    $('#myModal').on("hidden.bs.modal",function(){// obtener el cierre del modal para hacer redistribucion
+        if ($scope.employeeWithRooms.length>0) {
+          $scope.distribute(); 
+        }
+    })
     $scope.handleClick = function(evt,f) {
     	if (evt.which == 3) {
         $scope.infoRC=f;
