@@ -26,6 +26,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.room;
     $scope.dragged_Room ={}
     $scope.room_dragged_from = {}
+    $scope.infoRC;
     
     //--lo que hizo elena ---
 
@@ -628,8 +629,9 @@ angular.module('AngularScaffold.Controllers')
     }
     //---------------
    
-    $scope.handleClick = function(evt) {
+    $scope.handleClick = function(evt,f) {
     	if (evt.which == 3) {
+        $scope.infoRC=f;
     		evt.preventDefault()
     		$('#infoMsg').modal('show');
     	}

@@ -54,7 +54,7 @@
                jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
                ng-click = "selectRoom(false,f)"                 
                ng-class="{'room-selected': f.status == 1, 'room-clean': f.status == 2, 'room-clean-w-prob': f.status ==3,       'room-not-clean': f.status == 4}" 
-               ng-mousedown="handleClick($event)"
+               ng-mousedown="handleClick($event,f)"
                oncontextmenu="return false"
                ng-model="floors">
               {{f.room_id}}
@@ -67,7 +67,7 @@
                jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
                ng-click = "selectRoom(false,f)"                 
                ng-class="{'room-selected': f.status == 1, 'room-clean': f.status == 2, 'room-clean-w-prob': f.status ==3,       'room-not-clean': f.status == 4}"
-               ng-model="floors">
+               ng-model="floors" ng-mousedown="handleClick($event,f)">
               {{f.room_id}}
               <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
             </div>
@@ -117,14 +117,25 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Información habitación</h4>
+        <h2 class="modal-title"><center>Información habitacion</center></h2>
       </div>
-      <div class="modal-body">
-        <center>
-          Desea efectuar el pago?
-          <br>
-          <button type="button" class="btn btn-danger caja" data-dismiss="modal"> Cancelar</button>
-        </center>
+      <div class="modal-body" ng-model="infoRC">
+      <h3 ><center>{{infoRC.room_id}}</center> </h3>
+      <div class="row">
+      	 <div   class="col-xs-6 jumbotron"  >
+      	 	<img    data-ng-src="img1.jpg"/>
+      	 </div>
+
+      	 <div class="col-xs-6"  ng-repeat="f in infoRC.idUser">
+      	   <div class="row">
+      	   		<img class="col-xs-6"   max-width="30" max-heigth="30" data-ng-src="{{f.photo}}"/>
+      	   		<h3 class="col-xs-6"  >{{f.username}}</h3>
+      	   </div>
+      	 	
+      	 </div>
+      </div>
+       
+        
       </div>
     </div>
   </div>
