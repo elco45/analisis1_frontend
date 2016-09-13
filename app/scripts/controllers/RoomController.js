@@ -1,5 +1,5 @@
 angular.module('AngularScaffold.Controllers')
-  .controller('RoomController', ['RoomService' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage',
+  .controller('RoomController', ['RoomService' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', 
     function (RoomService, $q,$scope, $state, $stateParams,$rootScope, $timeout, $sessionStorage) {
     $scope.$sessionStorage = $sessionStorage;
     $scope.selectedRooms = [];
@@ -615,7 +615,6 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.getEmpRooms = function() {
-      console.log("xcadc  "+$sessionStorage.currentUser.username)
         RoomService.GetEmpRooms($sessionStorage.currentUser).then(function(response){
           for(var i =0; i<response.data.length;i++){
               for(var j=0;j<response.data[i].idUser.length; j++){
@@ -629,7 +628,16 @@ angular.module('AngularScaffold.Controllers')
     }
     //---------------
    
+    $scope.handleClick = function(evt) {
+    	if (evt.which == 3) {
+    		evt.preventDefault()
+    		$('#infoMsg').modal('show');
+    	}
+      
+    };
 
+    
+    
 
 }]);
 
@@ -638,3 +646,7 @@ app.filter('slice', function() {
         return arr.slice(start, end);
       };
     });
+
+window.oncontextmenu = function () {
+return false;
+}

@@ -54,6 +54,8 @@
                jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
                ng-click = "selectRoom(false,f)"                 
                ng-class="{'room-selected': f.status == 1, 'room-clean': f.status == 2, 'room-clean-w-prob': f.status ==3,       'room-not-clean': f.status == 4}" 
+               ng-mousedown="handleClick($event)"
+               oncontextmenu="return false"
                ng-model="floors">
               {{f.room_id}}
               <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
@@ -110,14 +112,20 @@
     </div>
   </div>
 
-  <!-- Pagination -->
-  <div class="container bod col-md-12">
-    <nav aria-label="...">
-      <ul class="pager">
-        <li class="previous"><a ng-click = "changeAddRooms()"><span aria-hidden="true">&larr;</span> </a></li>
-        <li class="next"><a ng-click="changeAddRooms()">Terminar <span aria-hidden="true">&rarr;</span></a></li>
-      </ul>
-    </nav>
+<div  id="infoMsg" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Información habitación</h4>
+      </div>
+      <div class="modal-body">
+        <center>
+          Desea efectuar el pago?
+          <br>
+          <button type="button" class="btn btn-danger caja" data-dismiss="modal"> Cancelar</button>
+        </center>
+      </div>
+    </div>
   </div>
 </div>
-
