@@ -65,7 +65,8 @@ angular.module('AngularScaffold.Controllers')
       //console.log(room)
       $scope.room_dragged_from = dragged_from;
     };
-    $scope.stopCallback_distribution = function(event, ui, employee) {    
+    $scope.stopCallback_distribution = function(event, ui, employee) {  
+        angular.element(event.target).removeClass("room-hover");   
         var cont_succeeded_operations = 0;
         for(var i =0; i < $scope.employeeWithRooms.length; i++){//lo eliminaremos del que lo tenia antes
           if($scope.employeeWithRooms[i].empleado.username == $scope.room_dragged_from.empleado.username){
@@ -97,7 +98,17 @@ angular.module('AngularScaffold.Controllers')
             next_user: employee.empleado,
             room_id: $scope.dragged_Room.room_id
           }
-
+          console.log(swap_iduser_element)
+          for (var i = 0; i < $scope.floors.length; i++) {
+            if(swap_iduser_element.room_id == $scope.floors[i].room_id){
+              for (var j = 0; j < $scope.floors[i].idUser.length; j++) {
+                if($scope.floors[i].idUser[j].username == swap_iduser_element.previous_user ){
+                  $scope.floors[i].idUser.splice(j,1)
+                  $scope.floors[i].idUser.push( swap_iduser_element.next_user)
+                }
+              }
+            }
+          }
           RoomService.SwapDistributedRooms(swap_iduser_element).then(function(response){
             console.log(response.data);
           })
@@ -326,11 +337,11 @@ angular.module('AngularScaffold.Controllers')
         room : room
       }
       //$sessionStorage.currentUser.paramsDistribution = $scope.selectedRooms
-     
+       
       RoomService.UpdateRoom(room_data).then(function(response){
-       if ($scope.employeeWithRooms.length>0) {
-        $scope.distribute(); 
-       }
+         if ($scope.employeeWithRooms.length>0) {
+          $scope.distribute(); 
+         }
         
       })
        
