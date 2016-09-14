@@ -672,7 +672,6 @@ angular.module('AngularScaffold.Controllers')
     		evt.preventDefault()
     		$('#infoMsg').modal('show');
     	}
-      
     };
 
     
