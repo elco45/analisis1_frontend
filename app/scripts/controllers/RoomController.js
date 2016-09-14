@@ -26,6 +26,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.room;
     $scope.dragged_Room ={}
     $scope.room_dragged_from = {}
+    $scope.RoomSelected = false;
     $scope.infoRC;
     
     //--lo que hizo elena ---
@@ -607,51 +608,52 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.changeMainEmployee = function(){
+      $scope.RoomSelected = false;
+      $scope.start = false;
+      $scope.showList = false;
+      $scope.showListProblems = false;
       $state.go("emp")
-      $scope.recargar();
     }
 
     $scope.changeRoomEmp = function(id){
-      console.log($scope.currentEmpRooms)
       for(var i=0;i<$scope.currentEmpRooms.length;i++){
         if (id==$scope.currentEmpRooms[i].room_id) {
-             $state.go("roomemp",{content: {
-              habitaciones:   $scope.currentEmpRooms[i]
-            }})
+            $scope.room = $scope.currentEmpRooms[i];
+            $scope.RoomSelected = true;
+            $scope.start = false;
+            $scope.showList = false;
+            $scope.showListProblems = false;
         };
-
       }
      
     }
 
-
-    $scope.recargar = function(){
-      $scope.room = $stateParams.content.habitaciones
+    $scope.cambioEstados = function(estado){
+      $scope.room.status = estado;
+      var temporal = {
+          room: $scope.room
+      }
+      RoomService.UpdateRoom(temporal).then(function(response){
+       
+      });
+      $scope.RoomSelected = false;
+      $scope.start = false;
+      $scope.showList = false;
+      $scope.showListProblems = false;
+      $scope.changeMainEmployee();
     }
 
-    $scope.cambioEstados = function(estado){
-      if (estado == 3) {
-        $scope.room.observation = document.getElementById("texta").value;
-        console.log($scope.room.observation);
-      } else if (estado == 4){
-         $scope.room.observation = document.getElementById("commentbox").value;
-         console.log($scope.room.observation);
-      }
-        for (var i = 0; i <$scope.room.idUser.length ; i++) {
-          if ($sessionStorage.currentUser.username == $scope.room.idUser[i].username) {
-            $scope.room.idUser.splice(i,1)
-          };
-        };
-        if ($scope.room.idUser.length == 0) {
-          $scope.room.status = estado;
-        };
-        var temporal = {
-            room: $scope.room
-        }
-       RoomService.UpdateRoom(temporal).then(function(response){
-        
-       });
-       $scope.changeMainEmployee();
+    $scope.getEmpRooms = function() {
+        RoomService.GetEmpRooms($sessionStorage.currentUser).then(function(response){
+          for(var i =0; i<response.data.length;i++){
+              for(var j=0;j<response.data[i].idUser.length; j++){
+                 if($sessionStorage.currentUser.username == response.data[i].idUser[j].username){
+                    $scope.currentEmpRooms.push(response.data[i]);
+                 }
+              }
+          }
+        });  
+        $scope.RoomSelected = false;
     }
 
     $scope.setText = function(notCleaned){

@@ -285,86 +285,148 @@ textarea.focus {
   color: gray;
 }
 
-/* HTML5 Boilerplate accessible hidden styles */
-[type="radio"] {
-  border: 0; 
-  clip: rect(0 0 0 0); 
-  height: 1px; margin: -1px; 
-  overflow: hidden; 
-  padding: 0; 
-  position: absolute; 
-  width: 1px;
+/*****Radio buttons employee*****/
+
+.outer{
+  margin-left: 3%;
+  margin-bottom: 2%;
 }
 
-/* One radio button per line */
-label {
-  display: block;
+.contain {
+  clear: both;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 35.5%;
+}
+
+.contain2 {
+  clear: both;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 33%;
+}
+
+label.lb {
+  width: 35%;
+  border-radius: 3px;
+  background-color: #F5F4F7;
+}
+
+/* hide input */
+input.radio:empty {
+  margin-left: -999px;
+}
+
+/* style label */
+input.radio:empty ~ label {
+  position: relative;
+  float: left;
+  line-height: 2.5em;
+  text-indent: 3.25em;
+  margin: 0;
   cursor: pointer;
-  line-height: 2.5;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-[type="radio"] + span {
-  display: block;
-}
-
-/* the basic, unchecked style */
-[type="radio"] + span:before {
-  content: '';
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.25em;
-  border-radius: 1em;
-  border: 0.125em solid #fff;
-  box-shadow: 0 0 0 0.15em #000;
-  margin-right: 0.75em;
-  transition: 0.5s ease all;
-}
-
-/* the checked style using the :checked pseudo class */
-[type="radio"]:checked + span:before {
-  background: green;
-  box-shadow: 0 0 0 0.25em #000;
-}
-
-/* never forget focus styling */
-[type="radio"]:focus + span:after {
-  content: '\0020\2190';
-  line-height: 1;
-  vertical-align: -0.125em;
-}
-
-/* Base styles for spans */
-.contain span::before,
-.contain span::after {
-  content: '';
+input.radio:empty ~ label:before {
   position: absolute;
+  display: block;
   top: 0;
   bottom: 0;
-  margin: auto;
+  left: 0;
+  content: '';
+  width: 2.5em;
+  background: #CACACC;
+  border-radius: 3px 0 0 3px;
 }
 
-/* Radio buttons */
-.contain span.radio::before {
-  width: 27px;
-  height: 27px;
-  background-color: #fff;
-  left: -35px;
-  box-sizing: border-box;
-  border: 3px solid transparent;
-  transition: border-color .2s;
+/* toggle hover */
+input.radio:hover:not(:checked) ~ label:before {
+  content:'\2714';
+  text-indent: .9em;
+  color: #28701B;
 }
-.contain span.radio:hover::before {
-  border: 3px solid #B5E5A4;
+
+/* toggle on */
+input.radio:checked ~ label:before {
+  content:'\2714';
+  text-indent: .9em;
+  color: #9CE2AE;
+  background-color: #4DCB6D;
 }
-.contain span.radio::after {
-  content: '\f00c';
-  font-family: 'FontAwesome';
-  left: -29px;
-  top: 2px;
-  color: transparent;
-  transition: color .2s;
-}
-input[type="radio"]:checked + label span.radio::after {
+
+input.radio:checked ~ label {
   color: green;
+}
+
+.room-selected2{
+  color: #fff!important;
+  background-color: #337ab7!important;
+  padding: 22px;
+  margin: 0;
+  font-size: 24px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 85px;
+  height: 75px;
+}
+
+.room-clean2 {
+  color: #fff!important;
+  background-color: #5cb85c!important;
+  padding: 22px;
+  margin: 0;
+  font-size: 24px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 85px;
+  height: 75px;
+}
+
+.room-clean-w-prob2 {
+  color: #fff!important;
+  background-color: #f0ad4e!important;
+  padding: 22px;
+  margin: 0;
+  font-size: 24px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 85px;
+  height: 75px;
+}
+
+.room-not-clean2 {
+  color: #fff!important;
+  background-color: #d9534f!important;
+  padding: 22px;
+  margin: 0;
+  font-size: 24px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 85px;
+  height: 75px;
+}
+
+.room-hover2 {
+    background-color: #9f9 !important;
+    padding: 22px;
+    margin: 0;
+    font-size: 24px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    width: 85px;
+    height: 75px;
+}
+
+.text {
+  font-size: 16px !important;
+  font-weight: 310 !important;
 }

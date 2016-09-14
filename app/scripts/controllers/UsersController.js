@@ -8,6 +8,7 @@ angular.module('AngularScaffold.Controllers')
   	$scope.usuario = { employee_type:"0", role:"0"};
     $scope.lisUsuario = []; 
     $scope.usuarioSeleccionado ={ employee_type:"0", role:"0", status:"0" };
+    $scope.actualUser = true;
 
     $scope.getUser = function(){
      
@@ -117,8 +118,10 @@ angular.module('AngularScaffold.Controllers')
                     $sessionStorage.currentUser = response.data
                     console.log(response.data)
                     if(response.data.role == 0){
+                      $scope.actualUser = false;
                       $state.go("home")
                     }else{
+                      $scope.actualUser = true;
                       $state.go("emp")
                     }
                 }

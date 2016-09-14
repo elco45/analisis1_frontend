@@ -48,8 +48,8 @@
          </div>
          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="/#/home">Manejar Habitaciones</a></li>
-              <li><a href="/#/manage">Manejar Usuarios</a></li>
+              <li ng-show="!actualUser" class="active"><a href="/#/home">Manejar Habitaciones</a></li>
+              <li ng-show="!actualUser"><a href="/#/manage">Manejar Usuarios</a></li>
               <li ng-show ="isLogged()" ng-click="logout()"><a href="">Logout</a></li>
             </ul>
          </div>
