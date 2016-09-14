@@ -501,7 +501,9 @@ angular.module('AngularScaffold.Controllers')
               employee : $scope.employeeWithRooms[i].empleado,
               room_id : temp
             }
-            RoomService.SaveDistributedRooms(temp).then(function(response){
+            console.log("-----------------")
+            console.log(room_with_employee)
+            RoomService.SaveDistributedRooms(room_with_employee).then(function(response){
               console.log(response.data)
             })
           };
