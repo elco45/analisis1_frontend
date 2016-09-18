@@ -117,10 +117,12 @@ angular.module('AngularScaffold.Controllers')
                 if(response.data != "error"){
                     $sessionStorage.currentUser = response.data
                     console.log(response.data)
-                    if(response.data.role == 0){
+                    if(response.data.role === 0){
                       $scope.actualUser = false;
+                      console.log($scope.actualUser);
                       $state.go("home")
-                    }else{
+                    }
+                    if(response.data.role === 1){
                       $scope.actualUser = true;
                       $state.go("emp")
                     }
