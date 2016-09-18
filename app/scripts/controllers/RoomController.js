@@ -1,6 +1,6 @@
 angular.module('AngularScaffold.Controllers')
-  .controller('RoomController', ['RoomService' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', 
-    function (RoomService, $q,$scope, $state, $stateParams,$rootScope, $timeout, $sessionStorage) {
+  .controller('RoomController', ['RoomService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', 
+    function (RoomService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage) {
     $scope.$sessionStorage = $sessionStorage;
     $scope.selectedRooms = [];
     $scope.empleados = [];
@@ -28,13 +28,42 @@ angular.module('AngularScaffold.Controllers')
     $scope.room_dragged_from = {}
     $scope.RoomSelected = false;
     $scope.infoRC;
-    
+    $scope.doneChecking = true;
+        
+    $scope.Timer = $interval(function () { 
+      if($scope.doneChecking){
+        $scope.doneChecking = false;
+        var employee_username ={
+          username: $sessionStorage.currentUser.username
+        }
+        RoomService.CheckForChanges(employee_username).then(function(response){
+          if(!response.data.last_change_seen){
+            if($sessionStorage.currentUser.role === 1){// es empleado
+              $scope.currentEmpRooms =[];
+              $scope.getEmpRooms();
+            }else{//es admin
+              $scope.floors = []
+              $scope.employeeWithRooms = []
+              $scope.selectedRooms = []
+              $scope.init();
+            }
+            var user = {
+              username: $sessionStorage.currentUser.username
+            }
+            RoomService.UpdateControl(user).then(function(response){
+              $scope.doneChecking = true;
+            })
+          }else{
+            $scope.doneChecking = true;
+          }
+        })        
+      }
+    }, 500);
     //--lo que hizo elena ---
 
     $scope.init = function() {
       $scope.getRooms();
       $scope.llenarEmpleado();
-      console.log($scope.employeeWithRooms)
 
       //$scope.createAllRooms();
     };
@@ -43,7 +72,6 @@ angular.module('AngularScaffold.Controllers')
     //------------------------- 
 
     $scope.room_hover = function(event, ui, room){
-        //console.log(room)
         angular.element(event.target).addClass("room-hover");
     };
 
@@ -63,7 +91,6 @@ angular.module('AngularScaffold.Controllers')
     //para la segunda view
     $scope.startCallback_distribution = function(event, ui, room, dragged_from) {
       $scope.dragged_Room = room;
-      //console.log(room)
       $scope.room_dragged_from = dragged_from;
     };
     $scope.stopCallback_distribution = function(event, ui, employee) {  
@@ -87,8 +114,6 @@ angular.module('AngularScaffold.Controllers')
           if($scope.employeeWithRooms[i].empleado.username == employee.empleado.username){
             $scope.employeeWithRooms[i].habitacion.push($scope.dragged_Room)
             cont_succeeded_operations++;
-            console.log("entro");
-            console.log($scope.employeeWithRooms[i]);
             break;
           }
         }
@@ -99,7 +124,6 @@ angular.module('AngularScaffold.Controllers')
             next_user: employee.empleado,
             room_id: $scope.dragged_Room.room_id
           }
-          console.log(swap_iduser_element)
           for (var i = 0; i < $scope.floors.length; i++) {
             if(swap_iduser_element.room_id == $scope.floors[i].room_id){
               for (var j = 0; j < $scope.floors[i].idUser.length; j++) {
@@ -111,7 +135,7 @@ angular.module('AngularScaffold.Controllers')
             }
           }
           RoomService.SwapDistributedRooms(swap_iduser_element).then(function(response){
-            console.log(response.data);
+
           })
 
         }
@@ -206,15 +230,14 @@ angular.module('AngularScaffold.Controllers')
           closeOnConfirm: true
         }, 
         function(){
-            console.log("entro")
            for (var i = 0; i < $scope.employeeWithRooms[index].habitacion.length; i++) {
             for (var j = 0; j < $scope.floors.length; j++) {
               if($scope.employeeWithRooms[index].habitacion[i].room_id === $scope.floors[j].room_id){
                 for (var k = 0; k < $scope.floors[j].idUser.length; k++) {
                   if($scope.floors[j].idUser[k].username === $scope.employeeWithRooms[index].empleado.username){
                     $scope.floors[j].idUser.splice(k,1);
-                    console.log($scope.floors[j])
                     var param_modif = {
+                      employee: $sessionStorage.currentUser.username,
                       room: $scope.floors[j]
                     }
                     RoomService.UpdateRoom(param_modif).then(function(response){
@@ -240,7 +263,6 @@ angular.module('AngularScaffold.Controllers')
             break;
           }
         }
-        console.log($scope.n)
         if(index === -1){
 
             var empleado_con_su_habitacion = {
@@ -250,7 +272,6 @@ angular.module('AngularScaffold.Controllers')
             }
             $scope.employeeWithRooms.push(empleado_con_su_habitacion);
         }
-        console.log($scope.employeeWithRooms);
         
       }
     }
@@ -273,7 +294,6 @@ angular.module('AngularScaffold.Controllers')
         contador: 0          
       }
       $scope.employeeWithRooms.push(empleado_con_su_habitacion);
-      console.log($scope.employeeWithRooms)
       
     }//pasa empleadas que van a trabajar hoy
     
@@ -290,7 +310,6 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.selectRoom = function(dragged,room) {
       var index = -1;
-      console.log(room)
       for (i =0; i < $scope.selectedRooms.length; i++) {
         if(room.room_id == $scope.selectedRooms[i].room_id){          
           index = i;
@@ -333,8 +352,8 @@ angular.module('AngularScaffold.Controllers')
 
 
       }
-      console.log(room)
       var room_data = {
+        employee: $sessionStorage.currentUser.username,
         room : room
       }
       //$sessionStorage.currentUser.paramsDistribution = $scope.selectedRooms
@@ -361,7 +380,6 @@ angular.module('AngularScaffold.Controllers')
           time_reserved: "0hr"
         }
         RoomService.CreateRoom(room_id).then(function(response){
-          console.log(response.data)
         })
       }
       for (var i = 1; i < 21; i++) {
@@ -374,14 +392,11 @@ angular.module('AngularScaffold.Controllers')
           time_reserved: "0hr"
         }
         RoomService.CreateRoom(room_id).then(function(response){
-          console.log(response.data)
         })
       }
     }
 
     $scope.getParameters = function(){
-      console.log("--------------------getParameters") 
-      console.log($stateParams )
       $scope.distribute();
     }
     
@@ -501,29 +516,23 @@ angular.module('AngularScaffold.Controllers')
                   };
                 };
                 if (!encontrado) {
-                  console.log($scope.employeeWithRooms[i].empleado)
                   $scope.floors[k].idUser.push($scope.employeeWithRooms[i].empleado)
                   temp = $scope.floors[k];
                 };
                 break;
               };
             };
-              //guardarlo
-            var room_with_employee = {
-              employee : $scope.employeeWithRooms[i].empleado,
-              room_id : temp
+              //guardarlo 
+            var parameters = {
+                employee: $sessionStorage.currentUser.username,
+                room: temp
             }
-            console.log("-----------------")
-            console.log(room_with_employee)
-            RoomService.SaveDistributedRooms(room_with_employee).then(function(response){
-              console.log(response.data)
+            RoomService.SaveDistributedRooms(parameters).then(function(response){
             })
           };
         }//TERMINADO
       }else{
-        console.log("no hay habitaciones para repartir")
       }
-      //console.log($scope.employeeWithRooms)
         
     }
 
@@ -566,14 +575,10 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.changeChooseEmps =function(params){
-      console.log("-------------selectedrooms size: " + $scope.selectedRooms.length)
-      console.log(params)
-      console.log($scope.selectedRooms)
       var object_param = {
         rooms: params,
         room_distributed: $scope.employeeWithRooms
       }
-      console.log(  object_param)
       if($scope.selectedRooms.length === 0){
        
         swal({
@@ -631,6 +636,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.cambioEstados = function(estado){
       $scope.room.status = estado;
       var temporal = {
+          employee: $sessionStorage.currentUser.username,
           room: $scope.room
       }
       RoomService.UpdateRoom(temporal).then(function(response){
@@ -657,21 +663,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.setText = function(notCleaned){
-      console.log(notCleaned);
       document.getElementById("commentbox").value = notCleaned;
-    }
-
-    $scope.getEmpRooms = function() {
-        RoomService.GetEmpRooms($sessionStorage.currentUser).then(function(response){
-          for(var i =0; i<response.data.length;i++){
-              for(var j=0;j<response.data[i].idUser.length; j++){
-                 if($sessionStorage.currentUser.username == response.data[i].idUser[j].username){
-                    $scope.currentEmpRooms.push(response.data[i]);
-                 }
-              }
-          }
-          console.log($scope.currentEmpRooms)
-        });  
     }
     //---------------
     $('#myModal').on("hidden.bs.modal",function(){// obtener el cierre del modal para hacer redistribucion
