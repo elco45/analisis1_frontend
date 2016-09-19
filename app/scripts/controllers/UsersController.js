@@ -8,7 +8,7 @@ angular.module('AngularScaffold.Controllers')
   	$scope.usuario = { employee_type:"0", role:"0"};
     $scope.lisUsuario = []; 
     $scope.usuarioSeleccionado ={ employee_type:"0", role:"0", status:"0" };
-    $scope.actualUser = true;
+    $sessionStorage.logged = false;
 
     $scope.getUser = function(){
      
@@ -85,9 +85,10 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.isLogged = function(){
 
-      if(typeof($sessionStorage.currentUser) === "undefined" ){
+      console.log($state.current.name)
+      if(typeof($sessionStorage.currentUser) === "undefined" || $state.current.name === 'login'){
         return false
-      }
+      }      
       return true;
     }
 
@@ -117,6 +118,7 @@ angular.module('AngularScaffold.Controllers')
                 if(response.data != "error"){
                     $sessionStorage.currentUser = response.data
                     console.log(response.data)
+                    $sessionStorage.logged = true;
                     if(response.data.role === 0){
                       $scope.actualUser = false;
                       console.log($scope.actualUser);
