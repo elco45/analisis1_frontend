@@ -112,6 +112,7 @@ angular.module('AngularScaffold.Controllers')
         }
         for(var i =0; i < $scope.employeeWithRooms.length; i++){//lo agregamos al nuevo en donde se dropeo
           if($scope.employeeWithRooms[i].empleado.username == employee.empleado.username){
+            $scope.dragged_Room.priority = $scope.employeeWithRooms[i].habitacion.length+1;
             $scope.employeeWithRooms[i].habitacion.push($scope.dragged_Room)
             cont_succeeded_operations++;
             break;
@@ -122,7 +123,7 @@ angular.module('AngularScaffold.Controllers')
           var swap_iduser_element = {//estructura para guardado
             previous_user: $scope.room_dragged_from.empleado.username,
             next_user: employee.empleado,
-            room_id: $scope.dragged_Room.room_id
+            room: $scope.dragged_Room
           }
           for (var i = 0; i < $scope.floors.length; i++) {
             if(swap_iduser_element.room_id == $scope.floors[i].room_id){
@@ -146,7 +147,7 @@ angular.module('AngularScaffold.Controllers')
       var index = -1;
       angular.element(event.target).removeClass("room-hover"); 
       var already_on_the_list = false;
-      var index_on_the_list 
+      var index_on_the_list;
       for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
           if($scope.employeeWithRooms[i].empleado.username === $scope.dragged_Employee.username) {
             already_on_the_list = true;
@@ -214,6 +215,27 @@ angular.module('AngularScaffold.Controllers')
           } 
         } 
       } 
+    }
+
+     $scope.sortRoomsPriority= function(){
+      var j;
+      var flag = true;   // set flag to true to begin first pass
+      var temp;   //holding variable
+
+      while ( flag ){
+        flag= false;    //set flag to false awaiting a possible swap
+        for( j=0;  j < $scope.employeeWithRooms.length;  j++ ){
+          for (var i = 0; i < $scope.employeeWithRooms[j].habitacion.length-1; i++) {
+            if ( $scope.employeeWithRooms[j].habitacion[i].priority > $scope.employeeWithRooms[j].habitacion[i+1].priority ){   // change to > for ascending sort
+              temp = $scope.employeeWithRooms[j].habitacion[i];                //swap elements
+              $scope.employeeWithRooms[j].habitacion[i] = $scope.employeeWithRooms[j].habitacion[i+1];
+              $scope.employeeWithRooms[j].habitacion[i+1] = temp;
+              flag = true;              //shows a swap occurred  
+            } 
+          };
+        } 
+      } 
+      console.log($scope.employeeWithRooms)
     }
 
     $scope.close = function(index) {
@@ -316,6 +338,7 @@ angular.module('AngularScaffold.Controllers')
           break;          
         }
       }
+
       if(index >-1 || dragged) {
         if(index === 0){
           $scope.selectedRooms.shift()
@@ -323,13 +346,15 @@ angular.module('AngularScaffold.Controllers')
           $scope.selectedRooms.splice(index, 1);        
         }
       } else {
-        $scope.selectedRooms.push(room);
+          $scope.selectedRooms.push(room);
       }
+
       if(dragged){
         room.status = 1
       }else{
         room.status = !room.status
       }
+
       if(room.status == 0){
         room.idUser = [];
         for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
@@ -359,9 +384,9 @@ angular.module('AngularScaffold.Controllers')
       //$sessionStorage.currentUser.paramsDistribution = $scope.selectedRooms
        
       RoomService.UpdateRoom(room_data).then(function(response){
-         if ($scope.employeeWithRooms.length>0) {
+        if ($scope.employeeWithRooms.length>0) {
           $scope.distribute(); 
-         }
+        }
         
       })
        
@@ -375,7 +400,7 @@ angular.module('AngularScaffold.Controllers')
           status: 0,
           room_id:i +100,
           idUser: [],
-          priority: 0,
+          priority: -1,
           observation: "",
           time_reserved: "0hr"
         }
@@ -387,7 +412,7 @@ angular.module('AngularScaffold.Controllers')
           status: 0,
           room_id:i +200,
           idUser: [],
-          priority: 0,
+          priority: -1,
           observation: "",
           time_reserved: "0hr"
         }
@@ -398,6 +423,7 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.getParameters = function(){
       $scope.distribute();
+      $scope.sortRoomsPriority();
     }
     
     $scope.distribute = function(){
@@ -487,20 +513,23 @@ angular.module('AngularScaffold.Controllers')
                 }
               }
               if(habia){  
-                temp = selectedRooms[index]  
-                $scope.employeeWithRooms[i].habitacion.push(selectedRooms[index]);
+                temp = selectedRooms[index]
+                temp.priority = $scope.employeeWithRooms[i].habitacion.length;
+                $scope.employeeWithRooms[i].habitacion.push(temp);
                 id = selectedRooms[index].room_id;
                 selectedRooms.splice(index,1)
               }else{
                 temp = selectedRooms[0]
-                $scope.employeeWithRooms[i].habitacion.push(selectedRooms[0])
+                temp.priority = $scope.employeeWithRooms[i].habitacion.length;
+                $scope.employeeWithRooms[i].habitacion.push(temp)
                 id = selectedRooms[0].room_id;
                 selectedRooms.splice(0,1)
               }
 
             }else{
-              temp = selectedRooms[0]            
-              $scope.employeeWithRooms[i].habitacion.push(selectedRooms[0]);
+              temp = selectedRooms[0];
+              temp.priority = $scope.employeeWithRooms[i].habitacion.length;            
+              $scope.employeeWithRooms[i].habitacion.push(temp);
               id = selectedRooms[0].room_id;
               selectedRooms.splice(0,1)
               //aqui es cuando hayan sin habitacion
@@ -509,8 +538,7 @@ angular.module('AngularScaffold.Controllers')
               if ($scope.floors[k].room_id === id) {
                 var encontrado = false;
                 for (var l = 0; l < $scope.floors[k].idUser.length; l++) {
-                  if ($scope.floors[k].idUser[l].username === 
-                    $scope.employeeWithRooms[i].empleado.username) {
+                  if ($scope.floors[k].idUser[l].username === $scope.employeeWithRooms[i].empleado.username) {
                     encontrado = true;
                     break;
                   };
@@ -528,6 +556,7 @@ angular.module('AngularScaffold.Controllers')
                 room: temp
             }
             RoomService.SaveDistributedRooms(parameters).then(function(response){
+              console.log(response.data)
             })
           };
         }//TERMINADO
@@ -570,6 +599,7 @@ angular.module('AngularScaffold.Controllers')
         }
 
         $scope.sortRooms();
+        $scope.sortRoomsPriority();
         
       })
     }

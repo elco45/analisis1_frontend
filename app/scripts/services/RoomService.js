@@ -1,8 +1,8 @@
 angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
 	function($http){
 		$http.defaults.withCredentials = true;
-		var baseUrl = 'https://hotelmacarthur-backend.herokuapp.com/';
-		//var baseUrl = 'http://localhost:8000/';
+		//var baseUrl = 'https://hotelmacarthur-backend.herokuapp.com/';
+		var baseUrl = 'http://localhost:8000/';
 		return {
 			GetEmpleado: function(){
 	      		return $http.get(baseUrl + "v1/getEmployees");
@@ -17,7 +17,6 @@ angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
 	      		return $http.post(baseUrl + "v1/updateRoom",payload);
       		},
       		SaveDistributedRooms: function(payload){
-      			console.log(payload)
       			return $http.post(baseUrl + "v1/saveDistributedRooms",payload);
       		},
       		SwapDistributedRooms: function(payload){
