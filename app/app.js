@@ -26,6 +26,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             params: {content:undefined},
             templateUrl: '/viewsAdmin/manageUsers.html'
         })
+        .state('reports', {
+            url: '/reports',
+            params: {content:undefined},
+            templateUrl: '/viewsAdmin/history.html'
+        })
         .state('choose', {
             url: '/choose',
             params: {content:undefined},
