@@ -30,7 +30,10 @@ angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
       		},
       		UpdateControl: function(payload){
 	      		return $http.post(baseUrl + "v1/updateControl",payload);
-      		}
+      		},
+                  UpdatePriorityAfterSplice: function(payload){
+                        return $http.post(baseUrl + "v1/updatePriorityAfterSplice",payload);
+                  }
       	}
       	
 	}
