@@ -147,6 +147,13 @@ h1{
   background-color: #d9534f!important;
 }
 
+.room-priority{
+  color: #fff!important;
+  background-color: #5E267C!important;
+  border-style: solid;
+  border-color: #E60000!important;
+}
+
 .room-hover {
     background-color: #9f9 !important;
 }
@@ -421,6 +428,20 @@ input.radio:checked ~ label {
   margin: 0;
   font-size: 24px;
   border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 85px;
+  height: 75px;
+}
+
+.room-priority2{
+  color: #fff!important;
+  background-color: #5E267C!important;
+  border-style: solid;
+  border-color: #E60000!important;
+  padding: 22px;
+  margin: 0;
+  font-size: 24px;
   border-radius: 15px;
   cursor: pointer;
   width: 85px;
