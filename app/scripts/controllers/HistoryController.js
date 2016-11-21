@@ -3,9 +3,13 @@ angular.module('AngularScaffold.Controllers')
   	function (HistoryService, $scope, $state, $rootScope, $sessionStorage) {
   		$scope.reportsList = [];
 
+  		$scope.init = function() {
+	      $scope.getReports();
+	    };
+
   		$scope.getReports = function(){
-  			HistoryService.getReports().then(function(response){
-      	$scope.reportsList = response.data
+  			HistoryService.GetReports().then(function(response){
+      		$scope.reportsList = response.data
   			});
 	  	}
 
