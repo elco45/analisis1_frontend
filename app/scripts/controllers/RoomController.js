@@ -1,6 +1,6 @@
 angular.module('AngularScaffold.Controllers')
-  .controller('RoomController', ['RoomService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', 
-    function (RoomService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage) {
+  .controller('RoomController', ['RoomService','HistoryService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', 
+    function (RoomService,HistoryService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage) {
     $scope.$sessionStorage = $sessionStorage;
     $scope.selectedRooms = [];
     $scope.empleados = [];
@@ -741,7 +741,32 @@ angular.module('AngularScaffold.Controllers')
           room: $scope.room
       }
       RoomService.UpdateRoom(temporal).then(function(response){
-       
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if(dd<10) {
+            dd='0'+dd
+        } 
+
+        if(mm<10) {
+            mm='0'+mm
+        } 
+
+        today = mm+'/'+dd+'/'+yyyy;
+
+        var reporte ={
+          employee_id: response.data.idUser[0].username,
+          room_number: response.data.room_id,
+          problem_id: 0,//ESTO ESTA EN DURO, HAY QUE HACERLO!
+          room_state: response.data.status,
+          date_reported: today
+        };
+
+        HistoryService.CreateRegister(reporte).then(function(response2){////EL PAYLOAD ESTA MALO
+          console.log(response2.data)
+        }); 
       });
       $scope.RoomSelected = false;
       $scope.start = false;
