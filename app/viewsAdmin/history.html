@@ -1,64 +1,152 @@
-<div class="container" ng-controller="HistoryController" ng-init = "" > 
-  
-  <div class="container-extra">
-  </div>
-  <div class="container-extra">
-  </div>
+  <div class="container" ng-controller="HistoryController" ng-init = "" >
 
-  <h1>Historial</h1>
-
-  <div class="slinput" ng-init="">
-    <i class="fa fa-search left-icon"></i> 
-    <input placeholder="Busque aquí" ng-model="searchInputVal"/> 
-    <i ng-class="{'fa' : true, 'fa-close' : true, 'right-icon' : true, active : (searchInputVal.length > 0)}" ng-click="searchInputVal = ''"></i>
-  </div>  
-
-  <div ng-init="sortOrderVal = 'date' ">
-    <ul class="nav nav-tabs" ng-init="tab = 1">
-      <li role="presentation" class="tab" ng-class="{active: tab==1}" ng-click="tab=1" ng-model="sortOrderVal='date'"><a>Fecha</a></li>
-      <li role="presentation" class="tab" ng-class="{active: tab==2}" ng-click="tab=2" ng-model="sortOrderVal='room_number'"><a>Habitación</a></li>
-      <li role="presentation" class="tab" ng-class="{active: tab==3}" ng-click="tab=3" ng-model="sortOrderVal='employee_name'"><a>Empleado</a></li>
-    </ul>
-  </div>
-
-  <div class="hist">
-    <div id="reports" class="reports-by-date" ng-show="tab == 1" ng-repeat="rep in fakeReports | filter:searchInputVal | orderBy:sortOrderVal">
-      <div class="rep-left">
-        <h4>{{rep.date}}</h4>
-      </div>
-      <div class="rep-body">
-        <h5>Número de Habitación: </h5>{{rep.room_number}}
-        <h5>Nombre del Empleado: </h5>{{rep.employee_name}}
-        <h5>Estado: </h5>{{rep.room_state}}
-        <h5>Observación: </h5>{{rep.observation}}
-      </div>
+    <div class="container-extra">
+    </div>
+    <div class="container-extra">
     </div>
 
-    <div id="reports" class="reports-by-room" ng-show="tab == 2" ng-repeat="rep in fakeReports | filter:searchInputVal | orderBy:sortOrderVal">
-      <div class="rep-left">
-        <h4>{{rep.room_number}}</h4>
-      </div>
-      <div class="rep-body">
-        <h5>Nombre del Empleado: </h5>{{rep.employee_name}}
-        <h5>Estado: </h5>{{rep.room_state}}
-        <h5>Observación: </h5>{{rep.observation}}
-        <h5>Fecha: </h5>{{rep.date}}
-      </div>
+    <h1>Historial</h1>
+
+    <div class="slinput" ng-init="">
+      <i class="fa fa-search left-icon"></i>
+      <input placeholder="Busque aquí" ng-model="searchInputVal"/>
+      <i ng-class="{'fa' : true, 'fa-close' : true, 'right-icon' : true, active : (searchInputVal.length > 0)}" ng-click="searchInputVal = ''"></i>
     </div>
 
-    <div id="reports" class="reports-by-user" ng-show="tab == 3" ng-repeat="rep in fakeReports | filter:searchInputVal | orderBy:sortOrderVal">
-      <div class="rep-left">
-        <h4>{{rep.employee_name}}</h4>
-      </div>
-      <div class="rep-body">
-        <h5>Número de Habitación: </h5>{{rep.room_number}}
-        <h5>Estado: </h5>{{rep.room_state}}
-        <h5>Observación: </h5>{{rep.observation}}
-        <h5>Fecha: </h5>{{rep.date}}
-      </div>
+    <div ng-init="sortOrderVal = 'date' ">
+      <ul class="nav nav-tabs" ng-init="tab = 1">
+        <li role="presentation" class="tab" ng-class="{active: tab==1}" ng-click="tab=1" ng-model="sortOrderVal='date'"><a>Fecha</a></li>
+        <li role="presentation" class="tab" ng-class="{active: tab==2}" ng-click="tab=2" ng-model="sortOrderVal='room_number'"><a>Habitación</a></li>
+        <li role="presentation" class="tab" ng-class="{active: tab==3}" ng-click="tab=3" ng-model="sortOrderVal='employee_name'"><a>Empleado</a></li>
+      </ul>
     </div>
 
+    <div class="hist">
+      <div id="reports" class="reports-by-date" ng-show="tab == 1" >
+        <div class="rep-left">
+            <div class="col-md-4">
+              Ingrese fecha de Inicio:
+              <input class="input_date" type="date" name="bday" max="2012-12-31">
+            </div>
+            <div class="col-md-4">
+              Ingrese fecha Final:
+              <input class="input_date" type="date" name="bday" min="2016-01-02">
+            </div>
+
+          </div>
+               <table id="table_by_date" class="table table-stripes">
+                 <tr>
+                   <th>
+                     Número de Habitación
+                   </th>
+                   <th>
+                     Nombre del Empleado
+                   </th>
+                   <th>
+                     Estado
+                   </th>
+                   <th>
+                     Observación
+                   </th>
+                   <th>
+                     Fecha
+                   </th>
+                 </tr>
+                 <tr ng-repeat="rep in fakeReports | filter:searchInputVal | orderBy:sortOrderVal">
+                   <td>
+                     {{rep.room_number}}
+                   </td>
+                   <td>
+                     {{rep.employee_name}}
+                   </td>
+                   <td>
+                     {{rep.room_state}}
+                   </td>
+                   <td>
+                     {{rep.observation}}
+                   </td>
+                 </tr>
+               </table>
+      </div>
+
+      <div id="reports" class="reports-by-room" ng-show="tab == 2" >
+        <div class="rep-left">
+          <h4>{{rep.room_number}}</h4>
+        </div>
+        <div class="rep-body">
+          <table id="table_by_room" class="table table-stripes">
+            <tr>
+              <th>
+                Número de Habitación
+              </th>
+              <th>
+                Nombre del Empleado
+              </th>
+              <th>
+                Estado
+              </th>
+              <th>
+                Observación
+              </th>
+              <th>
+                Fecha
+              </th>
+            </tr>
+            <tr ng-repeat="rep in fakeReports | filter:searchInputVal | orderBy:sortOrderVal">
+              <td>
+                {{rep.room_number}}
+              </td>
+              <td>
+                {{rep.employee_name}}
+              </td>
+              <td>
+                {{rep.room_state}}
+              </td>
+              <td>
+                {{rep.observation}}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div id="reports" class="reports-by-user" ng-show="tab == 3" >
+        <div class="rep-left">
+          <h4>{{rep.employee_name}}</h4>
+        </div>
+        <table id="table_by_employee" class="table table-stripes" >
+          <tr>
+            <th>
+              Número de Habitación
+            </th>
+            <th>
+              Nombre del Empleado
+            </th>
+            <th>
+              Estado
+            </th>
+            <th>
+              Observación
+            </th>
+            <th>
+              Fecha
+            </th>
+          </tr>
+          <tr ng-repeat="rep in fakeReports | filter:searchInputVal | orderBy:sortOrderVal">
+            <td>
+              {{rep.room_number}}
+            </td>
+            <td>
+              {{rep.employee_name}}
+            </td>
+            <td>
+              {{rep.room_state}}
+            </td>
+            <td>
+              {{rep.observation}}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
-  
-  
-</div>
