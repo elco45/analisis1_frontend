@@ -2,7 +2,7 @@
 /* ng-show/cloak*/
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
-    display: none !important; 
+    display: none !important;
 }
 
 h1{
@@ -82,7 +82,7 @@ h1{
 .grids {
 	padding: 10px;
   margin: 0 auto;
-  width: 100%; 
+  width: 100%;
 }
 .fa-remove{
   font-size:22px;
@@ -161,9 +161,9 @@ h1{
 .rcorners {
     border-radius: 25px;
     border: 2px solid #gray;
-    padding: 20px; 
+    padding: 20px;
     width: 200px;
-    height: 150px; 
+    height: 150px;
 }
 
 .c {
@@ -298,7 +298,7 @@ textarea.focus {
 }
 
 .list {
-  list-style-type: none; 
+  list-style-type: none;
 }
 
 .examples{
