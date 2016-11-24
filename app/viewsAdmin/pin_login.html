@@ -1,0 +1,46 @@
+<div class="container" ng-controller="UsersController as vm" ng-init="getEmployees()">
+   
+   <div class="container extra">
+   </div>
+
+  <div class="main-login">
+    <div class="" ng-repeat = "e in employees track by $index"  >
+      <button class="repart-name" ng-click="select_current_emp(e)" data-toggle = "modal" data-target="#numpad">
+        {{e.username}}
+      </button>          
+    </div>
+  </div>  
+  <!-- MODAL -->
+  <div  id="numpad" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h2 class="modal-title"><center>Ingrese Pin</center></h2>
+        </div>
+
+        <div class="modal-body" ng-model="pinInserted">
+          <div>
+            <div class="demo__iphone-numbers">                
+                <input type="text" data-ng-model="vm.numbers">
+            </div>
+            
+            <div class="demo__iphone-keypad">
+                <bc-keypad bc-number-model="vm.numbers" bc-left-button="backspace" bc-right-button="submit" bc-max-length = "4"></bc-keypad>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click ="verificarDatos(vm.numbers, SelectedEmployee)" >Autenticar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

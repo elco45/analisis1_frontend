@@ -58,7 +58,7 @@ angular.module('AngularScaffold.Controllers')
           }
         })        
       }
-    }, 500);
+    }, 1000);
     //--lo que hizo elena ---
 
     $scope.init = function() {
@@ -776,6 +776,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.getEmpRooms = function() {
+        $scope.currentEmpRooms = [];
         RoomService.GetRooms().then(function(response){
           for(var i =0; i<response.data.length;i++){
               for(var j=0;j<response.data[i].idUser.length; j++){
