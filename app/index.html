@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="styles/sweetalert.css">
     <link href="styles/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/angular-keypad/dist/angular-keypad.css">
+
     <!-- endinject -->
     
     <!-- bower:css -->
@@ -27,7 +29,7 @@
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
         <link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
   </head>
-  
+
   <body>
   <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller ="UsersController">
       <div class="container">
@@ -38,7 +40,7 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/#/home"> 
+            <a class="navbar-brand" href = "" ng-click="clickIconButton()"> 
                <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
                    width: 8em;
                    height: 2.8em;
@@ -62,7 +64,7 @@
 
   <!-- bower:js -->
 
-  <script src="/jquery/dist/jquery.js"></script>  
+  <script src="/jquery/dist/jquery.js"></script>
   <script src="/jquery-ui/jquery-ui.js"></script>
   <script src="/angular/angular.js"></script>
   <script src="/angular-ui-router/release/angular-ui-router.js"></script>
@@ -75,8 +77,6 @@
   <script src="app.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.4.6/angular-locale_es-es.js"></script>
-  
-
   <!-- inject:js -->
   <script src="scripts/controllers/UsersController.js"></script>
   <script src="scripts/services/UserService.js"></script>
@@ -86,6 +86,7 @@
   <script src="scripts/services/HistoryService.js"></script>
   <script src="scripts/services/authService.js"></script>
   <script src="scripts/controllers/modules/exporting.js"></script>
+  <script src="/angular-keypad/dist/angular-keypad.js"></script>
   <!-- endinject -->
 
 </html>

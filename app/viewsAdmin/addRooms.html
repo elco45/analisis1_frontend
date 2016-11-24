@@ -131,14 +131,14 @@
           	 <div class="col-md-6 emps-info" ng-repeat="f in infoRC.idUser">
           	   <div class="row">
                   <h3 class="name-emps-info col-xs-6">{{f.username}}</h3>
-          	   		<img style="height:100%; width:100%;" class="col-xs-6" data-ng-src="{{f.photo}}"/>
+          	   		<!--<img style="height:100%; width:100%;" class="col-xs-6" data-ng-src="{{f.photo}}"/>-->
           	   </div>
           	 </div>
           </div>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click = "selectRoom(false,infoRC,true)">Prioridad!</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click = "selectRoom(false,infoRC,true)" ng-disabled="infoRC.status === 0 || employeeWithRooms.length <= 0">Prioridad!</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         </div>
 

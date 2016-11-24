@@ -9,6 +9,9 @@ angular.module('AngularScaffold.Services').factory('AuthService', ['$http',
 			},
 			Login: function(payload){
 				return $http.post(baseUrl +"v1/login", payload);
+			},
+			LoginWithPin: function(payload){
+				return $http.post(baseUrl + "v1/loginWithPin", payload);
 			}
 	    };
 }]);

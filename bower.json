@@ -31,6 +31,10 @@
     "bootstrap3-dialog": "latest",
     "angular-dragdrop": "latest",
     "bootstrap-sweetalert": "latest",
+<<<<<<< HEAD
     "underscore": "latest"
+=======
+    "angular-keypad": "^2.0.4"
+>>>>>>> 923ad82a0f862b26fae53269a3551bf07f96ae76
   }
 }
