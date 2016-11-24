@@ -360,26 +360,31 @@ angular.module('AngularScaffold.Controllers')
         $scope.selectedRooms.push(room);
       }
 
+      var addpriofromcero = false;
       if(dragged){
         room.status = 1
       }else if(prioridad){ //apreta prioridad en modal!
+
         if(room.status == 1){ //cuando esta por limpiar y le pone prioridad
           room.status = 5
           $scope.selectedRooms.splice(index, 1);
-
         }else if(room.status == 5){ //remover su prioridad
+          room.status = 1
+          $scope.selectedRooms.splice(index, 1);
+          for (var i = 0; i < $scope.employeeWithRooms.length; i++) { // por todos los empleados
+            for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length -1; j++) {//por cada habitacion de cada empleado
+              for (var k = 0; k < $scope.employeeWithRooms[i].habitacion.length; k++) {
+                if ( $scope.employeeWithRooms[i].habitacion[ j ].status != 5 && $scope.employeeWithRooms[i].habitacion[j+1].status == 5 ){
+                 temp = $scope.employeeWithRooms[i].habitacion[ j ];
+                 $scope.employeeWithRooms[i].habitacion[ j ] = $scope.employeeWithRooms[i].habitacion[ j+1 ];
+                 $scope.employeeWithRooms[i].habitacion[ j+1 ] = temp;
 
-          /*room.status = 1
-          for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
-            for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length; j++) {
-              if($scope.employeeWithRooms[i].habitacion[j].room_id === room.room_id){
-                $scope.employeeWithRooms[i].habitacion.splice(j,1)
-                break;
+                 $scope.employeeWithRooms[i].habitacion[ j ].priority = j
+                 $scope.employeeWithRooms[i].habitacion[ j+1 ].priority = j+1
+                }
               }
             }
-          }*/
-          room.status = 0
-          $scope.selectedRooms.splice(index, 1);
+          }
         }else{ // poner prioridad
           room.status = 5
         }
@@ -407,11 +412,11 @@ angular.module('AngularScaffold.Controllers')
         if(index != -1) {
           $scope.selectedRooms.splice(index, 1);        
         }
-
       }
       if (room.status == 5) {
         $scope.selectedRooms.push(room);
       }
+
       var room_data = {
         employee: $sessionStorage.currentUser.username,
         room : room
@@ -473,7 +478,7 @@ angular.module('AngularScaffold.Controllers')
           }
         }*///fin fors para ordernar las habitaciones 
         
-        var temp;
+        /*var temp;
         for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
           for (var j = 0; j <$scope.employeeWithRooms.length - 1; j++) {
               if ( $scope.employeeWithRooms[j].habitacion.length < $scope.employeeWithRooms[j+1].habitacion.length ){
@@ -482,7 +487,7 @@ angular.module('AngularScaffold.Controllers')
                 $scope.employeeWithRooms[j+1] = temp;
               }
           }
-        } //ordena los employees por length de su arreglo de habitaciones
+        } //ordena los employees por length de su arreglo de habitaciones*/
 
         
         var temp;
@@ -542,12 +547,10 @@ angular.module('AngularScaffold.Controllers')
                   break;
                 }
               }
-
               if(habia){  
 
                 temp = selectedRooms[index]
                 if(temp.status == 5){
-                  console.log(temp)
                   temp.priority = 0;
                   $scope.employeeWithRooms[i].habitacion.splice(0,0,temp);
                   $scope.organizePriority(i);                  
@@ -571,7 +574,6 @@ angular.module('AngularScaffold.Controllers')
                       }
                     }
                     if (cont==1) {
-                      console.log(n)
                       $scope.employeeWithRooms[n].habitacion.splice(asd,1);
                       $scope.employeeWithRooms[n].habitacion.splice(0,0,temp);
                       $scope.organizePriority(n);
@@ -824,9 +826,7 @@ angular.module('AngularScaffold.Controllers')
     };
 
     $scope.organizePriority = function(i){
-      console.log($scope.employeeWithRooms[i].habitacion)
       for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length; j++) {
-        //console.log($scope.employeeWithRooms[i].habitacion[j])
         $scope.employeeWithRooms[i].habitacion[j].priority = j;
         var parameters = {
             employee: $sessionStorage.currentUser.username,
@@ -837,6 +837,13 @@ angular.module('AngularScaffold.Controllers')
           //console.log(response.data)
         })
       };
+    }
+
+    $scope.isNeutral = function(infoRoom){
+      if(infoRoom.status === 0){
+        return true;
+      }
+      return false;
     }
     
 }]);
