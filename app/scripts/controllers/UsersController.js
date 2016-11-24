@@ -6,12 +6,12 @@ angular.module('AngularScaffold.Controllers')
     $scope.username = "";
     $scope.password = "";
   	$scope.usuario = { employee_type:"0", role:"0"};
-    $scope.lisUsuario = []; 
+    $scope.lisUsuario = [];
     $scope.usuarioSeleccionado ={ employee_type:"0", role:"0", status:"0" };
     $sessionStorage.logged = false;
 
     $scope.getUser = function(){
-     
+
       UserService.GetUser().then(function(response){
       $scope.lisUsuario = response.data
       });
@@ -29,12 +29,13 @@ angular.module('AngularScaffold.Controllers')
         $scope.usuario.photo = reader.result
         UserService.Register($scope.usuario).then(function(algo){
           console.log("Guardado con exito");
+          swal("¡Exito!","success");
           $scope.usuario="";
         }).catch(function(err){
-        
+
       },false)
-      
-       
+
+
       });
     };
 
@@ -76,9 +77,10 @@ angular.module('AngularScaffold.Controllers')
 
       UserService.UpdateUser(temp).then(function(algo){
         console.log("Guardado con exito");
+        swal("¡Exito!","success");
         $scope.usuarioSeleccionado = " ";
       }).catch(function(err){
-       
+
       });
     }
 
@@ -88,12 +90,12 @@ angular.module('AngularScaffold.Controllers')
       console.log($state.current.name)
       if(typeof($sessionStorage.currentUser) === "undefined" || $state.current.name === 'login'){
         return false
-      }      
+      }
       return true;
     }
 
-      	
-    $scope.logout = function(){ 
+
+    $scope.logout = function(){
         authService.Logout().then(function(response){
           	$sessionStorage.$reset();
           	$state.go("login");
@@ -109,6 +111,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
    	$scope.login = function(){
+
         if ($scope.username != null && $scope.password != null) {
             UserData = {
               username: $scope.username,
@@ -128,10 +131,16 @@ angular.module('AngularScaffold.Controllers')
                       $scope.actualUser = true;
                       $state.go("emp")
                     }
+                }else{
+                  swal("Error", "Ingrese los datos correctos", "error");
                 }
 
-            })
+            }).catch(function(err){
+              swal("Error", "Ingrese los datos correctos", "error");
+              console.log((err.data.error + " " + err.data.message));
+            });
         }else{
+          swal("Error", "Ingrese los datos correctos", "error");
           	BootstrapDialog.alert({
           	  	title: 'ERROR',
 	            message: 'Porfavor ingrese un usuario y contraseña valido.',
@@ -146,5 +155,5 @@ angular.module('AngularScaffold.Controllers')
         $state.go("signUp")
    	}
 
-   	
+
   }]);

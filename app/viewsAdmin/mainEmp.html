@@ -1,22 +1,26 @@
 <div class="container" ng-controller="RoomController" ng-init="getEmpRooms()">
-  
+
 
 <div class="container extra">
 </div>
 
 <!-- Grid de habitaciones -->
+
+
+
+
 <div class="jumbotron col-md-12">
   <h1>Habitaciones</h1>
   <table class=col-md-12 style="margin-top: 25px;">
     <tr>
       <td ng-repeat="r in currentEmpRooms">
         <center>
-          <button ng-click="changeRoomEmp(r.room_id)" ng-class="{'room-selected2': 
-          r.status == 1, 'room-clean2': 
-          r.status == 2, 'room-clean-w-prob2': 
-          r.status ==3,'room-not-clean2': 
-          r.status == 4,'room-priority2': 
-          r.status == 5}">
+          <button  ng-click=" changeRoomEmp(r.room_id)" ng-class="{'room-selected2':
+          r.status == 1, 'room-clean2':
+          r.status == 2, 'room-clean-w-prob2':
+          r.status ==3,'room-not-clean2':
+          r.status == 4,'room-priority2':
+          r.status == 5">
             {{r.room_id}}
           </button>
         </center>
@@ -59,9 +63,9 @@
         </td>
         <td ng-hide="showListProblems">
           <div class="roombutton2">
-            <button ng-click="showListProblems=true" class="mybtn2">Terminar de limpiar y reportar problema</button>
+            <button ng-click="showListProblems=true" class="danger mybtn2">Terminar de limpiar y reportar problema</button>
           </div>
-        </td>   
+        </td>
       </tr>
       <tr>
         <div class="col-md-12 outer" ng-show="showList">
@@ -88,7 +92,7 @@
       <tr>
         <div class="col-md-12 outer" ng-show="showListProblems">
           <div class="contain">
-            <input class="radio" id="opt4" type="radio" value="No funciona el TV." ng-model="room.observation" name="Problems"> 
+            <input class="radio" id="opt4" type="radio" value="No funciona el TV." ng-model="room.observation" name="Problems">
             <label class="lb" for="opt4"> No funciona el TV. </label>
           </div>
           <div class="contain">
@@ -99,12 +103,12 @@
             <input class="radio" id="opt6" type="radio" value="Se quebró una lámpara." ng-model="room.observation" name="Problems">
             <label class="lb" for="opt6"> Se quebró una lámpara. </label>
           </div>
-        </div> 
+        </div>
         <div class="col-md-12 contain2">
           <button ng-click="cambioEstados(3)" ng-show="showListProblems" class="mybtn2 col-md-3"> Finalizar </button>
         </div>
       </tr>
-    </table> 
+    </table>
     </div>
   </div>
 </div>
