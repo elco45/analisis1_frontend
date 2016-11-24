@@ -58,7 +58,7 @@ angular.module('AngularScaffold.Controllers')
           }
         })
       }
-    }, 500);
+    }, 1000);
     //--lo que hizo elena ---
 
     $scope.init = function() {
@@ -476,15 +476,8 @@ angular.module('AngularScaffold.Controllers')
               }
             }
           }
-<<<<<<< HEAD
-        }*///fin fors para ordernar las habitaciones
-
-        var temp;
-=======
-        }*///fin fors para ordernar las habitaciones 
         
         /*var temp;
->>>>>>> 05189a526537e0270e4f1fd7799ecb58687335f3
         for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
           for (var j = 0; j <$scope.employeeWithRooms.length - 1; j++) {
               if ( $scope.employeeWithRooms[j].habitacion.length < $scope.employeeWithRooms[j+1].habitacion.length ){
@@ -553,12 +546,7 @@ angular.module('AngularScaffold.Controllers')
                   break;
                 }
               }
-<<<<<<< HEAD
-
-              if(habia){
-=======
               if(habia){  
->>>>>>> 05189a526537e0270e4f1fd7799ecb58687335f3
 
                 temp = selectedRooms[index]
                 if(temp.status == 5){
@@ -789,6 +777,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.getEmpRooms = function() {
+        $scope.currentEmpRooms = [];
         RoomService.GetRooms().then(function(response){
           for(var i =0; i<response.data.length;i++){
               for(var j=0;j<response.data[i].idUser.length; j++){
@@ -850,8 +839,6 @@ angular.module('AngularScaffold.Controllers')
       };
     }
 
-<<<<<<< HEAD
-=======
     $scope.isNeutral = function(infoRoom){
       if(infoRoom.status === 0){
         return true;
@@ -859,7 +846,6 @@ angular.module('AngularScaffold.Controllers')
       return false;
     }
     
->>>>>>> 05189a526537e0270e4f1fd7799ecb58687335f3
 }]);
 
 app.filter('slice', function() {

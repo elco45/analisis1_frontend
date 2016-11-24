@@ -4,7 +4,7 @@ angular.module('AngularScaffold.Controllers', []);
 angular.module('AngularScaffold.Services', []);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise('login');
+	$urlRouterProvider.otherwise('start');
 	$stateProvider
 		.state('home', {
             url: '/home',
@@ -50,5 +50,15 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             url: '/roomemp',
             params: {content:undefined},
             templateUrl: '/viewsAdmin/roomEmp.html'
+        })
+        .state('start', {
+            url: '/start',
+            params: {content:undefined},
+            templateUrl: '/viewsAdmin/start_page.html'
+        })
+        .state('pin_login', {
+            url: '/login_emp',
+            params: {content:undefined},
+            templateUrl: '/viewsAdmin/pin_login.html'
         });
 }])

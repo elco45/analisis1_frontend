@@ -1,6 +1,6 @@
-angular.module('AngularScaffold.Controllers')
-  .controller('UsersController', ['AuthService','UserService' , '$scope', '$state', '$rootScope', '$sessionStorage',
-  	function (authService,UserService, $scope, $state, $rootScope, $sessionStorage) {
+angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
+  .controller('UsersController', ['AuthService','RoomService','UserService' , '$scope', '$state', '$rootScope', '$sessionStorage',
+  	function (authService,RoomService,UserService, $scope, $state, $rootScope, $sessionStorage) {
   	$scope.$sessionStorage = $sessionStorage;
   	$scope.title = "Login";
     $scope.username = "";
@@ -9,6 +9,8 @@ angular.module('AngularScaffold.Controllers')
     $scope.lisUsuario = [];
     $scope.usuarioSeleccionado ={ employee_type:"0", role:"0", status:"0" };
     $sessionStorage.logged = false;
+    $scope.employees = [];
+    $scope.SelectedEmployee = {};
 
     $scope.getUser = function(){
 
@@ -71,7 +73,8 @@ angular.module('AngularScaffold.Controllers')
         nombre : $scope.usuarioSeleccionado.name,
         employee_type : $scope.usuarioSeleccionado.employee_type,
         status:$scope.usuarioSeleccionado.status,
-        role: $scope.usuarioSeleccionado.role
+        role: $scope.usuarioSeleccionado.role,
+        pin: $scope.usuarioSeleccionado.pin
       }
 
 
@@ -98,7 +101,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.logout = function(){
         authService.Logout().then(function(response){
           	$sessionStorage.$reset();
-          	$state.go("login");
+          	$state.go("start");
         }).catch(function(err){
           	BootstrapDialog.alert({
               	title: 'ERROR',
@@ -155,5 +158,69 @@ angular.module('AngularScaffold.Controllers')
         $state.go("signUp")
    	}
 
+    $scope.go_admin_login = function(){
+      $state.go("login")
+    }
+
+    $scope.go_emp_login = function(){
+      $state.go("pin_login")
+    }
+   	
+    $scope.getEmployees = function(){     
+      RoomService.GetEmpleado().then(function(response){
+        $scope.employees = response.data
+      });
+    }
+
+    $scope.select_current_emp = function(employee){
+      $scope.SelectedEmployee = employee;
+    }
+
+    $scope.verificarDatos = function(numbers,employee){
+      if (employee.pin === null) {
+        var temp = {
+          username: employee.username,
+          pin: numbers
+        }
+        UserService.ModifyPin(temp).then(function(response){
+          console.log(response.data)
+        });
+      }else if(employee.pin != null && employee.username != null){
+          UserData = {
+            username: employee.username,
+            pin: numbers
+          }
+          authService.LoginWithPin(UserData).then(function(response){
+              if(response.data != "error"){
+                  $sessionStorage.currentUser = response.data
+                  console.log(response.data)
+                  $sessionStorage.logged = true;
+                  if(response.data.role === 1){
+                    $scope.actualUser = true;
+                    $state.go("emp")
+                  }
+              }
+
+          })
+      }else{
+          BootstrapDialog.alert({
+              title: 'ERROR',
+            message: 'Porfavor ingrese un usuario y contraseña valido.',
+            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: true, // <-- Default value is false
+            buttonLabel: 'Cerrar', // <-- Default value is 'OK',
+        });
+      }
+    }
+
+    $scope.clickIconButton = function(){
+      if($scope.$sessionStorage.currentUser === undefined){
+        $state.go("start");
+      }else if($scope.$sessionStorage.currentUser.role === 0){
+        $state.go("home");
+      }else if($scope.$sessionStorage.currentUser.role === 1){
+        $state.go("emp");
+      }
+    }
 
   }]);
