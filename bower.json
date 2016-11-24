@@ -30,6 +30,7 @@
     "ngstorage": "latest",
     "bootstrap3-dialog": "latest",
     "angular-dragdrop": "latest",
-    "bootstrap-sweetalert": "latest"
+    "bootstrap-sweetalert": "latest",
+    "underscore": "latest"
   }
 }

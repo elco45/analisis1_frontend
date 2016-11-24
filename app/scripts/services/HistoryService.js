@@ -1,4 +1,4 @@
-angular.module('AngularScaffold.Services').factory('HistoryService', ['$http',
+angular.module('AngularScaffold.Services').factory('HistoryService', ['$http', 
 	function($http){
 		$http.defaults.withCredentials = true;
 		//var baseUrl = 'https://hotelmacarthur-backend.herokuapp.com/';

@@ -1,24 +1,47 @@
 angular.module('AngularScaffold.Controllers')
-  .controller('HistoryController', ['HistoryService' , '$scope', '$state', '$rootScope', '$sessionStorage',
+  .controller('HistoryController', ['HistoryService' , '$scope', '$state', '$rootScope', '$sessionStorage', 
   	function (HistoryService, $scope, $state, $rootScope, $sessionStorage) {
   		$scope.reportsList = [];
-
-  		$scope.init = function() {
-	      $scope.getReports();
-	    };
+  		$scope.selected = [];
+  		$scope.userList = [];
 
   		$scope.getReports = function(){
   			HistoryService.GetReports().then(function(response){
       		$scope.reportsList = response.data
   			});
-	  	}
+	  	};
 
-	  	$scope.fakeReports = [
-            {"employee_id":"1", "employee_name":"Srinivas Dasari", "room_number":"201", "date":"Monday", "observation":"", "room_state":"clean"},
-            {"employee_id":"2", "employee_name":"Srinivas Tamada", "room_number":"201", "date":"Tuesday", "observation":"Bad","room_state":"dirty"},
-            {"employee_id":"3", "employee_name":"Sri Harsha", "room_number":"103", "date":"Tuesday", "observation":"No remote","room_state":"clean w/prob"},
-            {"employee_id":"4", "employee_name":"Lokesh Raghuram", "room_number":"108", "date":"Wednesday", "observation":"Bad","room_state":"dirty"},
-            {"employee_id":"5", "employee_name":"Bala Ganesh", "room_number":"108", "date":"Thursday","observation":"TV broken", "room_state":"clean w/prob"},
-            {"employee_id":"6", "employee_name":"Arun kumar", "room_number":"101", "date":"Friday", "observation":"","room_state":"clean"}
+	  	$scope.mockData = [
+            {"room_number":"201", "employee_username":"dany", "room_state":"0", "problem_id":"0", "date_reported":"2016-11-20T05:00:00.000Z"},
+            {"room_number":"201", "employee_username":"dany", "room_state":"1", "problem_id":"3", "date_reported":"2016-11-08T05:00:00.000Z"},
+            {"room_number":"103", "employee_username":"dario", "room_state":"2", "problem_id":"5", "date_reported":"2016-10-26T05:00:00.000Z"},
+            {"room_number":"116", "employee_username":"katherine", "room_state":"2", "problem_id":"3", "date_reported":"2016-10-29T05:00:00.000Z"},
+            {"room_number":"114", "employee_username":"dario", "room_state":"1", "problem_id":"1", "date_reported":"2016-10-30T05:00:00.000Z"},
+            {"room_number":"114", "employee_username":"katherine", "room_state":"1", "problem_id":"2", "date_reported":"2016-11-04T05:00:00.000Z"}
             ];
+
+      $.each($scope.reportsList, function(i, el){
+			  if($.inArray(el.employee_username, $scope.userList) === -1) {
+			  	$scope.userList.push(el.employee_username);
+			  }
+			});
+
+			$scope.filter = function(){};
+
+			$scope.filterByUsername = function(username){
+				return $scope.filter[username.employee_username] || $scope.noFilter($scope.filter);
+			};
+
+			$scope.noFilter = function(filterObj){
+				return Object.
+	      keys(filterObj).
+	      every(function (key) { return !filterObj[key]; });
+			};
+
+			$scope.records = [];
+			$scope.recordLimit = 8;
+			for(var i=0; i<$scope.reportsList.length; i++) {
+			   $scope.records.push($scope.reportsList);     
+			}
+
 	  }]);
