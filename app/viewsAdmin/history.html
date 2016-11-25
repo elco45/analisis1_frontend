@@ -22,7 +22,7 @@
     </div>
 
     <div class="row">
-      <div class="hist col-md-9" id="printThisElement">
+      <div class="hist col-md-9">
         <div class="reports-by-date" ng-show="tab == 1" >
           <div class="rep">
             <div class="col-md-4">
@@ -34,7 +34,7 @@
               <input class="input_date" type="date" name="bday" max="2020-01-01">
             </div>
           </div>
-          <div class="rep-body">
+          <div class="rep-body" id="printThisElement">
             <table id="table_by_date" class="table table-stripes">
               <tr>
                 <th>
@@ -74,7 +74,6 @@
           </div>
         </div>
         <div id="reports" class="reports-by-room" ng-show="tab == 2" >
-          <div class="rep-body">
             <table id="table_by_room" class="table table-stripes">
               <tr>
                 <th>
@@ -111,7 +110,6 @@
                 </td>
               </tr>
             </table>
-          </div>
         </div>
 
         <div id="reports" class="reports-by-user" ng-show="tab == 3" >
@@ -163,6 +161,6 @@
       </div>
     </div>
     <button type="button" class="btn btn-primary" ng-show="records.length > recordLimit" ng-click="recordLimit = recordLimit + 5">Mostrar más Reportes</button>
-    <button type="button" class="btn btn-primary" id="btnPrint">Imprimir</button>
+    <button type="button" class="btn btn-primary" ng-click="printToCart('printThisElement')">Imprimir</button>
 
   </div>
