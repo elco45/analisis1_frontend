@@ -83,7 +83,6 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
         swal("¡Exito!","success");
         $scope.usuarioSeleccionado = " ";
       }).catch(function(err){
-
       });
     }
 
@@ -162,6 +161,10 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
       $state.go("login")
     }
 
+    $scope.go_start = function(){
+      $state.go("start")
+    }
+
     $scope.go_emp_login = function(){
       $state.go("pin_login")
     }
@@ -222,5 +225,6 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
         $state.go("emp");
       }
     }
+
 
   }]);
