@@ -30,7 +30,7 @@
 
           <ul class="list-group">
             <li ng-repeat = "n in employeeWithRooms track by $index" class="list-group-item" >
-              {{n.empleado.username}}
+              {{n.empleado.username}} 
               <a ng-click="close($index)" class="fa fa-remove fa-times fa-lg pull-right" style="color: gray;"></a>
               <span data-drag="true" 
                     data-jqyoui-options="{revert: 'invalid'}" 

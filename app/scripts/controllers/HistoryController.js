@@ -2,8 +2,9 @@ angular.module('AngularScaffold.Controllers')
   .controller('HistoryController', ['HistoryService' , '$scope', '$state', '$rootScope', '$sessionStorage', 
   	function (HistoryService, $scope, $state, $rootScope, $sessionStorage) {
   		$scope.reportsList = [];
-  		$scope.selected = [];
   		$scope.userList = [];
+  		$scope.startDate =  new Date(2015, 11, 31)
+      $scope.endDate = new Date(2019, 12, 1)
 
   		$scope.getReports = function(){
   			HistoryService.GetReports().then(function(response){
@@ -26,10 +27,10 @@ angular.module('AngularScaffold.Controllers')
 			  }
 			});
 
-			$scope.filter = function(){};
+			$scope.filterUsernames = function(){};
 
 			$scope.filterByUsername = function(username){
-				return $scope.filter[username.employee_username] || $scope.noFilter($scope.filter);
+				return $scope.filterUsernames[username.employee_username] || $scope.noFilter($scope.filterUsernames);
 			};
 
 			$scope.noFilter = function(filterObj){
@@ -50,6 +51,15 @@ angular.module('AngularScaffold.Controllers')
         popupWinindow.document.open();
         popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
         popupWinindow.document.close();
-      }
+      } 
+
+      $scope.filterByDate = function(property, lowbound, highbound){
+      	return function (){
+      		if (true) {
+      			return true;
+      		}
+      		return false;
+      	}
+      };
 
 	  }]);

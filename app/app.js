@@ -9,56 +9,36 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		.state('home', {
             url: '/home',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/addRooms.html'
+            templateUrl: '/views/addRooms.html'
         })
         .state('login', {
             url: '/login',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/login.html'
-        })
-        .state('addRoom', {
-            url: '/addRooms',
-            params: {content:undefined},
-            templateUrl: '/viewsAdmin/addRooms.html'
+            templateUrl: '/views/login.html'
         })
         .state('manage', {
             url: '/manage',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/manageUsers.html'
+            templateUrl: '/views/manageUsers.html'
         })
         .state('reports', {
             url: '/reports',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/history.html'
-        })
-        .state('choose', {
-            url: '/choose',
-            params: {content:undefined},
-            templateUrl: '/viewsAdmin/chooseEmps.html'
-        })
-        .state('dist', {
-            url: '/dist',
-            params: {content:undefined},
-            templateUrl: '/viewsAdmin/distributeRooms.html',
+            templateUrl: '/views/history.html'
         })
         .state('emp', {
             url: '/emp',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/mainEmp.html'
-        })
-        .state('roomemp', {
-            url: '/roomemp',
-            params: {content:undefined},
-            templateUrl: '/viewsAdmin/roomEmp.html'
+            templateUrl: '/views/mainEmp.html'
         })
         .state('start', {
             url: '/start',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/start_page.html'
+            templateUrl: '/views/start_page.html'
         })
         .state('pin_login', {
             url: '/login_emp',
             params: {content:undefined},
-            templateUrl: '/viewsAdmin/pin_login.html'
+            templateUrl: '/views/pin_login.html'
         });
 }])

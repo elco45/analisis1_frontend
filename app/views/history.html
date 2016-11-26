@@ -1,0 +1,92 @@
+<div class="container" ng-controller="HistoryController" ng-init = "getReports()" >
+
+  <div class="container-extra">
+  </div>
+  <div class="container-extra">
+  </div>
+
+  <h1>Historial</h1>
+
+  <div class="slinput" ng-init="">
+    <i class="fa fa-search left-icon"></i>
+    <input placeholder="Busque aquí" ng-model="searchInputVal"/>
+    <i ng-class="{'fa' : true, 'fa-close' : true, 'right-icon' : true, active : (searchInputVal.length > 0)}" ng-click="searchInputVal = ''"></i>
+  </div>
+
+  <div ng-init="sortOrderVal = 'date_reported' ">
+    <ul class="nav nav-tabs" ng-init="tab = 1">
+      <li role="presentation" class="tab" ng-class="{active: tab==1}" ng-click="tab=1; sortOrderVal='date_reported'" ><a>Fecha</a></li>
+      <li role="presentation" class="tab" ng-class="{active: tab==2}" ng-click="tab=2; sortOrderVal='room_number'" ><a>Habitación</a></li>
+      <li role="presentation" class="tab" ng-class="{active: tab==3}" ng-click="tab=3; sortOrderVal='employee_username'"><a>Empleado</a></li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <div class="rep">
+      <div class="row">
+        <div class="col-md-4">
+          <strong>Ingrese fecha de Inicio:</strong>
+          <input class="input_date" type="date" name="bday" min="2015-12-31" ng-model="startDate">
+        </div>
+        <div class="col-md-4">
+          <strong>Ingrese fecha Final:</strong>
+          <input class="input_date" type="date" name="bday" max="2020-01-01" ng-model="endDate">
+        </div>
+      </div>
+    </div>
+    <div class="hist col-md-9">
+      <div class="reports" ng-if="tab">
+        <div class="rep-body" id="printThisElement">
+          <H2>Reportes de Habitaciónes</H2>
+          <table id="table" class="table table-stripes">
+            <tr>
+              <th>
+                Número de Habitación
+              </th>
+              <th>
+                Nombre del Empleado
+              </th>
+              <th>
+                Estado
+              </th>
+              <th>
+                Observación
+              </th>
+              <th>
+                Fecha
+              </th>
+            </tr>
+            <tr ng-repeat="rep in reportsList | filter:searchInputVal | orderBy:sortOrderVal | filter:filterByUsername | limitTo:recordLimit | filter: startDate">
+              <td>
+                {{rep.room_number}}
+              </td>
+              <td>
+                {{rep.employee_username}}
+              </td>
+              <td>
+                {{rep.room_state}}
+              </td>
+              <td>
+                {{rep.problem_id}}
+              </td>
+              <td>
+                {{rep.date_reported | date: 'EEEE dd/MM/yyyy @ h:mma'}}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="user-filter col-md-3">
+      <strong>Filtro por Usuario</strong>
+      <div ng-repeat="user in userList">
+        <label class="checkbox-inline">
+          <input type="checkbox" name="users" ng-model="filterUsernames[user]"> {{user}}
+        </label>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary" ng-show="records.length > recordLimit" ng-click="recordLimit = recordLimit + 5">Mostrar más Reportes</button>
+  <button type="button" class="btn btn-primary" ng-click="printToCart('printThisElement')">Imprimir</button>
+
+</div>
