@@ -819,7 +819,6 @@ angular.module('AngularScaffold.Controllers')
     })
     $scope.handleClick = function(evt,f) {
     	if (evt.which == 3) {
-        console.log(f)
         $scope.infoRC=f;
     		evt.preventDefault()
     		$('#infoMsg').modal('show');
