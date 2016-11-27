@@ -858,7 +858,7 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.startTime = function() {
         var today = new Date();
-        var dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+        var dias = [ 'Domingo','Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         var fecha = dias[today.getDay()] +" " + today.getDate()+ " de " + meses[today.getMonth()] + " "+ today.toLocaleTimeString();
         if(document.getElementById('time') !== null)
@@ -885,7 +885,6 @@ angular.module('AngularScaffold.Controllers')
       RoomService.GetSettings().then(function(response){
 
         document.getElementById("pin_login_check").checked = response.data.pin_login;
-
         console.log(response.data)
       })
     }

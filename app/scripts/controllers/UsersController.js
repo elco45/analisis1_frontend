@@ -102,8 +102,19 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
 
     $scope.logout = function(){
         authService.Logout().then(function(response){
-          	$sessionStorage.$reset();
-          	$state.go("start");
+          RoomService.GetSettings().then(function(response){   
+            if($sessionStorage.currentUser.role === 0 && response.data.pin_login === true){
+              $sessionStorage.$reset();
+              $state.go("login");
+            }else if($sessionStorage.currentUser.role === 1 && response.data.pin_login === true){
+              $sessionStorage.$reset();
+              $state.go("pin_login");
+            }else if(response.data.pin_login === false){
+              $state.go("login")
+            }
+            
+          })
+            
         }).catch(function(err){
           	BootstrapDialog.alert({
               	title: 'ERROR',
@@ -163,7 +174,8 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     //checkups for ng-if in navbar
     $scope.check_login_allowed = function(){
      $scope.clear_user()
-     RoomService.GetSettings().then(function(response){        
+     RoomService.GetSettings().then(function(response){     
+        $scope.pin_login = response.data;   
         if(!response.data.pin_login){
           $state.go("login");
         }
@@ -225,10 +237,48 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
 
     $scope.select_current_emp = function(employee){
       $scope.SelectedEmployee = employee;
+      if(employee.pin === null){          
+        BootstrapDialog.confirm({
+            title: 'SUCCESS',
+            message: 'Porfavor ingresar un PIN.',
+            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: true, // <-- Default value is false
+            buttonLabel: 'Cerrar', // <-- Default value is 'OK',
+        });
+      }
     }
 
     $scope.verificarDatos = function(numbers,employee){
-      if(employee.pin != null && employee.username != null){
+
+      if (employee.pin === null) {
+        var temp = {
+          username: employee.username,
+          pin: numbers
+        }
+        UserService.ModifyPin(temp).then(function(response){
+          BootstrapDialog.confirm({
+              title: 'SUCCESS',
+              message: 'Pin creado exitosamente.',
+              type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+              closable: true, // <-- Default value is false
+              buttonLabel: 'Cerrar', // <-- Default value is 'OK',
+              callback: function(result) {
+                // result will be true if button was click, while it will be false if users close the dialog directly.
+                location.reload();
+            }
+          });
+          
+          
+        });
+      }else if(employee.pin != numbers){
+        BootstrapDialog.alert({
+              title: 'ERROR',
+            message: 'Porfavor ingrese un pin valido.',
+            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: true, // <-- Default value is false
+            buttonLabel: 'Cerrar', // <-- Default value is 'OK',
+        });
+      }else if(employee.pin != null && employee.username != null){
           UserData = {
             username: employee.username,
             pin: numbers
@@ -248,25 +298,25 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
           })
           $('#numpad').modal('hide');
           $('.modal-backdrop').remove();
-      }else{
-          BootstrapDialog.alert({
-              title: 'ERROR',
-            message: 'Porfavor ingrese un usuario y contraseña valido.',
-            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-            closable: true, // <-- Default value is false
-            buttonLabel: 'Cerrar', // <-- Default value is 'OK',
-        });
       }
     }
 
     $scope.clickIconButton = function(){
-      if($scope.$sessionStorage.currentUser === undefined){
-        $state.go("start");
-      }else if($scope.$sessionStorage.currentUser.role === 0){
-        $state.go("home");
-      }else if($scope.$sessionStorage.currentUser.role === 1){
-        $state.go("emp");
-      }
+
+      RoomService.GetSettings().then(function(response){   
+        if(response.data.pin_login === true){
+          if($sessionStorage.currentUser.role === 0 ){
+            $state.go("home");
+          }else if($sessionStorage.currentUser.role === 1){
+            $state.go("emp");
+          }else if($scope.$sessionStorage.currentUser){
+            $state.go("start")
+          }
+        }else{
+          $state.go("login");
+        }
+                
+      })
     }
 
 
