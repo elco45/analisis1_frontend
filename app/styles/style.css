@@ -464,3 +464,39 @@ input.radio:checked ~ label {
   font-size: 16px !important;
   font-weight: 310 !important;
 }
+
+.startform {
+  margin: 28% 5% 28% 5%;
+}
+
+.photo-button {
+  background: white;
+  border: 2px solid;
+  border-radius: 50%;
+  border-color: lightgray;
+  margin: 5px !important;
+}
+
+.centered {
+  border-radius: 50%;
+}
+
+.login_table {
+  margin-top: 25%;
+  margin-left: -17%;
+}
+
+.btn-back {
+  margin-left: 85%;
+  margin-top: 5%;
+  width: 90px !important;
+  height: 60px !important;
+  border-radius: 45px;
+  font-size: 20px;
+  color: #9d9d9d!important;
+  background-color: #01403a;
+  border: 1px solid #027268;
+  border-width: 1px 1px 3px;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+  margin-bottom: 10px;
+}

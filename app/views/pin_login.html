@@ -4,13 +4,21 @@
    </div>
 
   <div class="main-login">
-    <div class="" ng-repeat = "e in employees track by $index"  >
-      <button class="repart-name" ng-click="select_current_emp(e)" data-toggle = "modal" data-target="#numpad">
-        {{e.username}}
-      </button>          
-    </div>
+    <table class='login_table col-md-12'>
+      <tr>
+        <th class="emp_img" ng-repeat = "e in employees track by $index">  
+          <center>
+            <button class="photo-button" ng-click="select_current_emp(e)" data-toggle = "modal" data-target="#numpad">
+              <img class="img-circle" src="{{e.photo}}" width="200" height="200" />
+            </button>  
+          </center>
+          <center>{{e.username}}</center>
+        </th>
+      </tr>
+    </table>
   </div>  
-  
+  <center><button ng-click="go_start()" class="btn-back">Atrás</button></center>
+  <!-- MODAL -->
   <div  id="numpad" class="modal fade" role="dialog">
     <div class="modal-dialog">
       
@@ -27,13 +35,12 @@
             </div>
             
             <div class="demo__iphone-keypad">
-                <bc-keypad bc-number-model="vm.numbers" bc-left-button="backspace" bc-right-button="submit" bc-max-length = "4"></bc-keypad>
+                <bc-keypad bc-number-model="vm.numbers" bc-left-button="backspace" bc-right-button="submit" bc-right-button-method="verificarDatos(vm.numbers, SelectedEmployee)" bc-max-length = "4"></bc-keypad>
             </div>
           </div>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click ="verificarDatos(vm.numbers, SelectedEmployee)" >Autenticar</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         </div>
 
@@ -42,4 +49,3 @@
     </div>
   </div>
 </div>
-
