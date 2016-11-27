@@ -50,7 +50,7 @@ angular.module('AngularScaffold.Controllers')
             var user = {
               username: $sessionStorage.currentUser.username
             }
-              
+
             if(typeof(user.username) !== "undefined"){
               RoomService.UpdateControl(user).then(function(response){
                 $scope.doneChecking = true;
@@ -479,7 +479,7 @@ angular.module('AngularScaffold.Controllers')
               }
             }
           }
-        
+
         /*var temp;
         for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
           for (var j = 0; j <$scope.employeeWithRooms.length - 1; j++) {
@@ -549,7 +549,7 @@ angular.module('AngularScaffold.Controllers')
                   break;
                 }
               }
-              if(habia){  
+              if(habia){
 
                 temp = selectedRooms[index]
                 if(temp.status == 5){
@@ -759,13 +759,18 @@ angular.module('AngularScaffold.Controllers')
         }
 
         today = mm+'/'+dd+'/'+yyyy;
+        var resuelto = true;
+        if( response.data.status ==3 || response.data.status ==4  ){
+           resuelto = false;
+         }
 
         var reporte ={
           employee_id: response.data.idUser[0].username,
           room_number: response.data.room_id,
           problem_id: 0,//ESTO ESTA EN DURO, HAY QUE HACERLO!
           room_state: response.data.status,
-          date_reported: today
+          date_reported: today,
+          resolved:resuelto
         };
 
         HistoryService.CreateRegister(reporte).then(function(response2){////EL PAYLOAD ESTA MALO
@@ -865,27 +870,27 @@ angular.module('AngularScaffold.Controllers')
     $scope.startTime();
     //fin mostrar fecha actual
 
-    //settings 
+    //settings
     $scope.save_settings = function(){
       var settings = {
         pin_login: document.getElementById("pin_login_check").checked
       }
-      console.log(settings) 
+      console.log(settings)
       RoomService.SaveSettings(settings).then(function(response){
         console.log(response.data)
       })
     }
     $scope.get_settings = function(){
-      
+
       RoomService.GetSettings().then(function(response){
-        
+
         document.getElementById("pin_login_check").checked = response.data.pin_login;
-        
+
         console.log(response.data)
       })
     }
     //fin settings
-    $scope.blinking = function() {   
+    $scope.blinking = function() {
       var timer = setInterval(blink, 10);
       function blink() {
           $('.blink').fadeOut(800, function() {
@@ -893,7 +898,7 @@ angular.module('AngularScaffold.Controllers')
           });
       }
     }
-    
+
 }]);
 
 app.filter('slice', function() {
