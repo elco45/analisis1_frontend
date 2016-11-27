@@ -190,18 +190,19 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
       try{
         if(typeof($sessionStorage.currentUser.username) === "undefined")
           return false;
+         if($sessionStorage.currentUser.logged)
+          return false;
+        if($state.current.name == 'login' || $state.current.name == 'start' 
+          || $state.current.name == 'pin_login'){   
+          return false;
+        }
+      return true;
 
 
       }catch(err){
         
       }
-      if($sessionStorage.currentUser.logged)
-        return false;
-      if($state.current.name == 'login' || $state.current.name == 'start' 
-        || $state.current.name == 'pin_login'){   
-        return false;
-      }
-      return true;
+     
    }
    //done with checkups
     $scope.go_admin_login = function(){
