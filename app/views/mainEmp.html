@@ -10,7 +10,7 @@
 
 
 <div class="jumbotron col-md-12">
-  <h1>Habitaciones</h1>
+  <h1 ng-init="m()">Habitaciones</h1>
   <table class=col-md-12 style="margin-top: 25px;">
     <tr>
       <td ng-repeat="r in currentEmpRooms">
@@ -19,8 +19,8 @@
           r.status == 1, 'room-clean2':
           r.status == 2, 'room-clean-w-prob2':
           r.status ==3,'room-not-clean2':
-          r.status == 4,'room-priority2':
-          r.status == 5">
+          r.status == 4,'room-priority2 blink':
+          r.status == 5}">
             {{r.room_id}}
           </button>
         </center>

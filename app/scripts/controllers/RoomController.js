@@ -845,6 +845,15 @@ angular.module('AngularScaffold.Controllers')
       }
       return false;
     }
+
+    $scope.m = function() {   
+      var timer = setInterval(blink, 10);
+      function blink() {
+          $('.blink').fadeOut(800, function() {
+             $('.blink').fadeIn(800);
+          });
+      }
+    }
     
 }]);
 

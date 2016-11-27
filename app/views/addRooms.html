@@ -56,7 +56,8 @@
                ng-class="{'room-selected': f.status == 1, 'room-clean': f.status == 2, 'room-clean-w-prob': f.status ==3,       'room-not-clean': f.status == 4, 'room-priority':f.status==5}" 
                ng-mousedown="handleClick($event,f)"
                oncontextmenu="return false"
-               ng-model="floors">
+               ng-model="floors"
+               >
               {{f.room_id}}
               <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
             </div>
@@ -67,7 +68,7 @@
                jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
                ng-click = "selectRoom(false,f,false)"                 
                ng-class="{'room-selected': f.status == 1, 'room-clean': f.status == 2, 'room-clean-w-prob': f.status ==3,       'room-not-clean': f.status == 4, 'room-priority':f.status==5}"
-               ng-model="floors" ng-mousedown="handleClick($event,f)">
+               ng-model="floors" ng-mousedown="handleClick($event,f)" >
               {{f.room_id}}
               <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
             </div>
@@ -138,7 +139,7 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click = "selectRoom(false,infoRC,true)" ng-disabled="infoRC.status === 0 || employeeWithRooms.length <= 0 || infoRC.status === false ">Prioridad!</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click = "selectRoom(false,infoRC,true)" ng-disabled="infoRC.status === 0 || employeeWithRooms.length <= 0 || infoRC.status === false || infoRC.status === 2 || infoRC.status === 3 || infoRC.status === 4">{{infoRC.status === 5 ? 'Despriorizar' : 'Priorizar'}}</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         </div>
 
