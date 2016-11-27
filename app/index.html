@@ -50,10 +50,12 @@
          </div>
          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li ng-show="$sessionStorage.currentUser.role == 0 && $state.current.name != 'login'" ng-cloak><a href="/#/home"> Manejar Habitaciones</a></li>
-              <li ng-show="$sessionStorage.currentUser.role == 0 && $state.current.name != 'login'" ng-cloak><a href="/#/manage">Manejar Usuarios</a></li>
-              <li ng-show="$sessionStorage.currentUser.role == 0 && $state.current.name != 'login'" ng-cloak><a href="/#/reports">Historial</a></li>
-              <li ng-show="$sessionStorage.logged || $sessionStorage.currentUser" ng-cloak ng-click="logout()"><a href="">Logout</a></li>
+              <li ng-cloak ng-show="show_for_admin()" ><a href="/#/home"> Manejar Habitaciones</a></li>
+              <li ng-if="show_for_admin()" ng-cloak><a href="/#/manage">Manejar Usuarios</a></li>
+              <li ng-if="show_for_admin()" ng-cloak><a href="/#/reports">Historial</a></li>
+              <li ng-if="show_for_admin()" ng-cloak  ng-click ="show_options()">
+              <a class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a></li>
+              <li ng-if="show_logout()" ng-cloak ng-click="logout()"><a href="">Logout</a></li>
             </ul>
          </div>
       </div>

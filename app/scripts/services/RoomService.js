@@ -33,6 +33,12 @@ angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
       		},
                   UpdatePriorityAfterSplice: function(payload){
                         return $http.post(baseUrl + "v1/updatePriorityAfterSplice",payload);
+                  },
+                  SaveSettings: function(payload){
+                        return $http.post(baseUrl + "v1/saveSettings",payload);
+                  },
+                  GetSettings: function(){
+                        return $http.get(baseUrl + "v1/getSettings");
                   }
       	}
       	
