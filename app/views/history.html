@@ -70,7 +70,7 @@
                 {{rep.problem_id}}
               </td>
               <td>
-                {{rep.date_reported | date: 'EEEE dd/MM/yyyy @ h:mma'}}
+                {{rep.date_reported | date: 'EEEE dd/MM/yyyy'}}
               </td>
             </tr>
           </table>
@@ -81,7 +81,7 @@
       <strong>Filtro por Usuario</strong>
       <div ng-repeat="user in userList">
         <label class="checkbox-inline">
-          <input type="checkbox" name="users" ng-model="filterUsernames[user]"> {{user}}
+          <input type="checkbox" name="users" ng-model="filter[user]"> {{user}}
         </label>
       </div>
     </div>
