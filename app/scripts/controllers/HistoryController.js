@@ -2,6 +2,7 @@ angular.module('AngularScaffold.Controllers')
   .controller('HistoryController', ['HistoryService' , '$scope', '$state', '$rootScope', '$sessionStorage',
   	function (HistoryService, $scope, $state, $rootScope, $sessionStorage) {
   		$scope.reportsList = [];
+      	$scope.lista_problemas = [];
   		$scope.userList = [];
   		$scope.startDate =  new Date(2015, 11, 31)
       $scope.endDate = new Date(2019, 12, 1)
