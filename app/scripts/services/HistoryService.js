@@ -1,4 +1,4 @@
-angular.module('AngularScaffold.Services').factory('HistoryService', ['$http', 
+angular.module('AngularScaffold.Services').factory('HistoryService', ['$http',
 	function($http){
 		$http.defaults.withCredentials = true;
 		//var baseUrl = 'https://hotelmacarthur-backend.herokuapp.com/';
@@ -9,7 +9,14 @@ angular.module('AngularScaffold.Services').factory('HistoryService', ['$http',
   			},
 			CreateRegister: function(payload){
     			return $http.post(baseUrl + "v1/createRegister",payload);
+  			},
+			getResolved: function(){
+    			return $http.get(baseUrl + "v1/getResolved");
+  			},
+			modResolved: function(payload){
+				console.log("servise fron: "+payload)
+    			return $http.post(baseUrl + "v1/updateResolved",payload);
   			}
-  		}	
+  		}
 	}
 ]);
