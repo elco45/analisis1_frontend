@@ -487,6 +487,7 @@ input.radio:checked ~ label {
 }
 
 .btn-back {
+  margin-left: 85%;
   margin-top: 5%;
   width: 90px !important;
   height: 60px !important;

@@ -74,9 +74,10 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
         employee_type : $scope.usuarioSeleccionado.employee_type,
         status:$scope.usuarioSeleccionado.status,
         role: $scope.usuarioSeleccionado.role,
-        pin: $scope.usuarioSeleccionado.pin
+        pin: $scope.usuarioSeleccionado.pin,
+        photo: $scope.usuarioSeleccionado.photo
       }
-
+      console.log($scope.usuarioSeleccionado);
 
       UserService.UpdateUser(temp).then(function(algo){
         console.log("Guardado con exito");
@@ -180,20 +181,13 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }
 
     $scope.verificarDatos = function(numbers,employee){
-      if (employee.pin === null) {
-        var temp = {
-          username: employee.username,
-          pin: numbers
-        }
-        UserService.ModifyPin(temp).then(function(response){
-          console.log(response.data)
-        });
-      }else if(employee.pin != null && employee.username != null){
+      if(employee.pin != null && employee.username != null){
           UserData = {
             username: employee.username,
             pin: numbers
           }
           authService.LoginWithPin(UserData).then(function(response){
+            console.log(response)
               if(response.data != "error"){
                   $sessionStorage.currentUser = response.data
                   console.log(response.data)

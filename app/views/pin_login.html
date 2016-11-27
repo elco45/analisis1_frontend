@@ -35,13 +35,12 @@
             </div>
             
             <div class="demo__iphone-keypad">
-                <bc-keypad bc-number-model="vm.numbers" bc-left-button="backspace" bc-right-button="submit" bc-max-length = "4"></bc-keypad>
+                <bc-keypad bc-number-model="vm.numbers" bc-left-button="backspace" bc-right-button="submit" bc-right-button-method="verificarDatos(vm.numbers, SelectedEmployee)" bc-max-length = "4"></bc-keypad>
             </div>
           </div>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click ="verificarDatos(vm.numbers, SelectedEmployee)" >Autenticar</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         </div>
 

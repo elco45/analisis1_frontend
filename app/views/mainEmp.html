@@ -15,12 +15,12 @@
     <tr>
       <td ng-repeat="r in currentEmpRooms">
         <center>
-          <button  ng-click=" changeRoomEmp(r.room_id)" ng-class="{'room-selected2':
-          r.status == 1, 'room-clean2':
-          r.status == 2, 'room-clean-w-prob2':
-          r.status ==3,'room-not-clean2':
-          r.status == 4,'room-priority2':
-          r.status == 5">
+          <button ng-click="changeRoomEmp(r.room_id)" ng-class="{'room-selected2': 
+          r.status == 1, 'room-clean2': 
+          r.status == 2, 'room-clean-w-prob2': 
+          r.status ==3,'room-not-clean2': 
+          r.status == 4, 'room-priority2':
+          r.status == 5}">
             {{r.room_id}}
           </button>
         </center>
