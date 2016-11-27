@@ -75,6 +75,50 @@
             </tr>
           </table>
         </div>
+        <!-- jossy se la come   completa -->
+
+        <div id="reports" class="reports-by-room" ng-show="tab == 4" >
+        <div class="rep-body">
+          <table id="table_by_room" class="table table-stripes">
+            <tr>
+              <th>
+                Número de Habitación
+              </th>
+              <th>
+                Nombre del Empleado
+              </th>
+              <th>
+                 Observación
+              </th>
+              <th>
+                  Fecha
+              </th>
+              <th>
+                Estado
+              </th>
+            </tr>
+            <tr ng-repeat="rep in lista_problemas | filter:searchInputVal | orderBy:sortOrderVal">
+              <td>
+                {{rep.room_number}}
+              </td>
+              <td>
+                {{rep.employee_username}}
+              </td>
+              <td>
+                {{rep.problem_id}}
+              </td>
+              <td>
+                {{rep.date_reported | date: 'MM/dd/yyyy @ h:mma'}}
+              </td>
+              <td>
+                <button type="button" class="btn btn-info" ng-click="cambiar_estado_problema(rep) ">Problema Resuelto</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+<!-- dany se la come completa -->
       </div>
     </div>
     <div class="user-filter col-md-3">
