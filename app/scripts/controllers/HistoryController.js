@@ -1,7 +1,8 @@
 angular.module('AngularScaffold.Controllers')
-  .controller('HistoryController', ['HistoryService' , '$scope', '$state', '$rootScope', '$sessionStorage', 
+  .controller('HistoryController', ['HistoryService' , '$scope', '$state', '$rootScope', '$sessionStorage',
   	function (HistoryService, $scope, $state, $rootScope, $sessionStorage) {
   		$scope.reportsList = [];
+      	$scope.lista_problemas = [];
   		$scope.userList = [];
   		$scope.startDate =  new Date(2015, 11, 31)
       $scope.endDate = new Date(2019, 12, 1)
@@ -11,6 +12,27 @@ angular.module('AngularScaffold.Controllers')
       		$scope.reportsList = response.data
   			});
 	  	};
+
+      $scope.getResolved = function(){
+  			HistoryService.getResolved().then(function(response){
+      		$scope.lista_problemas  = response.data
+  			});
+			  console.log($scope.lista_problemas);
+	  	}
+		$scope.cambiar_estado_problema = function(algo){
+	       var params={
+			    employee_username:algo.employee_username,
+				room_number:  algo.room_number,
+				problem_id: algo.problem_id,
+				room_state: algo.room_state,
+				date_reported: algo.date_reported,
+				resolved: true
+		   }
+		    HistoryService.modResolved(params).then(function(response2){
+               console.log(response2.data)
+           });
+  			console.log("numero de habitacion es: "+params.employee_username);
+	  	}
 
 	  	$scope.mockData = [
             {"room_number":"201", "employee_username":"dany", "room_state":"0", "problem_id":"0", "date_reported":"2016-11-20T05:00:00.000Z"},
@@ -42,7 +64,7 @@ angular.module('AngularScaffold.Controllers')
 			$scope.records = [];
 			$scope.recordLimit = 8;
 			for(var i=0; i<$scope.reportsList.length; i++) {
-			   $scope.records.push($scope.reportsList);     
+			   $scope.records.push($scope.reportsList);
 			}
 
 			$scope.printToCart = function(printSectionId) {
@@ -51,7 +73,7 @@ angular.module('AngularScaffold.Controllers')
         popupWinindow.document.open();
         popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
         popupWinindow.document.close();
-      } 
+      }
 
       $scope.filterByDate = function(property, lowbound, highbound){
       	return function (){
