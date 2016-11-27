@@ -249,6 +249,8 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
               }
 
           })
+          $('#numpad').modal('hide');
+          $('.modal-backdrop').remove();
       }else{
           BootstrapDialog.alert({
               title: 'ERROR',
