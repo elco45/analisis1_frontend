@@ -225,10 +225,48 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
 
     $scope.select_current_emp = function(employee){
       $scope.SelectedEmployee = employee;
+      if(employee.pin === null){        
+        BootstrapDialog.confirm({
+            title: 'SUCCESS',
+            message: 'Porfavor ingresar un PIN.',
+            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: true, // <-- Default value is false
+            buttonLabel: 'Cerrar', // <-- Default value is 'OK',
+        });
+      }
     }
 
     $scope.verificarDatos = function(numbers,employee){
-      if(employee.pin != null && employee.username != null){
+
+      if (employee.pin === null) {
+        var temp = {
+          username: employee.username,
+          pin: numbers
+        }
+        UserService.ModifyPin(temp).then(function(response){
+          BootstrapDialog.confirm({
+              title: 'SUCCESS',
+              message: 'Pin creado exitosamente.',
+              type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+              closable: true, // <-- Default value is false
+              buttonLabel: 'Cerrar', // <-- Default value is 'OK',
+              callback: function(result) {
+                // result will be true if button was click, while it will be false if users close the dialog directly.
+                location.reload();
+            }
+          });
+          
+          
+        });
+      }else if(employee.pin != numbers){
+        BootstrapDialog.alert({
+              title: 'ERROR',
+            message: 'Porfavor ingrese un pin valido.',
+            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: true, // <-- Default value is false
+            buttonLabel: 'Cerrar', // <-- Default value is 'OK',
+        });
+      }else if(employee.pin != null && employee.username != null){
           UserData = {
             username: employee.username,
             pin: numbers
@@ -248,14 +286,6 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
           })
           $('#numpad').modal('hide');
           $('.modal-backdrop').remove();
-      }else{
-          BootstrapDialog.alert({
-              title: 'ERROR',
-            message: 'Porfavor ingrese un usuario y contraseña valido.',
-            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-            closable: true, // <-- Default value is false
-            buttonLabel: 'Cerrar', // <-- Default value is 'OK',
-        });
       }
     }
 
