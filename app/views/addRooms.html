@@ -3,6 +3,7 @@
    </div>
    <div class="container-extra">
    </div>
+    <div id = "time"> </div>
 
     <div class="row">
       <!-- Seleccion de Empleadas -->
@@ -43,7 +44,37 @@
           <button type="button" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal" ></button>
 
       </div>
-   
+
+
+     <!-- inicio modal opciones-->
+
+
+     <div class="emps col-md-4">
+          <div class="modal fade" id="settings_modal" tabindex="1" role="dialog" aria-labelledby="settings_modal_label"  >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="settings_modal_label">Opciones</h4>
+                </div>
+                <div ng-init = "get_settings()">                
+                  <input type="checkbox" id="pin_login_check" value="pin_login">Login por PIN<br>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" ng-click = "save_settings()">Guardar Opciones</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+
+
+      </div>
+
+
+     <!-- fin modal opciones-->
      <!-- Grid de habitaciones -->
       <div class="habs col-md-8">
         <h1>Habitaciones</h1>

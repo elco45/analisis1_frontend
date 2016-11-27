@@ -31,7 +31,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.doneChecking = true;
 
     $scope.Timer = $interval(function () {
-      if($scope.doneChecking){
+      if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
         $scope.doneChecking = false;
         var employee_username ={
           username: $sessionStorage.currentUser.username
@@ -50,9 +50,12 @@ angular.module('AngularScaffold.Controllers')
             var user = {
               username: $sessionStorage.currentUser.username
             }
-            RoomService.UpdateControl(user).then(function(response){
-              $scope.doneChecking = true;
-            })
+              
+            if(typeof(user.username) !== "undefined"){
+              RoomService.UpdateControl(user).then(function(response){
+                $scope.doneChecking = true;
+              })
+            }
           }else{
             $scope.doneChecking = true;
           }
@@ -846,7 +849,43 @@ angular.module('AngularScaffold.Controllers')
       return false;
     }
 
-    $scope.m = function() {   
+    //funcion para mostrar la fecha actual
+
+    $scope.startTime = function() {
+        var today = new Date();
+        var dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+        var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        var fecha = dias[today.getDay()] +" " + today.getDate()+ " de " + meses[today.getMonth()] + " "+ today.toLocaleTimeString();
+        if(document.getElementById('time') !== null)
+          document.getElementById('time').innerHTML = fecha;
+        t = setTimeout(function () {
+            $scope.startTime()
+        }, 500);
+    }
+    $scope.startTime();
+    //fin mostrar fecha actual
+
+    //settings 
+    $scope.save_settings = function(){
+      var settings = {
+        pin_login: document.getElementById("pin_login_check").checked
+      }
+      console.log(settings) 
+      RoomService.SaveSettings(settings).then(function(response){
+        console.log(response.data)
+      })
+    }
+    $scope.get_settings = function(){
+      
+      RoomService.GetSettings().then(function(response){
+        
+        document.getElementById("pin_login_check").checked = response.data.pin_login;
+        
+        console.log(response.data)
+      })
+    }
+    //fin settings
+    $scope.blinking = function() {   
       var timer = setInterval(blink, 10);
       function blink() {
           $('.blink').fadeOut(800, function() {
