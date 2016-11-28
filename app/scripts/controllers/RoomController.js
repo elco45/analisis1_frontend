@@ -29,9 +29,11 @@ angular.module('AngularScaffold.Controllers')
     $scope.RoomSelected = false;
     $scope.infoRC;
     $scope.doneChecking = true;
+    $scope.change_true = true;
 
     $scope.Timer = $interval(function () {
       if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
+        console.log(234)
         $scope.doneChecking = false;
         var employee_username ={
           username: $sessionStorage.currentUser.username
@@ -46,6 +48,20 @@ angular.module('AngularScaffold.Controllers')
               $scope.employeeWithRooms = []
               $scope.selectedRooms = []
               $scope.init();
+              console.log("jossy de Garrrrryyyyyyyy  2");
+              if ($scope.change_true) {
+                $scope.change_true=false;
+                HistoryService.GetSeenReports().then(function(response){
+                  if (response.data ) {
+
+                    Notify("Stop! Hammer time", null, null, 'danger');
+                    console.log("jossy de Garrrrryyyyyyyy ");
+                  }
+                  $scope.change_true=true;
+
+                });
+              }
+
             }
             var user = {
               username: $sessionStorage.currentUser.username
@@ -61,7 +77,7 @@ angular.module('AngularScaffold.Controllers')
           }
         })
       }
-    }, 1000);
+    }, 5000);
     //--lo que hizo elena ---
 
     $scope.init = function() {
