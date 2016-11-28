@@ -1,73 +1,65 @@
 angular.module('AngularScaffold.Controllers')
   .controller('HistoryController', ['HistoryService' , '$scope', '$state', '$rootScope', '$sessionStorage',
-  	function (HistoryService, $scope, $state, $rootScope, $sessionStorage) {
-  		$scope.reportsList = [];
-      	$scope.lista_problemas = [];
-  		$scope.userList = [];
-  		$scope.startDate =  new Date(2015, 11, 31)
-      $scope.endDate = new Date(2019, 12, 1)
+    function (HistoryService, $scope, $state, $rootScope, $sessionStorage) {
+      $scope.reportsList = [];
+      $scope.lista_problemas = [];
+      $scope.userList = [];
+      $scope.records = [];
+      $scope.reportBackup =[];
+      $scope.startDate =  new Date(2015, 11, 31);
+      $scope.endDate = new Date();
+      $scope.recordLimit = 8;
 
-  		$scope.getReports = function(){
-  			HistoryService.GetReports().then(function(response){
-      		$scope.reportsList = response.data
-  			});
-	  	};
+      $scope.getReports = function(){
+        HistoryService.GetReports().then(function(response){
+          $scope.reportsList = response.data;
+
+
+          for(var i=0; i<$scope.reportsList.length; i++) {
+            $scope.records.push($scope.reportsList); 
+            
+            $scope.reportBackup.push(response.data[i]);
+            if ($scope.userList.indexOf($scope.reportsList[i].employee_username) === -1) {
+              $scope.userList.push($scope.reportsList[i].employee_username);
+            }
+          }
+        });
+      };
 
       $scope.getResolved = function(){
-  			HistoryService.getResolved().then(function(response){
-      		$scope.lista_problemas  = response.data
-  			});
-			  console.log($scope.lista_problemas);
-	  	}
-		$scope.cambiar_estado_problema = function(algo){
-	       var params={
-			    employee_username:algo.employee_username,
-				room_number:  algo.room_number,
-				problem_id: algo.problem_id,
-				room_state: algo.room_state,
-				date_reported: algo.date_reported,
-				resolved: true
-		   }
-		    HistoryService.modResolved(params).then(function(response2){
+          HistoryService.getResolved().then(function(response){
+            $scope.lista_problemas  = response.data
+          });
+          console.log($scope.lista_problemas);
+      }
+      $scope.cambiar_estado_problema = function(algo){
+        var params={
+          employee_username:algo.employee_username,
+          room_number:  algo.room_number,
+          problem_id: algo.problem_id,
+          room_state: algo.room_state,
+          date_reported: algo.date_reported,
+          resolved: true
+        }
+        HistoryService.modResolved(params).then(function(response2){
                console.log(response2.data)
-           });
-  			console.log("numero de habitacion es: "+params.employee_username);
-	  	}
+        });
+        console.log("numero de habitacion es: "+params.employee_username);
+      }
 
-	  	$scope.mockData = [
-            {"room_number":"201", "employee_username":"dany", "room_state":"0", "problem_id":"0", "date_reported":"2016-11-20T05:00:00.000Z"},
-            {"room_number":"201", "employee_username":"dany", "room_state":"1", "problem_id":"3", "date_reported":"2016-11-08T05:00:00.000Z"},
-            {"room_number":"103", "employee_username":"dario", "room_state":"2", "problem_id":"5", "date_reported":"2016-10-26T05:00:00.000Z"},
-            {"room_number":"116", "employee_username":"katherine", "room_state":"2", "problem_id":"3", "date_reported":"2016-10-29T05:00:00.000Z"},
-            {"room_number":"114", "employee_username":"dario", "room_state":"1", "problem_id":"1", "date_reported":"2016-10-30T05:00:00.000Z"},
-            {"room_number":"114", "employee_username":"katherine", "room_state":"1", "problem_id":"2", "date_reported":"2016-11-04T05:00:00.000Z"}
-            ];
+      $scope.filter = function(){};
 
-      $.each($scope.reportsList, function(i, el){
-			  if($.inArray(el.employee_username, $scope.userList) === -1) {
-			  	$scope.userList.push(el.employee_username);
-			  }
-			});
+      $scope.filterByUsername = function(username){
+        return $scope.filter[username.employee_username] || $scope.noFilter($scope.filter);
+      };
 
-			$scope.filterUsernames = function(){};
+      $scope.noFilter = function(filterObj){
+        return Object.
+        keys(filterObj).
+        every(function (key) { return !filterObj[key]; });
+      };
 
-			$scope.filterByUsername = function(username){
-				return $scope.filterUsernames[username.employee_username] || $scope.noFilter($scope.filterUsernames);
-			};
-
-			$scope.noFilter = function(filterObj){
-				return Object.
-	      keys(filterObj).
-	      every(function (key) { return !filterObj[key]; });
-			};
-
-			$scope.records = [];
-			$scope.recordLimit = 8;
-			for(var i=0; i<$scope.reportsList.length; i++) {
-			   $scope.records.push($scope.reportsList);
-			}
-
-			$scope.printToCart = function(printSectionId) {
+      $scope.printToCart = function(printSectionId) {
         var innerContents = document.getElementById(printSectionId).innerHTML;
         var popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
         popupWinindow.document.open();
@@ -75,13 +67,19 @@ angular.module('AngularScaffold.Controllers')
         popupWinindow.document.close();
       }
 
-      $scope.filterByDate = function(property, lowbound, highbound){
-      	return function (){
-      		if (true) {
-      			return true;
-      		}
-      		return false;
-      	}
+      $scope.filterByDate = function(property){
+        for (var i = 0; i < $scope.reportBackup.length; i++) {
+          $scope.reportsList.push($scope.reportBackup[i])
+        }
+        var inicio = document.getElementById('start').value;
+        var final = document.getElementById('end').value;
+        for (var i = 0; i < $scope.reportsList.length; i++) {
+          var date = $scope.reportsList[i].date_reported.substring(0,10);
+          if (date > final || date < inicio) {
+            $scope.reportsList.splice(i,1);
+            i--;
+          }
+        }
       };
 
-	  }]);
+    }]);

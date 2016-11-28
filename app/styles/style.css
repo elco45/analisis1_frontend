@@ -95,6 +95,12 @@ h1{
   border-color: #ccc!important;
 }
 
+.label.label-priority{
+  color: #fff!important;
+  background-color: #6f5499!important;
+  border-color: #563d7c!important;
+}
+
 /* modal*/
 .room-image{
   background: #f4f7f8;
@@ -114,6 +120,26 @@ h1{
 }
 .name-emps-info{
   text-align: center!important;
+}
+.modal {
+  text-align: center;
+}
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+.modal-dialog.sizing {
+  width: 320px!important;
+  height: 320px!important;
 }
 
 /*distribute Rooms*/
@@ -149,9 +175,9 @@ h1{
 
 .room-priority{
   color: #fff!important;
-  background-color: #5E267C!important;
+  background-color: #6f5499!important;
   border-style: solid;
-  border-color: #E60000!important;
+  border-color: #fff!important;
 }
 
 .room-hover {
@@ -436,7 +462,7 @@ input.radio:checked ~ label {
 
 .room-priority2{
   color: #fff!important;
-  background-color: #5E267C!important;
+  background-color: #6f5499!important;
   border-style: solid;
   border-color: #E60000!important;
   padding: 22px;
@@ -493,7 +519,7 @@ input.radio:checked ~ label {
   height: 60px !important;
   border-radius: 45px;
   font-size: 20px;
-  color: #9d9d9d!important;
+  color: #fff!important;
   background-color: #01403a;
   border: 1px solid #027268;
   border-width: 1px 1px 3px;
