@@ -31,6 +31,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.doneChecking = true;
     $scope.change_true = true;
     $scope.reports_not_seen = [];
+    $scope.problema_resuelto=[];
 
     $scope.Timer = $interval(function () {
       if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
@@ -93,8 +94,17 @@ angular.module('AngularScaffold.Controllers')
     //--lo que hizo elena ---
 
     $scope.init = function() {
+      $scope.problema_resuelto=[];
+      HistoryService.getResolved().then(function(response){
+          $scope.problema_resuelto=response.data;
+
+
+      });
+
+
       $scope.getRooms();
       $scope.llenarEmpleado();
+
 
       //$scope.createAllRooms();
     };
@@ -770,7 +780,8 @@ angular.module('AngularScaffold.Controllers')
       $scope.room.status = estado;
       var temporal = {
           employee: $sessionStorage.currentUser.username,
-          room: $scope.room
+          room: $scope.room,
+
       }
       RoomService.UpdateRoom(temporal).then(function(response){
         var today = new Date();
@@ -941,6 +952,23 @@ angular.module('AngularScaffold.Controllers')
       });
     }
 
+$scope.manita = function( room ){
+  var temp = false;
+for (var i = 0; i < $scope.problema_resuelto.length; i++) {
+  console.log(room)
+  if ($scope.problema_resuelto[i].room_number === room) {
+    temp = true;
+
+  }
+
+
+
+}
+if (temp) {
+  return false;
+}
+return true;
+}
 }]);
 
 app.filter('slice', function() {
