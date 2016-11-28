@@ -74,7 +74,7 @@
                ng-class="{'room-selected': f.status == 1, 'room-clean': f.status == 2, 'room-clean-w-prob': f.status ==3,       'room-not-clean': f.status == 4, 'room-priority':f.status==5}"
                ng-model="floors" ng-mousedown="handleClick($event,f)" >
               {{f.room_id}}
-              <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span>
+              <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span><br>
               <span class = "glyphicon glyphicon-thumbs-down" ng-hide = "f.status <3 || f.status ==5"></span>
             </div>
 
@@ -158,5 +158,5 @@
     </div>
   </div>
 
-  <div id="notifications" ng-click = "">
+  <div id="notifications" >
   </div>

@@ -19,7 +19,11 @@ angular.module('AngularScaffold.Services').factory('HistoryService', ['$http',
   			},
 				GetSeenReports: function(){
 	    			return $http.get(baseUrl + "v1/getSeenReports");
-  		}
+  		},
+			ReportModifySeen: function(payload){
+				console.log(payload);
+					return $http.post(baseUrl + "v1/reportModifySeen",payload);
+		}
 		}
 	}
 ]);

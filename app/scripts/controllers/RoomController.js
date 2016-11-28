@@ -30,6 +30,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.infoRC;
     $scope.doneChecking = true;
     $scope.change_true = true;
+    $scope.reports_not_seen = [];
 
     $scope.Timer = $interval(function () {
       if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
@@ -53,8 +54,19 @@ angular.module('AngularScaffold.Controllers')
                 $scope.change_true=false;
                 HistoryService.GetSeenReports().then(function(response){
                   if (response.data ) {
+                    for (var i = 0; i < response.data.length; i++) {
+                      var temp = {
+                        reporte:response.data[i]
+                      }
+                      HistoryService.ReportModifySeen(temp).then(function(response2){
+                        var str="HAY PROBLEMA EN LA HABITACION: "+response2.data.room_number;
+                          Notify(str, null, null, 'danger');
 
-                    Notify("Stop! Hammer time", null, null, 'danger');
+                      });
+                    }
+
+
+
                     console.log("jossy de Garrrrryyyyyyyy ");
                   }
                   $scope.change_true=true;
@@ -912,6 +924,21 @@ angular.module('AngularScaffold.Controllers')
              $('.blink').fadeIn(800);
           });
       }
+    }
+
+    $scope.report_modifySeen = function(  ) {
+      var temp = {
+        empty:null
+      }
+      HistoryService.ReportModifySeen(temp).then(function(response){
+        if (response.data ) {
+
+          Notify("Stop! Hammer time", null, null, 'danger');
+          console.log("jossy de Garrrrryyyyyyyy ");
+        }
+        $scope.change_true=true;
+
+      });
     }
 
 }]);
