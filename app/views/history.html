@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="hist col-md-9">
-      <div class="reports" ng-if="tab">
+      <div class="reports" ng-if="tab<4">
         <div class="rep-body" id="printThisElement">
           <H2>Reportes de Habitaciónes</H2>
           <table id="table" class="table table-stripes">
@@ -77,9 +77,8 @@
             </tr>
           </table>
         </div>
-        <!-- jossy se la come   completa -->
-
-        <div id="reports" class="reports-by-room" ng-show="tab == 4" >
+      </div>
+      <div id="reports" class="reports-by-room" ng-if="tab == 4" >
         <div class="rep-body">
           <table id="table_by_room" class="table table-stripes">
             <tr>
@@ -118,7 +117,6 @@
             </tr>
           </table>
         </div>
-      </div>
       </div>
     </div>
     <div class="user-filter col-md-3">
