@@ -519,7 +519,7 @@ input.radio:checked ~ label {
   height: 60px !important;
   border-radius: 45px;
   font-size: 20px;
-  color: #9d9d9d!important;
+  color: #fff!important;
   background-color: #01403a;
   border: 1px solid #027268;
   border-width: 1px 1px 3px;
