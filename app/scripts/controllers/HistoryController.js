@@ -4,15 +4,20 @@ angular.module('AngularScaffold.Controllers')
   		$scope.reportsList = [];
   		$scope.userList = [];
 			$scope.records = [];
+			$scope.reportBackup =[];
   		$scope.startDate =  new Date(2015, 11, 31);
-      $scope.endDate = new Date(2019, 12, 1);
+      $scope.endDate = new Date();
       $scope.recordLimit = 8;
 
   		$scope.getReports = function(){
   			HistoryService.GetReports().then(function(response){
       		$scope.reportsList = response.data;
+
       		for(var i=0; i<$scope.reportsList.length; i++) {
 					  $scope.records.push($scope.reportsList); 
+					  
+					  $scope.reportBackup.push(response.data[i]);
+
 					  if ($scope.userList.indexOf($scope.reportsList[i].employee_username) === -1) {
 					   	$scope.userList.push($scope.reportsList[i].employee_username);
 					  }
@@ -40,12 +45,18 @@ angular.module('AngularScaffold.Controllers')
         popupWinindow.document.close();
       } 
 
-      $scope.filterByDate = function(property, lowbound, highbound){
-      	return function (){
-      		if (true) {
-      			return true;
+      $scope.filterByDate = function(property){
+      	for (var i = 0; i < $scope.reportBackup.length; i++) {
+      		$scope.reportsList.push($scope.reportBackup[i])
+      	}
+      	var inicio = document.getElementById('start').value;
+      	var final = document.getElementById('end').value;
+      	for (var i = 0; i < $scope.reportsList.length; i++) {
+      		var date = $scope.reportsList[i].date_reported.substring(0,10);
+      		if (date > final || date < inicio) {
+      			$scope.reportsList.splice(i,1);
+      			i--;
       		}
-      		return false;
       	}
       };
 
