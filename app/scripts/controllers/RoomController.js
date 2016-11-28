@@ -29,9 +29,13 @@ angular.module('AngularScaffold.Controllers')
     $scope.RoomSelected = false;
     $scope.infoRC;
     $scope.doneChecking = true;
+    $scope.change_true = true;
+    $scope.reports_not_seen = [];
+    $scope.problema_resuelto=[];
 
     $scope.Timer = $interval(function () {
       if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
+        console.log(234)
         $scope.doneChecking = false;
         var employee_username ={
           username: $sessionStorage.currentUser.username
@@ -46,6 +50,31 @@ angular.module('AngularScaffold.Controllers')
               $scope.employeeWithRooms = []
               $scope.selectedRooms = []
               $scope.init();
+              console.log("jossy de Garrrrryyyyyyyy  2");
+              if ($scope.change_true) {
+                $scope.change_true=false;
+                HistoryService.GetSeenReports().then(function(response){
+                  if (response.data ) {
+                    for (var i = 0; i < response.data.length; i++) {
+                      var temp = {
+                        reporte:response.data[i]
+                      }
+                      HistoryService.ReportModifySeen(temp).then(function(response2){
+                        var str="HAY PROBLEMA EN LA HABITACION: "+response2.data.room_number;
+                          Notify(str, null, null, 'danger');
+
+                      });
+                    }
+
+
+
+                    console.log("jossy de Garrrrryyyyyyyy ");
+                  }
+                  $scope.change_true=true;
+
+                });
+              }
+
             }
             var user = {
               username: $sessionStorage.currentUser.username
@@ -61,12 +90,21 @@ angular.module('AngularScaffold.Controllers')
           }
         })
       }
-    }, 1000);
+    }, 5000);
     //--lo que hizo elena ---
 
     $scope.init = function() {
+      $scope.problema_resuelto=[];
+      HistoryService.getResolved().then(function(response){
+          $scope.problema_resuelto=response.data;
+
+
+      });
+
+
       $scope.getRooms();
       $scope.llenarEmpleado();
+
 
       //$scope.createAllRooms();
     };
@@ -742,7 +780,8 @@ angular.module('AngularScaffold.Controllers')
       $scope.room.status = estado;
       var temporal = {
           employee: $sessionStorage.currentUser.username,
-          room: $scope.room
+          room: $scope.room,
+
       }
       RoomService.UpdateRoom(temporal).then(function(response){
         var today = new Date();
@@ -898,6 +937,38 @@ angular.module('AngularScaffold.Controllers')
       }
     }
 
+    $scope.report_modifySeen = function(  ) {
+      var temp = {
+        empty:null
+      }
+      HistoryService.ReportModifySeen(temp).then(function(response){
+        if (response.data ) {
+
+          Notify("Stop! Hammer time", null, null, 'danger');
+          console.log("jossy de Garrrrryyyyyyyy ");
+        }
+        $scope.change_true=true;
+
+      });
+    }
+
+$scope.manita = function( room ){
+  var temp = false;
+for (var i = 0; i < $scope.problema_resuelto.length; i++) {
+  console.log(room)
+  if ($scope.problema_resuelto[i].room_number === room) {
+    temp = true;
+
+  }
+
+
+
+}
+if (temp) {
+  return false;
+}
+return true;
+}
 }]);
 
 app.filter('slice', function() {

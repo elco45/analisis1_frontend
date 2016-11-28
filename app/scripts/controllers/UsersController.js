@@ -11,9 +11,9 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     $sessionStorage.logged = false;
     $scope.employees = [];
     $scope.SelectedEmployee = {};
-    
+
     $scope.is_admin_logged = false;
-    
+
     $scope.show_logout = false;
     $scope.getUser = function(){
 
@@ -102,7 +102,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
 
     $scope.logout = function(){
         authService.Logout().then(function(response){
-          RoomService.GetSettings().then(function(response){   
+          RoomService.GetSettings().then(function(response){
             if($sessionStorage.currentUser.role === 0 && response.data.pin_login === true){
               $sessionStorage.$reset();
               $state.go("login");
@@ -112,9 +112,9 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
             }else if(response.data.pin_login === false){
               $state.go("login")
             }
-            
+
           })
-            
+
         }).catch(function(err){
           	BootstrapDialog.alert({
               	title: 'ERROR',
@@ -174,24 +174,24 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     //checkups for ng-if in navbar
     $scope.check_login_allowed = function(){
      $scope.clear_user()
-     RoomService.GetSettings().then(function(response){     
-        $scope.pin_login = response.data;   
+     RoomService.GetSettings().then(function(response){
+        $scope.pin_login = response.data;
         if(!response.data.pin_login){
           $state.go("login");
         }
-        
+
       })
    }
-   
+
     $scope.clear_user = function(){
       $sessionStorage.currentUser = {};
     }
     $scope.show_for_admin= function(){
       if(typeof($sessionStorage.currentUser) === "undefined")
         return false;
-      if($sessionStorage.currentUser.role == 0 && $state.current.name != 'login' && $state.current.name != 'start' 
+      if($sessionStorage.currentUser.role == 0 && $state.current.name != 'login' && $state.current.name != 'start'
         && $state.current.name != 'pin_login'){
-        $scope.is_admin_logged = true;    
+        $scope.is_admin_logged = true;
         return true;
       }
       return false;
@@ -204,17 +204,17 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
           return false;
          if($sessionStorage.currentUser.logged)
           return false;
-        if($state.current.name == 'login' || $state.current.name == 'start' 
-          || $state.current.name == 'pin_login'){   
+        if($state.current.name == 'login' || $state.current.name == 'start'
+          || $state.current.name == 'pin_login'){
           return false;
         }
       return true;
 
 
       }catch(err){
-        
+
       }
-     
+
    }
    //done with checkups
     $scope.go_admin_login = function(){
@@ -228,8 +228,8 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     $scope.go_emp_login = function(){
       $state.go("pin_login")
     }
-   	
-    $scope.getEmployees = function(){     
+
+    $scope.getEmployees = function(){
       RoomService.GetEmpleado().then(function(response){
         $scope.employees = response.data
       });
@@ -237,7 +237,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
 
     $scope.select_current_emp = function(employee){
       $scope.SelectedEmployee = employee;
-      if(employee.pin === null){          
+      if(employee.pin === null){
         BootstrapDialog.confirm({
             title: 'SUCCESS',
             message: 'Porfavor ingresar un PIN.',
@@ -267,8 +267,8 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
                 location.reload();
             }
           });
-          
-          
+
+
         });
       }else if(employee.pin != numbers){
         BootstrapDialog.alert({
@@ -302,8 +302,9 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }
 
     $scope.clickIconButton = function(){
+      Notify("Stop! Hammer time", null, null, 'danger');
 
-      RoomService.GetSettings().then(function(response){   
+      RoomService.GetSettings().then(function(response){
         if(response.data.pin_login === true){
           if($sessionStorage.currentUser.role === 0 ){
             $state.go("home");
@@ -315,7 +316,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
         }else{
           $state.go("login");
         }
-                
+
       })
     }
 
