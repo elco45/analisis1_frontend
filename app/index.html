@@ -53,6 +53,7 @@
               <li ng-cloak ng-show="show_for_admin()" ><a href="/#/home"> Manejar Habitaciones</a></li>
               <li ng-if="show_for_admin()" ng-cloak><a href="/#/manage">Manejar Usuarios</a></li>
               <li ng-if="show_for_admin()" ng-cloak><a href="/#/reports">Historial</a></li>
+              <li ng-if="show_for_admin()" ng-cloak><a href="/#/problemas">Manejar Problemas</a></li>
               <li ng-if="show_for_admin()" ng-cloak  ng-click ="show_options()">
               <a class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a></li>
               <li ng-if="show_logout()" ng-cloak ng-click="logout()"><a href="">Logout</a></li>
@@ -113,6 +114,7 @@
   <script src="scripts/services/HistoryService.js"></script>
   <script src="scripts/services/authService.js"></script>
   <script src="/angular-keypad/dist/angular-keypad.js"></script>
+   <script src="scripts/controllers/ProblemasCrud.js"></script>
   <!-- endinject -->
 
 </html>

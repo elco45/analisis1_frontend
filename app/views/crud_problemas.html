@@ -1,0 +1,85 @@
+<div class="container" ng-controller="ProblemasCrud" ">
+  
+  <div class="container-extra">
+  </div>
+  <div class="container-extra">
+  </div>
+
+  <ul class="nav nav-tabs" ng-init="tab = 1">
+    <li role="presentation" class="tab" ng-class="{active: tab==1}" ng-click="tab = 1" ><a>Crear Problemas</a></li>
+    <li role="presentation" class="tab" ng-class="{active: tab==2}" ng-click="tab = 2"><a>Modificar Problemas</a></li>
+    <li role="presentation" class="tab" ng-class="{active: tab==3}" ng-click="tab = 3"><a>Eliminar Problemas</a></li>
+  </ul>
+
+  <div class="main-manage" >
+    <!-- Agregar Usuarios form -->
+    <form class = "fix " ng-show="tab == 1">
+
+
+      <h1>Crear un nuevo problema</h1>
+
+      <fieldset>
+      <label for="name">Tipo de problema:</label>
+        <select class="text">
+          <option value="0">Limpio con problemas</option>
+          <option value="1">No limpio</option>
+        </select>
+
+        <label for="name">Descripcion del Problema:</label>
+        <input type="text" id="name" name="user_name"  ng-model ="usuario.name" >
+
+              </fieldset>
+      <p></p>
+      <button class="bform"  ng-click="crear_problema()">Registrar</button>
+    </form>
+
+    <!-- Modificar Usuarios form--> 
+    <form ng-show="tab == 2">
+
+      <h1>Modificar Problema</h1>
+
+      <fieldset>
+        
+        <br>
+           <label >Tipo de Problema:</label> 
+       <select class="text">
+          <option value="0">Limpio con problemas</option>
+          <option value="1">No limpio</option>
+        </select>
+
+        <label >Descripcion del problema:</label>
+        <input type="text" id="name" name="user_name" ng-model="usuarioSeleccionado.name">
+
+       
+        </fieldset>
+      <p></p>
+      <button class="bform"  ng-click="modificar_usuario()">Modificar</button>
+    </form>
+
+
+     <form ng-show="tab == 3">
+
+      <h1>Eliminar Problema</h1>
+
+      <fieldset>
+       
+        <br>
+         <label >Tipo de problema:</label>
+            <select class="text">
+          <option value="0">tipo1</option>
+          <option value="0">tipo2</option>
+         
+        </select>
+        <label >Problema a eliminar:</label>
+         <select class="text">
+          <option value="0">problea1</option>
+          <option value="0">problea2</option>
+          <option value="0">problea3</option>
+          <option value="0">problea4</option>
+        </select>
+        </fieldset>
+      <p></p>
+      <button class="bform"  ng-click="modificar_usuario()">Eliminar</button>
+    </form>
+  </div>
+</div>
