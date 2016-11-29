@@ -1,17 +1,24 @@
-angular.module('AngularScaffold.Services').factory('problemService', ['$http', 
+angular.module('AngularScaffold.Services').factory('ProblemService', ['$http', 
 	function($http){
 		$http.defaults.withCredentials = true;
 		
 		var baseUrl = 'http://localhost:8000/';
 		return {
-			Logout: function(){
-				return $http.get(baseUrl +"v1/logout");
+						
+			CrearProblemas: function(payload){
+				console.log(payload)
+				return $http.post(baseUrl + "v1/crearProblema", payload);
 			},
-			Login: function(payload){
-				return $http.post(baseUrl +"v1/login", payload);
-			},
-			LoginWithPin: function(payload){
-				return $http.post(baseUrl + "v1/loginWithPin", payload);
-			}
+			GetProblema: function(){
+    			return $http.get(baseUrl + "v1/getProblemas");
+  			},
+  			Modificar: function(payload){
+				console.log("lo que estoy enviando"+payload);
+					return $http.post(baseUrl + "v1/modificarProblema",payload);
+		    },
+		    Eliminar: function(payload){
+				console.log("lo que estoy enviando"+payload);
+					return $http.post(baseUrl + "v1/eliminarProblema",payload);
+		    }
 	    };
 }]);
