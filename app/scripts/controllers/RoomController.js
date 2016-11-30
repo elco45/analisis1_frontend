@@ -1,6 +1,6 @@
 angular.module('AngularScaffold.Controllers')
-  .controller('RoomController', ['RoomService','HistoryService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', '$window',
-    function (RoomService,HistoryService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage, $window) {
+  .controller('RoomController', ['RoomService','HistoryService','ProblemService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', '$window',
+    function (RoomService,HistoryService,ProblemService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage, $window) {
     $scope.$sessionStorage = $sessionStorage;
     $scope.selectedRooms = [];
     $scope.empleados = [];
@@ -32,6 +32,10 @@ angular.module('AngularScaffold.Controllers')
     $scope.change_true = true;
     $scope.reports_not_seen = [];
     $scope.problema_resuelto=[];
+    $scope.problem_list = [];
+    $scope.no_limpio = [];
+    $scope.limpio_problema = [];
+    $scope.seleccionado = {};
 
     $scope.Timer = $interval(function () {
       if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
@@ -779,11 +783,15 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.cambioEstados = function(estado){
       $scope.room.status = estado;
+      if($scope.seleccionado){
+        $scope.room.observation = $scope.seleccionado;
+      }
       var temporal = {
           employee: $sessionStorage.currentUser.username,
-          room: $scope.room,
+          room: $scope.room
 
       }
+      
       RoomService.UpdateRoom(temporal).then(function(response){
         var today = new Date();
         var dd = today.getDate();
@@ -807,7 +815,7 @@ angular.module('AngularScaffold.Controllers')
         var reporte ={
           employee_id: response.data.idUser[0].username,
           room_number: response.data.room_id,
-          problem_id: 0,//ESTO ESTA EN DURO, HAY QUE HACERLO!
+          problem_id: response.data.observation,
           room_state: response.data.status,
           date_reported: today,
           resolved:resuelto
@@ -851,10 +859,13 @@ angular.module('AngularScaffold.Controllers')
               }
             }
           }
+          ProblemService.GetProblema().then(function(response){
+              $scope.problem_list = response.data;
+          });
         });
 
+        
         $scope.RoomSelected = false;
-        console.log($scope.currentEmpRooms)
     }
 
     $scope.setText = function(notCleaned){
@@ -956,21 +967,46 @@ angular.module('AngularScaffold.Controllers')
 
 $scope.manita = function( room ){
   var temp = false;
-for (var i = 0; i < $scope.problema_resuelto.length; i++) {
- 
-  if ($scope.problema_resuelto[i].room_number === room) {
-    temp = true;
+  for (var i = 0; i < $scope.problema_resuelto.length; i++) {
+   
+    if ($scope.problema_resuelto[i].room_number === room) {
+      temp = true;
+
+    }
+
+
 
   }
-
-
-
+  if (temp) {
+    return false;
+  }
+  return true;
 }
-if (temp) {
-  return false;
+
+$scope.showNotCleanList = function(){
+  $scope.no_limpio = [];
+  for (var i = 0; i < $scope.problem_list.length; i++) {
+    if($scope.problem_list[i].problem_type === 1){
+      $scope.no_limpio.push($scope.problem_list[i])
+    }
+  }
+  $scope.showList = true;
 }
-return true;
+
+$scope.showProblemList = function(){
+  $scope.no_limpio = [];
+  for (var i = 0; i < $scope.problem_list.length; i++) {
+    if($scope.problem_list[i].problem_type === 0){
+      $scope.limpio_problema.push($scope.problem_list[i])
+    }
+  }
+  $scope.showListProblems = true;
 }
+
+$scope.saberSelecc = function(){
+  console.log($scope.seleccionado)
+}
+
 }]);
 
 app.filter('slice', function() {

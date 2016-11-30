@@ -44,7 +44,7 @@
     <h1>Habitación {{room.room_id}}</h1>
     <table class="col-md-offset-3 col-md-6 col-md-offset-3" style="margin-top: 25px;">
       <!-- ngrepeat para las habitaciones que le toca limpiar a la empleada -->
-      <tr ng-show="!start" ng-hide="showList">
+      <tr ng-show="!start" ng-hide = "showList">
         <td>
           <div class="roombutton2">
             <button ng-click="start = true" class="mybtn2">Empezar a limpiar</button>
@@ -52,10 +52,11 @@
         </td>
         <td>
           <div class="roombutton2">
-            <button ng-click="showList = true" class="mybtn2">No se pudo limpiar</button>
+            <button ng-click="showNotCleanList()"  class="mybtn2">No se pudo limpiar</button>
           </div>
         </td>
       </tr>
+
       <tr ng-show="start">
         <td ng-hide="showListProblems">
           <div class="roombutton2">
@@ -64,46 +65,33 @@
         </td>
         <td ng-hide="showListProblems">
           <div class="roombutton2">
-            <button ng-click="showListProblems=true" class="danger mybtn2">Terminar de limpiar y reportar problema</button>
+            <button ng-click="showProblemList()" class="danger mybtn2">Terminar de limpiar y reportar problema</button>
           </div>
         </td>
       </tr>
+
       <tr>
         <div class="col-md-12 outer" ng-show="showList">
-          <div class="contain">
-            <input class="radio" id="opt1" type="radio" value="El cliente no queria." ng-model="room.observation" name="notCleaned">
-            <label class="lb" for="opt1"> El cliente no queria. </label>
-          </div>
-          <div class="contain">
-            <input class="radio" id="opt2" type="radio" value="No hay tiempo suficiente." ng-model="room.observation" name="notCleaned">
-            <label class="lb" for="opt2"> No hay tiempo suficiente. </label>
-          </div>
-          <div class="contain">
-            <input class="radio" id="opt3" type="radio" value="No hay materiales." ng-model="room.observation" name="notCleaned">
-            <label class="lb" for="opt3"> No hay materiales. </label>
-          </div>
-          <div class="col-md-12">
-            <br><br>
-          </div>
+
+          <div class = "contain" ng-repeat="n in no_limpio">
+              <label class="lb">
+                  <input type="radio" ng-model="$parent.seleccionado" name="NotClean" value="{{n._id}}" required />{{n.problem_description}}
+              </label>
+          </div> <!-- poner bonito lo del input -->
+
           <div class="col-md-12 contain2">
-            <button ng-click="cambioEstados(4)" ng-show="showList" class="mybtn2 col-md-2"> Finalizar </button>
+            <button ng-click="cambioEstados(4)" ng-show="showList " class="mybtn2 col-md-2"> Finalizar </button>
           </div>
         </div>
       </tr>
+
       <tr>
         <div class="col-md-12 outer" ng-show="showListProblems">
-          <div class="contain">
-            <input class="radio" id="opt4" type="radio" value="No funciona el TV." ng-model="room.observation" name="Problems">
-            <label class="lb" for="opt4"> No funciona el TV. </label>
-          </div>
-          <div class="contain">
-            <input class="radio" id="opt5" type="radio" value="Faltan toallas." ng-model="room.observation" name="Problems">
-            <label class="lb" for="opt5"> Faltan toallas. </label>
-          </div>
-          <div class="contain">
-            <input class="radio" id="opt6" type="radio" value="Se quebró una lámpara." ng-model="room.observation" name="Problems">
-            <label class="lb" for="opt6"> Se quebró una lámpara. </label>
-          </div>
+          <div class="contain" ng-repeat = "lp in limpio_problema">
+              <label class="lb">
+                  <input type="radio" ng-model="$parent.seleccionado" name="CleanWithProblem" value="{{lp._id}}" required />{{lp.problem_description}}
+              </label>
+          </div><!--PONER INPUT BONITO-->
         </div>
         <div class="col-md-12 contain2">
           <button ng-click="cambioEstados(3)" ng-show="showListProblems" class="mybtn2 col-md-3"> Finalizar </button>
