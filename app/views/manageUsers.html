@@ -1,4 +1,4 @@
-<div class="container" ng-controller="UsersController" ng-init="getUser()">
+i<div class="container" ng-controller="UsersController" ng-init="getUser()">
   
   <div class="container-extra">
   </div>
@@ -14,60 +14,59 @@
     <!-- Agregar Usuarios form -->
     <form class = "fix " ng-show="tab == 1">
 
-
       <h1>Crear un Nuevo Usuario</h1>
 
       <fieldset>
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="user_name"  ng-model ="usuario.name" >
+        <label class="mylabel" for="name">Nombre:</label>
+        <input type="text" id="name" name="user_name" ng-model ="usuario.name" maxlength="35" required minlength="7" required placeholder="El usuario debe tener entre 7 y 35 letras y espacios" pattern="[a-zA-Z]+ [a-zA-Z]+( [a-zA-Z]+)?( [a-zA-Z]+)?">
 
-        <label for="name">Usuario:</label>
-        <input type="text" id="name" name="user_username" ng-model ="usuario.username">
+        <label class="mylabel" for="name">Usuario:</label>
+        <input type="text" id="name" name="user_username" ng-model ="usuario.username" maxlength="15" required minlength="4" required placeholder="El usuario debe tener entre 4 y 15 letras Ej. mariaperez" pattern="[a-zA-Z]{3}[a-zA-Z]+">
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="user_password" ng-model ="usuario.password">
+        <label class="mylabel" for="password">Password:</label>
+        <input type="password" id="password" name="user_password" ng-model ="usuario.password" maxlength="15" required minlength="6" placeholder="La contraseña debe tener entre 6 y 15 caracteres" pattern=".{5}.+">
 
-        <label for="name">Celular:</label>
-        <input type="tel" id="name" name="user_username" ng-model ="usuario.cel">
+        <label class="mylabel" for="password">Verificación de password:</label>
+        <input type="password" id="password" name="user_password" ng-model ="usuario.password" maxlength="15" required minlength="6" placeholder="Ingrese de nuevo la contraseña" pattern=".{5}.+">
 
-        <label for="name">Telefono Fijo:</label>
-        <input type="tel" id="name" name="user_username" ng-model ="usuario.tel">
+        <label class="mylabel" for="name">Celular:</label>
+        <input type="tel" id="name" name="user_username" ng-model ="usuario.cel" maxlength="8" required minlength="8" required placeholder="El celular debe tener 8 números Ej. 99982019" pattern="\b\d{4}\d{4}\b">
 
-        <label for="name">Direccion:</label>
-        <input type="text" id="name" name="user_username" ng-model ="usuario.direction">
+        <label class="mylabel" for="name">Telefono Fijo:</label>
+        <input type="tel" id="name" name="user_username" ng-model ="usuario.tel" maxlength="8" required minlength="8" required placeholder="El teléfono debe tener 8 números Ej. 22324323" pattern="\b\d{4}\d{4}\b">
 
-        <label for="name"># Identidad:</label>
-        <input type="text" id="name" name="user_username" ng-model ="usuario.id">
+        <label class="mylabel" for="name">Direccion:</label>
+        <input type="text" id="name" name="user_username" ng-model ="usuario.direction" required minlength="10" required placeholder="La dirección debe tener más de 10 caracteres" pattern=".{9}.+">
 
-        <label for="name">Fecha de Nacimiento:</label>
-        <input type="date" name="usuario.birth_date">
+        <label class="mylabel" for="name"># Identidad:</label>
+        <input type="text" id="name" name="user_username" ng-model="usuario.id" maxlength="15" required minlength="15" required placeholder="El número de id debe ir con el formato 0801-1980-00234" pattern="\b\d{4}[-]\d{4}[-]\d{5}\b">
 
-        <label for="name">Estado Civil:</label>
+        <label class="mylabel" for="name">Fecha de Nacimiento:</label>
+        <input type="date" name="usuario.birth_date" maxlength="10" required minlength="10" required placeholder="La fecha debe ir con el formato dd/mm/aaaa" pattern="\b\d{2}[/]\d{2}[/]\d{4}\b">
+
+        <label class="mylabel" for="name">Estado Civil:</label>
         <select ng-model="usuario.civil_status">
-          <option value="Soltero">Soltero(a)</option>
+          <option selected value value="Soltero" selected>Soltero(a)</option>
           <option value="Casado">Casado(a)</option>
           <option value="Viudo">Viudo(a)</option>
         </select>
 
-        <label for="name">Hijos:</label>
-        <input type="number" id="name" name="user_children" ng-model ="usuario.children">
+        <label class="mylabel" for="name">Hijos:</label>
+        <input type="number" id="name" name="user_children" ng-model ="usuario.children" max="20" required min="0" required placeholder="Ingrese el número de hijos">
 
-        <label for="name">Foto:</label>
-        <input type="file" name="usuario.photo">
-
-        <label for="name">Usuario:</label>
-        <input type="text" id="name" name="user_username" ng-model ="usuario.username">
+        <label class="mylabel" for="name">Foto:</label>
+        <input type="file" name="usuario.photo" accept="image/*">
 
         <div class="role-user">
-          <label>Rol:</label> <br>
-          <input type="radio" id="adm" value="0" ng-model ="usuario.role" ><label for="adm" class="light"> Administrador</label><br>
-          <input type="radio" id="emp"  value="1" ng-model ="usuario.role" ><label for="emp" class="light"> Empleado</label>
+          <label class="mylabel">Rol:</label> <br>
+          <input type="radio" id="adm" value="0" ng-model ="usuario.role" ><label class="mylabel" for="adm" class="light"> Administrador</label><br>
+          <input type="radio" id="emp"  value="1" ng-model ="usuario.role" ><label class="mylabel" for="emp" class="light"> Empleado</label>
         </div>
 
         <div class="type-user">
-          <label>Tipo:</label> <br>
-          <input type="radio" id="perm"  value="0" ng-model ="usuario.employee_type" ><label for="perm" class="light">Permanente </label><br>
-          <input type="radio" id="temp" value="1" ng-model ="usuario.employee_type" ng-disabled="usuario.role == '0' "><label for="temp" class="light" > Temporal</label>
+          <label class="mylabel">Tipo:</label> <br>
+          <input type="radio" id="perm"  value="0" ng-model ="usuario.employee_type" ><label class="mylabel" for="perm" class="light">Permanente </label><br>
+          <input type="radio" id="temp" value="1" ng-model ="usuario.employee_type" ng-disabled="usuario.role == '0' "><label class="mylabel" for="temp" class="light" > Temporal</label>
         </div>
         
       </fieldset>
@@ -86,63 +85,63 @@
         </select>
         <br>
 
-        <label >Nombre:</label>
+        <label class="mylabel" >Nombre:</label>
         <input type="text" id="name" name="user_name" ng-model="usuarioSeleccionado.name">
 
-        <label >Usuario:</label> 
+        <label class="mylabel" >Usuario:</label> 
         <input type="text" id="name" name="user_username" ng-model="usuarioSeleccionado.username">
 
-        <label >Password:</label>
+        <label class="mylabel" >Password:</label>
         <input type="password" id="password" name="user_password" ng-model="usuarioSeleccionado.password">
 
-        <label for="name">Pin:</label>
+        <label class="mylabel" for="name">Pin:</label>
         <input type="text" id="name" name="user_pin" ng-model ="usuarioSeleccionado.pin" maxlength="4">
 
-        <label for="name">Celular:</label>
+        <label class="mylabel" for="name">Celular:</label>
         <input type="tel" id="name" name="user_username" ng-model ="usuarioSeleccionado.cel">
 
-        <label for="name">Telefono Fijo:</label>
+        <label class="mylabel" for="name">Telefono Fijo:</label>
         <input type="tel" id="name" name="user_username" ng-model ="usuarioSeleccionado.tel">
 
-        <label for="name">Direccion:</label>
+        <label class="mylabel" for="name">Direccion:</label>
         <input type="text" id="name" name="user_username" ng-model ="usuarioSeleccionado.direction">
 
-        <label for="name"># Identidad:</label>
+        <label class="mylabel" for="name"># Identidad:</label>
         <input type="text" id="name" name="user_username" ng-model ="usuarioSeleccionado.id">
 
-        <label for="name">Fecha de Nacimiento:</label>
+        <label class="mylabel" for="name">Fecha de Nacimiento:</label>
         <input type="date" name="usuarioSeleccionado.birth_date">
 
-        <label for="name">Estado Civil:</label>
+        <label class="mylabel" for="name">Estado Civil:</label>
         <select ng-model="usuarioSeleccionado.civil_status">
           <option value="Soltero">Soltero(a)</option>
           <option value="Casado">Casado(a)</option>
           <option value="Viudo">Viudo(a)</option>
         </select>
 
-        <label for="name">Hijos:</label>
+        <label class="mylabel" for="name">Hijos:</label>
         <input type="number" id="name" name="user_children" ng-model ="usuarioSeleccionado.children">
 
-        <label for="name">Foto:</label>
+        <label class="mylabel" for="name">Foto:</label>
         <input type="file" name="usuarioSeleccionado.photo">
 
-        <label for="name">Usuario:</label>
+        <label class="mylabel" for="name">Usuario:</label>
         <input type="text" id="name" name="user_username" ng-model ="usuarioSeleccionado.username">
 
         <div class="role-user">
-          <label>Rol:</label> <br>
-          <input type="radio" id="adm" value="0" ng-model="usuarioSeleccionado.role"><label for="adm" class="light"> Administrador</label><br>
-          <input type="radio" id="emp" value="1" ng-model="usuarioSeleccionado.role"><label for="emp" class="light"> Empleado</label>
+          <label class="mylabel">Rol:</label> <br>
+          <input type="radio" id="adm" value="0" ng-model="usuarioSeleccionado.role"><label class="mylabel" for="adm" class="light"> Administrador</label><br>
+          <input type="radio" id="emp" value="1" ng-model="usuarioSeleccionado.role"><label class="mylabel" for="emp" class="light"> Empleado</label>
         </div>
         <div class="type-user">
-          <label>Tipo:</label> <br>
-          <input type="radio" id="perm" value="0" ng-model="usuarioSeleccionado.employee_type"><label for="perm" class="light"> Permanente</label><br>
-          <input type="radio" id="temp" value="1" ng-model="usuarioSeleccionado.employee_type"><label for="temp" class="light"> Temporal</label>
+          <label class="mylabel">Tipo:</label> <br>
+          <input type="radio" id="perm" value="0" ng-model="usuarioSeleccionado.employee_type"><label class="mylabel" for="perm" class="light"> Permanente</label><br>
+          <input type="radio" id="temp" value="1" ng-model="usuarioSeleccionado.employee_type"><label class="mylabel" for="temp" class="light"> Temporal</label>
         </div>
         <div class="state-user">
-          <label>Estado:</label> <br>
-          <input type="radio" id="inact" value="0" ng-model="usuarioSeleccionado.status" ><label for="inact" class="light"> Inactivo</label><br>
-          <input type="radio" id="act" value="1" ng-model="usuarioSeleccionado.status" ><label for="act" class="light" > Activo</label>
+          <label class="mylabel">Estado:</label> <br>
+          <input type="radio" id="inact" value="0" ng-model="usuarioSeleccionado.status" ><label class="mylabel" for="inact" class="light"> Inactivo</label><br>
+          <input type="radio" id="act" value="1" ng-model="usuarioSeleccionado.status" ><label class="mylabel" for="act" class="light" > Activo</label>
         </div>
         </fieldset>
       <p></p>

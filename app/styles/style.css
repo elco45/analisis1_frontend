@@ -539,3 +539,11 @@ input.radio:checked ~ label {
     margin-right: 15px;
     max-width: 300px;
 }
+
+input:required:valid {
+  border: 1px solid green;
+}
+
+input:required:invalid, input:focus:invalid {
+  border: 1px solid red;
+}

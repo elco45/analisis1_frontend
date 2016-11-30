@@ -16,7 +16,6 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
 
     $scope.show_logout = false;
     $scope.getUser = function(){
-
       UserService.GetUser().then(function(response){
       $scope.lisUsuario = response.data
       });
@@ -37,13 +36,12 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
           swal("¡Exito!","success");
           $scope.usuario="";
         }).catch(function(err){
-
+          swal("Error al guardar el usuario", "error");
       },false)
 
 
       });
     };
-
 
     $scope.decode = function(file,fileName){
       var byteString;
