@@ -32,18 +32,18 @@ angular.module('AngularScaffold.Controllers')
     $scope.change_true = true;
     $scope.reports_not_seen = [];
     $scope.problema_resuelto=[];
+    console.log("")
 
-    $scope.Timer = $interval(function () {
+    $scope.Timer = function () {
+      console.log($scope.currentEmpRooms)
       if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
-        console.log(234)
         $scope.doneChecking = false;
         var employee_username ={
           username: $sessionStorage.currentUser.username
         }
         RoomService.CheckForChanges(employee_username).then(function(response){
           if(!response.data.last_change_seen){
-            if($sessionStorage.currentUser.role === 1){// es empleado
-              $scope.currentEmpRooms =[];
+            if($sessionStorage.currentUser.role === 1){// es empleados
               $scope.getEmpRooms();
             }else{//es admin
               $scope.floors = []
@@ -90,20 +90,23 @@ angular.module('AngularScaffold.Controllers')
           }
         })
       }
-    }, 5000);
+
+      setTimeout($scope.Timer, 500);
+    } 
+    setTimeout($scope.Timer, 500);
+
+    
     //--lo que hizo elena ---
 
     $scope.init = function() {
       $scope.problema_resuelto=[];
       HistoryService.getResolved().then(function(response){
           $scope.problema_resuelto=response.data;
+          $scope.getRooms();
+          $scope.llenarEmpleado();
 
 
       });
-
-
-      $scope.getRooms();
-      $scope.llenarEmpleado();
 
 
       //$scope.createAllRooms();
@@ -827,8 +830,9 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.getEmpRooms = function() {
-        $scope.currentEmpRooms = [];
         RoomService.GetRooms().then(function(response){
+
+          $scope.currentEmpRooms = [];
           for(var i =0; i<response.data.length;i++){
               for(var j=0;j<response.data[i].idUser.length; j++){
                  if($sessionStorage.currentUser.username == response.data[i].idUser[j].username){
@@ -836,7 +840,6 @@ angular.module('AngularScaffold.Controllers')
                  }
               }
           }
-        }).then(function(){
           var flag = true;   // set flag to true to begin first pass
           var temp;   //holding variable
 
@@ -851,8 +854,7 @@ angular.module('AngularScaffold.Controllers')
               }
             }
           }
-        });
-
+        })
         $scope.RoomSelected = false;
         console.log($scope.currentEmpRooms)
     }
@@ -896,18 +898,19 @@ angular.module('AngularScaffold.Controllers')
     }
 
     //funcion para mostrar la fecha actual
-
     $scope.startTime = function() {
         var today = new Date();
         var dias = [ 'Domingo','Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         var fecha = dias[today.getDay()] +" " + today.getDate()+ " de " + meses[today.getMonth()] + " "+ today.toLocaleTimeString();
+
         if(document.getElementById('time') !== null)
           document.getElementById('time').innerHTML = fecha;
         t = setTimeout(function () {
             $scope.startTime()
         }, 500);
     }
+
     $scope.startTime();
     //fin mostrar fecha actual
 
