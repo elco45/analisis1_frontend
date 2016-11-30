@@ -65,8 +65,17 @@
               <td>
                 {{rep.employee_username}}
               </td>
-              <td>
-                {{rep.room_state}}
+              <td ng-if="rep.room_state == 6">
+                No atendida
+              </td>
+              <td ng-if="rep.room_state == 2">
+                Limpia
+              </td>
+              <td ng-if="rep.room_state == 3">
+                Limpia con Problemas
+              </td>
+              <td ng-if="rep.room_state == 4">
+                No Limpia
               </td>
               <td>
                 {{rep.problem_id}}
@@ -119,12 +128,22 @@
         </div>
       </div>
     </div>
-    <div class="user-filter col-md-3">
-      <strong>Filtro por Usuario</strong>
-      <div ng-repeat="user in userList">
-        <label class="checkbox-inline">
-          <input type="checkbox" name="users" ng-model="filter[user]"> {{user}}
-        </label>
+    <div class="filts col-md-3">
+      <div class="user-filter">
+        <strong>Filtro por Usuario</strong>
+        <div ng-repeat="user in userList">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="users" ng-model="filter[user]"> {{user}}
+          </label>
+        </div>
+      </div>
+      <div class="state-filter">
+        <strong>Filtro por Estado</strong>
+        <div ng-repeat="state in statesList">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="states" ng-model="filterState[state]"> {{state}}
+          </label>
+        </div>
       </div>
     </div>
   </div>
