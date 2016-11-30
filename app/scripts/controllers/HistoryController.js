@@ -90,12 +90,40 @@ angular.module('AngularScaffold.Controllers')
           $scope.reportsList.push($scope.reportBackup[i])
         }
         var inicio = document.getElementById('start').value;
+        var compi = inicio.split('-');
+        var mi = parseInt(compi[0], 10);
+        var di = parseInt(compi[1], 10);
+        var yi = parseInt(compi[2], 10);
+        var datei = new Date(yi,mi-1,di);
+
         var final = document.getElementById('end').value;
-        for (var i = 0; i < $scope.reportsList.length; i++) {
-          var date = $scope.reportsList[i].date_reported.substring(0,10);
-          if (date > final || date < inicio) {
-            $scope.reportsList.splice(i,1);
-            i--;
+        var comp = final.split('-');
+        var m = parseInt(comp[0], 10);
+        var d = parseInt(comp[1], 10);
+        var y = parseInt(comp[2], 10);
+        var date = new Date(y,m-1,d);
+
+        if (inicio > final || (date.getFullYear() == y && date.getMonth() + 1 == m && date.getDate() == d) 
+              || (datei.getFullYear() == yi && datei.getMonth() + 1 == mi && datei.getDate() == di) ) {
+          swal({
+            title: "Fecha Incorrecta",
+            text: "La fecha debe ser válida",
+            type: "warning",
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Continuar!",
+            closeOnConfirm: true
+          },
+
+          function(){
+              $scope.endDate = new Date();
+          });
+        }else{
+          for (var i = 0; i < $scope.reportsList.length; i++) {
+            var date = $scope.reportsList[i].date_reported.substring(0,10);
+            if (date > final || date < inicio) {
+              $scope.reportsList.splice(i,1);
+              i--;
+            }
           }
         }
       };
