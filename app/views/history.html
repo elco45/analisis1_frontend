@@ -1,10 +1,5 @@
 <div class="container" ng-controller="HistoryController" ng-init = "getReports()" >
 
-  <div class="container-extra">
-  </div>
-  <div class="container-extra">
-  </div>
-
   <h1>Historial</h1>
 
   <div class="slinput" ng-init="">
@@ -23,18 +18,16 @@
   </div>
 
   <div class="row">
-    <div class="rep">
-      <div class="row">
-        <div class="col-md-4">
-          <strong>Ingrese fecha de Inicio:</strong>
-          <input class="input_date" type="date" id="start" min="2015-12-31" ng-model="startDate">
-        </div>
-        <div class="col-md-4">
-          <strong>Ingrese fecha Final:</strong>
-          <input class="input_date" type="date" id="end" max="2020-01-01" ng-model="endDate">
-        </div>
-        <button type="button" class="btn btn-primary" ng-click="filterByDate()">Filtrar por Fecha</button>
+    <div class="rep row">
+      <div class="col-md-4">
+        <strong>Ingrese fecha de Inicio:</strong>
+        <input class="input_date" type="date" id="start" min="2015-12-31" ng-model="startDate">
       </div>
+      <div class="col-md-4">
+        <strong>Ingrese fecha Final:</strong>
+        <input class="input_date" type="date" id="end" max="2020-01-01" ng-model="endDate">
+      </div>
+      <button type="button" class="btn btn-primary col-md-2" ng-click="filterByDate()">Filtrar por Fecha</button>
     </div>
     <div class="hist col-md-9">
       <div class="reports" ng-if="tab<4">
@@ -65,8 +58,17 @@
               <td>
                 {{rep.employee_username}}
               </td>
-              <td>
-                {{rep.room_state}}
+              <td ng-if="rep.room_state == 6">
+                No atendida
+              </td>
+              <td ng-if="rep.room_state == 2">
+                Limpia
+              </td>
+              <td ng-if="rep.room_state == 3">
+                Limpia con Problemas
+              </td>
+              <td ng-if="rep.room_state == 4">
+                No Limpia
               </td>
               <td>
                 {{rep.problem_id}}
@@ -119,16 +121,27 @@
         </div>
       </div>
     </div>
-    <div class="user-filter col-md-3">
-      <strong>Filtro por Usuario</strong>
-      <div ng-repeat="user in userList">
-        <label class="checkbox-inline">
-          <input type="checkbox" name="users" ng-model="filter[user]"> {{user}}
-        </label>
+    <div class="filts col-md-3">
+      <div class="user-filter">
+        <strong>Filtro por Usuario</strong>
+        <div ng-repeat="user in userList">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="users" ng-model="filter[user]"> {{user}}
+          </label>
+        </div>
+      </div>
+      <div class="state-filter">
+        <strong>Filtro por Estado</strong>
+        <div ng-repeat="state in statesList">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="states" ng-model="filterState[state]"> {{state}}
+          </label>
+        </div>
       </div>
     </div>
   </div>
   <button type="button" class="btn btn-primary" ng-show="records.length > recordLimit" ng-click="recordLimit = recordLimit + 5">Mostrar más Reportes</button>
   <button type="button" class="btn btn-primary" ng-click="printToCart('printThisElement')">Imprimir</button>
-
+  <div class="container-extra">
+  </div>
 </div>
