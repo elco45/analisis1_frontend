@@ -1,6 +1,6 @@
 angular.module('AngularScaffold.Controllers')
-  .controller('RoomController', ['RoomService','HistoryService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage',
-    function (RoomService,HistoryService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage) {
+  .controller('RoomController', ['RoomService','HistoryService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', '$window',
+    function (RoomService,HistoryService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage, $window) {
     $scope.$sessionStorage = $sessionStorage;
     $scope.selectedRooms = [];
     $scope.empleados = [];
@@ -765,8 +765,9 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.changeRoomEmp = function(id){
       for(var i=0;i<$scope.currentEmpRooms.length;i++){
-        if (id==$scope.currentEmpRooms[i].room_id) {
+        if (id === $scope.currentEmpRooms[i].room_id) {
             $scope.room = $scope.currentEmpRooms[i];
+            console.log($scope.room)
             $scope.RoomSelected = true;
             $scope.start = false;
             $scope.showList = false;
@@ -815,12 +816,14 @@ angular.module('AngularScaffold.Controllers')
         HistoryService.CreateRegister(reporte).then(function(response2){////EL PAYLOAD ESTA MALO
           console.log(response2.data)
         });
+      }).then(function(){
+        $scope.RoomSelected = true;
+        $scope.start = false;
+        $scope.showList = false;
+        $scope.showListProblems = false;
+        $state.reload();
       });
-      $scope.RoomSelected = false;
-      $scope.start = false;
-      $scope.showList = false;
-      $scope.showListProblems = false;
-      $scope.changeMainEmployee();
+      
     }
 
     $scope.getEmpRooms = function() {
@@ -834,7 +837,6 @@ angular.module('AngularScaffold.Controllers')
               }
           }
         }).then(function(){
-          console.log($scope.currentEmpRooms)
           var flag = true;   // set flag to true to begin first pass
           var temp;   //holding variable
 
