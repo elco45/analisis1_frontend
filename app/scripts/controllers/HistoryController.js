@@ -16,8 +16,8 @@ angular.module('AngularScaffold.Controllers')
 
 
           for(var i=0; i<$scope.reportsList.length; i++) {
-            $scope.records.push($scope.reportsList); 
-            
+            $scope.records.push($scope.reportsList);
+
             $scope.reportBackup.push(response.data[i]);
             if ($scope.userList.indexOf($scope.reportsList[i].employee_username) === -1) {
               $scope.userList.push($scope.reportsList[i].employee_username);
@@ -42,9 +42,12 @@ angular.module('AngularScaffold.Controllers')
           resolved: true
         }
         HistoryService.modResolved(params).then(function(response2){
-               console.log(response2.data)
+                 $scope.lista_problemas = [];
+                 $scope.getResolved ();
+
         });
         console.log("numero de habitacion es: "+params.employee_username);
+
       }
 
       $scope.filter = function(){};
