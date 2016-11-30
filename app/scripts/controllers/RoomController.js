@@ -957,7 +957,7 @@ angular.module('AngularScaffold.Controllers')
 $scope.manita = function( room ){
   var temp = false;
 for (var i = 0; i < $scope.problema_resuelto.length; i++) {
-  console.log(room)
+ 
   if ($scope.problema_resuelto[i].room_number === room) {
     temp = true;
 

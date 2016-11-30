@@ -36,6 +36,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             params: {content:undefined},
             templateUrl: '/views/start_page.html'
         })
+        .state('problemas', {
+            url: '/problemas',
+            params: {content:undefined},
+            templateUrl: '/views/crud_problemas.html'
+        })
         .state('pin_login', {
             url: '/login_emp',
             params: {content:undefined},
