@@ -683,7 +683,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.getRooms = function(){
       RoomService.GetRooms().then(function(response){
 
-        
+
         $scope.floors = []
         $scope.employeeWithRooms = []
         $scope.selectedRooms = []
@@ -912,44 +912,29 @@ angular.module('AngularScaffold.Controllers')
       }
       return false;
     }
-
-
-    /*$scope.serverTime =function (){
-      $.getJSON("https://api.github.com/users/jeresig?callback=?",function(json){
-        console.log(json);
-      });
-      var xmlHttp = new XMLHttpRequest();         
-
-      xmlHttp.onreadystatechange = function(){
-        if(xmlHttp.readyState === 4 && xmlHttp.status === 200){
-         console.log(xmlHttp.getResponseText)
-
-       }
-     }
-     xmlHttp.open('setRequestHeader',"http://httpbin.org/get",true);
-     xmlHttp.setRequestHeader("Content-Type", "text/plain");
-     xmlHttp.send('');
-   }*/
-
-    //funcion para mostrar la fecha actual
-    $scope.startTime = function() {
-       // var today = new Date($scope.serverTime());
-       RoomService.RequestTime().then(function(response){   
+     $scope.current_TimeStamp = 0;
+     $scope.clock= function(){
+        $scope.current_TimeStamp+=1000;
+        var today = new Date($scope.current_TimeStamp)
+        console.log(today.getTime())
+        console.log(today)
         
-        var today = new Date(response.data)
-        
-        var dias = [ 'Domingo','Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-        var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-        var fecha = dias[today.getDay()] +" " + today.getDate()+ " de " + meses[today.getMonth()] + " "+ today.toLocaleTimeString() ;
+        var days = [ 'Domingo','Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        var months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        var date = days[today.getDay()] +" " + today.getDate()+ " de " + months[today.getMonth()] + " "+ today.toLocaleTimeString() ;
 
         if(document.getElementById('time') !== null)
           document.getElementById('time').innerHTML = fecha;
-        t = setTimeout(function () {
-          $scope.startTime()
-        }, 250);
-      })
+        setTimeout($scope.clock, 1000);
      }
+     $scope.startTime= function(){      
+       RoomService.RequestTime().then(function(response){
+          var date = new Date(response.data)
+          $scope.current_TimeStamp = date.getTime()
+          var t = setTimeout($scope.clock, 1000);
+        })
 
+     }
      $scope.startTime();
     //fin mostrar fecha actual
 
