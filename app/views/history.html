@@ -48,7 +48,7 @@
                 Observación
               </th>
               <th>
-                Fecha
+                Fecha de cambio de estado
               </th>
             </tr>
             <tr ng-repeat="rep in reportsList | filter:searchInputVal | orderBy:sortOrderVal | filter:filterByUsername | limitTo:recordLimit">
@@ -74,7 +74,7 @@
                 {{rep.problem_id}}
               </td>
               <td>
-                {{rep.date_reported | date: 'EEEE dd/MM/yyyy h:mm a'}}
+                {{rep.date_reported | date: 'EEEE dd/MM/yyyy'}}
               </td>
             </tr>
           </table>
@@ -94,7 +94,7 @@
                  Observación
               </th>
               <th>
-                  Fecha
+                  Fecha de cambio de estado
               </th>
               <th>
                 Estado
@@ -111,7 +111,7 @@
                 {{rep.problem_id}}
               </td>
               <td>
-                {{rep.date_reported | date: 'MM/dd/yyyy @ h:mma'}}
+                {{rep.date_reported | date: 'MM/dd/yyyy'}}
               </td>
               <td>
                 <button type="button" class="btn btn-info" ng-click="cambiar_estado_problema(rep) ">Problema Resuelto</button>
@@ -133,9 +133,10 @@
       <div class="state-filter">
         <strong>Filtro por Estado</strong>
         <div ng-repeat="state in statesList">
-          <label class="checkbox-inline">
-            <input type="checkbox" name="states" ng-model="filterState[state]"> {{state}}
-          </label>
+          <label for="state6" class="checkbox-inline" ng-if="state == 6" ng-show="state == 6"> No atendida </label> <input id="state6" type="checkbox" name="states" ng-model="filterState[state]">
+          <label for="state2" class="checkbox-inline" ng-if="state == 2" ng-show="state == 2"> Limpia </label> <input id="state2" type="checkbox" name="states" ng-model="filterState[state]">
+          <label for="state3" class="checkbox-inline" ng-if="state == 3" ng-show="state == 3"> Limpia con problemas</label> <input id="state3" type="checkbox" name="states" ng-model="filterState[state]">
+          <label for="state4" class="checkbox-inline" ng-if="state == 4" ng-show="state == 4"> No limpia </label> <input id="state4" type="checkbox" name="states" ng-model="filterState[state]">
         </div>
       </div>
     </div>
