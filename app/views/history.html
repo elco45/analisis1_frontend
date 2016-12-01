@@ -8,12 +8,12 @@
     <i ng-class="{'fa' : true, 'fa-close' : true, 'right-icon' : true, active : (searchInputVal.length > 0)}" ng-click="searchInputVal = ''"></i>
   </div>
 
-  <div ng-init="sortOrderVal = 'date_reported' ">
-    <ul class="nav nav-tabs" ng-init="tab = 1">
-      <li role="presentation" class="tab" ng-class="{active: tab==1}" ng-click="tab=1; sortOrderVal='date_reported'" ><a>Fecha</a></li>
-      <li role="presentation" class="tab" ng-class="{active: tab==2}" ng-click="tab=2; sortOrderVal='room_number'" ><a>Habitación</a></li>
-      <li role="presentation" class="tab" ng-class="{active: tab==3}" ng-click="tab=3; sortOrderVal='employee_username'"><a>Empleado</a></li>
-      <li role="presentation" class="tab" ng-class="{active: tab==4}" ng-click="tab=4; sortOrderVal='room_number'; getResolved()"><a>Problemas</a></li>
+  <div ng-init="sortOrderVal = 'date_reported' " id = "myTab">
+    <ul class="nav nav-tabs" ng-init="tab = getActiveTab()">
+      <li role="presentation" class="tab" ng-class="{active: tab==1}" ng-click="tab=1; sortOrderVal='date_reported'; setActiveTab(1)" ><a>Fecha</a></li>
+      <li role="presentation" class="tab" ng-class="{active: tab==2}" ng-click="tab=2; sortOrderVal='room_number'; setActiveTab(2)" ><a>Habitación</a></li>
+      <li role="presentation" class="tab" ng-class="{active: tab==3}" ng-click="tab=3; sortOrderVal='employee_username'; setActiveTab(3)"><a>Empleado</a></li>
+      <li role="presentation" class="tab" ng-class="{active: tab==4}" ng-click="tab=4; sortOrderVal='room_number'; getResolved(); setActiveTab(4)"><a>Problemas</a></li>
     </ul>
   </div>
 
@@ -144,4 +144,23 @@
   <button type="button" class="btn btn-primary" ng-click="printToCart('printThisElement')">Imprimir</button>
   <div class="container-extra">
   </div>
+</div>
+
+<div class="container">
+ 
+<!-- create reference anchors for tabs -->
+<ul class="nav nav-tabs" id="tabs">
+<li class="active"><a href="#tab1" data-toggle="tab">Tab 1</a></li>
+<li><a href="#tab2" data-toggle="tab">Tab 2</a></li>
+</ul>
+ 
+<!-- tab content div -->
+<div class="tab-content">
+<div class="tab-pane active" id="tab1">
+<h3>Tab1</h3>
+</div>
+<div class="tab-pane" id="tab2">
+<h3>Tab2</h3>
+</div>
+</div>
 </div>

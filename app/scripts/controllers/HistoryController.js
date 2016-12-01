@@ -128,4 +128,17 @@ angular.module('AngularScaffold.Controllers')
         }
       };
 
+
+      // Save active tab to localStorage
+    $scope.setActiveTab = function (activeTab) {
+      console.log(activeTab)
+        sessionStorage.setItem("activeTab", activeTab);
+    };
+    
+    // Get active tab from localStorage
+    $scope.getActiveTab = function () {
+      console.log(sessionStorage.getItem("activeTab"))
+        return sessionStorage.getItem("activeTab");
+    };
+
     }]);
