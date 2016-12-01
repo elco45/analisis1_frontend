@@ -4,6 +4,7 @@ angular.module('AngularScaffold.Controllers')
       $scope.reportsList = [];
       $scope.lista_problemas = [];
       $scope.userList = [];
+      $scope.statesList = [];
       $scope.records = [];
       $scope.reportBackup =[];
       $scope.startDate =  new Date(2015, 11, 31);
@@ -14,13 +15,15 @@ angular.module('AngularScaffold.Controllers')
         HistoryService.GetReports().then(function(response){
           $scope.reportsList = response.data;
 
-
           for(var i=0; i<$scope.reportsList.length; i++) {
-            $scope.records.push($scope.reportsList); 
-            
+            $scope.records.push($scope.reportsList);
+
             $scope.reportBackup.push(response.data[i]);
             if ($scope.userList.indexOf($scope.reportsList[i].employee_username) === -1) {
               $scope.userList.push($scope.reportsList[i].employee_username);
+            }
+            if ($scope.statesList.indexOf($scope.reportsList[i].room_state) === -1) {
+              $scope.statesList.push($scope.reportsList[i].room_state);
             }
           }
         });
@@ -42,15 +45,30 @@ angular.module('AngularScaffold.Controllers')
           resolved: true
         }
         HistoryService.modResolved(params).then(function(response2){
-               console.log(response2.data)
+                 $scope.lista_problemas = [];
+                 $scope.getResolved ();
+
         });
         console.log("numero de habitacion es: "+params.employee_username);
+
       }
 
       $scope.filter = function(){};
 
       $scope.filterByUsername = function(username){
         return $scope.filter[username.employee_username] || $scope.noFilter($scope.filter);
+      };
+
+      $scope.noFilter = function(filterObj){
+        return Object.
+        keys(filterObj).
+        every(function (key) { return !filterObj[key]; });
+      };
+
+      $scope.filterState = function(){};
+
+      $scope.filterByUsername = function(state){
+        return $scope.filterState[state.room_state] || $scope.noFilter($scope.filterState);
       };
 
       $scope.noFilter = function(filterObj){
@@ -72,14 +90,55 @@ angular.module('AngularScaffold.Controllers')
           $scope.reportsList.push($scope.reportBackup[i])
         }
         var inicio = document.getElementById('start').value;
+        var compi = inicio.split('-');
+        var mi = parseInt(compi[0], 10);
+        var di = parseInt(compi[1], 10);
+        var yi = parseInt(compi[2], 10);
+        var datei = new Date(yi,mi-1,di);
+
         var final = document.getElementById('end').value;
-        for (var i = 0; i < $scope.reportsList.length; i++) {
-          var date = $scope.reportsList[i].date_reported.substring(0,10);
-          if (date > final || date < inicio) {
-            $scope.reportsList.splice(i,1);
-            i--;
+        var comp = final.split('-');
+        var m = parseInt(comp[0], 10);
+        var d = parseInt(comp[1], 10);
+        var y = parseInt(comp[2], 10);
+        var date = new Date(y,m-1,d);
+
+        if (inicio > final || (date.getFullYear() == y && date.getMonth() + 1 == m && date.getDate() == d) 
+              || (datei.getFullYear() == yi && datei.getMonth() + 1 == mi && datei.getDate() == di) ) {
+          swal({
+            title: "Fecha Incorrecta",
+            text: "La fecha debe ser válida",
+            type: "warning",
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Continuar!",
+            closeOnConfirm: true
+          },
+
+          function(){
+              $scope.endDate = new Date();
+          });
+        }else{
+          for (var i = 0; i < $scope.reportsList.length; i++) {
+            var date = $scope.reportsList[i].date_reported.substring(0,10);
+            if (date > final || date < inicio) {
+              $scope.reportsList.splice(i,1);
+              i--;
+            }
           }
         }
       };
+
+
+      // Save active tab to localStorage
+    $scope.setActiveTab = function (activeTab) {
+      console.log(activeTab)
+        sessionStorage.setItem("activeTab", activeTab);
+    };
+    
+    // Get active tab from localStorage
+    $scope.getActiveTab = function () {
+      console.log(sessionStorage.getItem("activeTab"))
+        return sessionStorage.getItem("activeTab");
+    };
 
     }]);

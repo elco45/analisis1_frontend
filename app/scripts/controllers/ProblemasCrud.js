@@ -25,7 +25,6 @@ angular.module('AngularScaffold.Controllers')
       	
         ProblemService.GetProblema().then(function(response){
             $scope.problemas = response.data;
-            console.log($scope.problemas);
         });
     }
       	

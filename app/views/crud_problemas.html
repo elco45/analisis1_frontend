@@ -1,9 +1,4 @@
 <div class="container" ng-controller="ProblemasCrud" ng-init="get_problema()">
-  
-  <div class="container-extra">
-  </div>
-  <div class="container-extra">
-  </div>
 
   <ul class="nav nav-tabs" ng-init="tab = 1">
     <li role="presentation" class="tab" ng-class="{active: tab==1}" ng-click="tab = 1" ><a>Crear Problemas</a></li>
@@ -48,9 +43,9 @@
          
         </select>
         
-        <label >Problemas:</label> 
-        <select ng-model="seleccionado2" ng-options="o as o.problem_description for o in no_limpio">
-        <label >Descripcion del problema:</label>
+        <label >Problema Actual:</label> 
+        <select ng-model="seleccionado2" ng-options="o as o.problem_description for o in no_limpio"></select>
+        <label >Problema Nuevo:</label>
         <input type="text" ng-model="problema_modificado">
        </fieldset>
       <p></p>

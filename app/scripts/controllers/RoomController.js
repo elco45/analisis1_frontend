@@ -1,6 +1,7 @@
 angular.module('AngularScaffold.Controllers')
-.controller('RoomController', ['RoomService','HistoryService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', '$window',
-  function (RoomService,HistoryService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage, $window) {
+.controller('RoomController', ['RoomService','HistoryService','ProblemService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', '$window',
+  function (RoomService,HistoryService,ProblemService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage, $window) {
+
     $scope.$sessionStorage = $sessionStorage;
     $scope.selectedRooms = [];
     $scope.empleados = [];
@@ -32,6 +33,10 @@ angular.module('AngularScaffold.Controllers')
     $scope.change_true = true;
     $scope.reports_not_seen = [];
     $scope.problema_resuelto=[];
+    $scope.problem_list = [];
+    $scope.no_limpio = [];
+    $scope.limpio_problema = [];
+    $scope.seleccionado = {};
 
     $scope.Timer = function () {
       //console.log($scope.currentEmpRooms)
@@ -679,9 +684,9 @@ angular.module('AngularScaffold.Controllers')
       RoomService.GetRooms().then(function(response){
 
         
-              $scope.floors = []
-              $scope.employeeWithRooms = []
-              $scope.selectedRooms = []
+        $scope.floors = []
+        $scope.employeeWithRooms = []
+        $scope.selectedRooms = []
         for (var i = 0; i <response.data.length; i++) {
           $scope.floors.push(response.data[i])
           if(response.data[i].status == 1 || response.data[i].status == 5){
@@ -784,12 +789,17 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.cambioEstados = function(estado){
       $scope.room.status = estado;
+      if($scope.seleccionado && estado != 2){
+        $scope.room.observation = $scope.seleccionado;
+      }
       var temporal = {
         employee: $sessionStorage.currentUser.username,
-        room: $scope.room,
+        room: $scope.room
 
       }
+
       RoomService.UpdateRoom(temporal).then(function(response){
+        console.log()
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth()+1; //January is 0!
@@ -812,11 +822,11 @@ angular.module('AngularScaffold.Controllers')
        var reporte ={
         employee_id: response.data.idUser[0].username,
         room_number: response.data.room_id,
-          problem_id: 0,//ESTO ESTA EN DURO, HAY QUE HACERLO!
-          room_state: response.data.status,
-          date_reported: today,
-          resolved:resuelto
-        };
+        problem_id: response.data.observation,
+        room_state: response.data.status,
+        date_reported: today,
+        resolved:resuelto
+      };
 
         HistoryService.CreateRegister(reporte).then(function(response2){////EL PAYLOAD ESTA MALO
           console.log(response2.data)
@@ -828,7 +838,7 @@ angular.module('AngularScaffold.Controllers')
         $scope.showListProblems = false;
         $state.reload();
       });
-      
+
     }
 
     $scope.getEmpRooms = function() {
@@ -856,9 +866,13 @@ angular.module('AngularScaffold.Controllers')
               }
             }
           }
-        })
+          ProblemService.GetProblema().then(function(response){
+            $scope.problem_list = response.data;
+          });
+        });
+
+
       $scope.RoomSelected = false;
-      console.log($scope.currentEmpRooms)
     }
 
     $scope.setText = function(notCleaned){
@@ -900,7 +914,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
 
-    $scope.serverTime =function (){
+    /*$scope.serverTime =function (){
       $.getJSON("https://api.github.com/users/jeresig?callback=?",function(json){
         console.log(json);
       });
@@ -915,7 +929,7 @@ angular.module('AngularScaffold.Controllers')
      xmlHttp.open('setRequestHeader',"http://httpbin.org/get",true);
      xmlHttp.setRequestHeader("Content-Type", "text/plain");
      xmlHttp.send('');
-   }
+   }*/
 
     //funcion para mostrar la fecha actual
     $scope.startTime = function() {
@@ -990,15 +1004,37 @@ angular.module('AngularScaffold.Controllers')
           temp = true;
 
         }
-
-
-
       }
       if (temp) {
         return false;
       }
       return true;
     }
+
+    $scope.showNotCleanList = function(){
+      $scope.no_limpio = [];
+      for (var i = 0; i < $scope.problem_list.length; i++) {
+        if($scope.problem_list[i].problem_type === 1){
+          $scope.no_limpio.push($scope.problem_list[i])
+        }
+      }
+      $scope.showList = true;
+    }
+
+    $scope.showProblemList = function(){
+      $scope.no_limpio = [];
+      for (var i = 0; i < $scope.problem_list.length; i++) {
+        if($scope.problem_list[i].problem_type === 0){
+          $scope.limpio_problema.push($scope.problem_list[i])
+        }
+      }
+      $scope.showListProblems = true;
+    }
+
+    $scope.saberSelecc = function(){
+      console.log($scope.seleccionado)
+    }
+
   }]);
 
 app.filter('slice', function() {

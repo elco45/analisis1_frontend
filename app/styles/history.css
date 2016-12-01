@@ -58,9 +58,16 @@
   background: #f4f7f8;
   border-radius: 8px;
   padding: 10px;
+  margin-bottom: 10px!important;
 }
 .user-filter{
-  margin-left: 5px!important;
+  margin-bottom: 5px!important;
+  padding: 20px;
+  background: #f4f7f8;
+  border-radius: 8px;
+}
+.state-filter{
+  margin-top: 5px!important;
   padding: 20px;
   background: #f4f7f8;
   border-radius: 8px;
@@ -72,5 +79,7 @@
   margin-top: 5px!important;
   padding-top: 10px!important;
   padding-left: 20px!important;
-  padding-bottom: : -10px!important;
+}
+.rep.btn {
+  margin-top: 5px!important;
 }
