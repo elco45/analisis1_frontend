@@ -300,6 +300,28 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
           $('.modal-backdrop').remove();
       }
     }
+     $scope.infoRC;
+    
+    //settings
+    $scope.save_settings = function(){
+      var settings = {
+        pin_login: document.getElementById("pin_login_check").checked
+      }
+      console.log(settings)
+      RoomService.SaveSettings(settings).then(function(response){
+        console.log(response.data)
+      })
+    }
+    $scope.get_settings = function(){
+
+      RoomService.GetSettings().then(function(response){
+
+        document.getElementById("pin_login_check").checked = response.data.pin_login;
+        console.log(response.data)
+      })
+    }
+    //fin settings
+
 
     $scope.clickIconButton = function(){
       Notify("Stop! Hammer time", null, null, 'danger');

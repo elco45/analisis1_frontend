@@ -40,6 +40,9 @@ angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
                   },
                   GetSettings: function(){
                         return $http.get(baseUrl + "v1/getSettings");
+                  },
+                  RequestTime: function(){
+                        return $http.get(baseUrl + "v1/requestTime");
                   }
       	}
 
