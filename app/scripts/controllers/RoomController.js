@@ -783,7 +783,7 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.cambioEstados = function(estado){
       $scope.room.status = estado;
-      if($scope.seleccionado){
+      if($scope.seleccionado && estado != 2){
         $scope.room.observation = $scope.seleccionado;
       }
       var temporal = {
