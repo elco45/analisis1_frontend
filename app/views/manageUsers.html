@@ -27,7 +27,9 @@ i<div class="container" ng-controller="UsersController" ng-init="getUser()">
         <input type="password" id="password" name="user_password" ng-model ="usuario.password" maxlength="15" required minlength="6" placeholder="La contraseña debe tener entre 6 y 15 caracteres" pattern=".{5}.+">
 
         <label class="mylabel" for="password_2">Verificación de password:</label>
-        <input type="password" id="password_2" name="user_password" ng-model ="password2" maxlength="15" required minlength="6" placeholder="Ingrese de nuevo la contraseña" ng-change="verifyPassword()" pattern=".{5}.+">
+        <input type="password" id="password_2" name="user_password" ng-model ="password2" maxlength="15" minlength="6" placeholder="Ingrese de nuevo la contraseña" ng-valid="verifyPassword()" ng-change="verifyPassword()" pattern=".{5}.+" ng-class="{'validpass':
+          validpwd == true, 'invalidpass':
+          validpwd == false}">
 
         <label class="mylabel" for="cel">Celular:</label>
         <input type="tel" id="cel" name="user_username" ng-model ="usuario.cel" maxlength="8" required minlength="8" required placeholder="El celular debe tener 8 números Ej. 99982019" pattern="\b\d{4}\d{4}\b">
@@ -97,7 +99,9 @@ i<div class="container" ng-controller="UsersController" ng-init="getUser()">
         <input ng-model="usuarioSeleccionado.password" type="password" id="passwordm" name="user_password" maxlength="15" required minlength="6" placeholder="La contraseña debe tener entre 6 y 15 caracteres" pattern=".{5}.+">
 
         <label class="mylabel" for="password_2m">Verificación de password:</label>
-        <input ng-model="usuarioSeleccionado.password" type="password" id="password_2m" name="user_password" maxlength="15" required minlength="6" placeholder="Ingrese de nuevo la contraseña" pattern=".{5}.+">
+        <input type="password" id="password_2m" name="user_password" ng-model ="password2" maxlength="15" minlength="6" placeholder="Ingrese de nuevo la contraseña" ng-valid="verifyPassword()" ng-change="verifyPassword()" pattern=".{5}.+" ng-class="{'validpass':
+          validpwd == true, 'invalidpass':
+          validpwd == false}">
 
         <label class="mylabel" for="celm">Celular:</label>
         <input ng-model="usuarioSeleccionado.cel" type="tel" id="celm" name="user_username" maxlength="8" required minlength="8" required placeholder="El celular debe tener 8 números Ej. 99982019" pattern="\b\d{4}\d{4}\b">

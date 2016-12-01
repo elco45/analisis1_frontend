@@ -11,7 +11,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     $sessionStorage.logged = false;
     $scope.employees = [];
     $scope.SelectedEmployee = {};
-    $scope.valid = true;
+    $scope.validpwd = false;
     $scope.password2;
 
     $scope.is_admin_logged = false;
@@ -28,8 +28,11 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }
 
     $scope.verifyPassword =  function(){
-      document.getElementById("password_2").
-      console.log(document.getElementById("password_2").valid + " valid")
+      if (document.getElementById("password_2").value == document.getElementById("password").value || document.getElementById("password_2m").value == document.getElementById("passwordm").value){
+        $scope.validpwd=true;
+      } else {
+        $scope.validpwd=false;
+      }
     }
 
     $scope.crear_usuario = function(){
