@@ -791,8 +791,9 @@ angular.module('AngularScaffold.Controllers')
           room: $scope.room
 
       }
-      
+
       RoomService.UpdateRoom(temporal).then(function(response){
+        console.log()
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth()+1; //January is 0!
@@ -831,7 +832,7 @@ angular.module('AngularScaffold.Controllers')
         $scope.showListProblems = false;
         $state.reload();
       });
-      
+
     }
 
     $scope.getEmpRooms = function() {
@@ -864,7 +865,7 @@ angular.module('AngularScaffold.Controllers')
           });
         });
 
-        
+
         $scope.RoomSelected = false;
     }
 
@@ -968,7 +969,7 @@ angular.module('AngularScaffold.Controllers')
 $scope.manita = function( room ){
   var temp = false;
   for (var i = 0; i < $scope.problema_resuelto.length; i++) {
-   
+
     if ($scope.problema_resuelto[i].room_number === room) {
       temp = true;
 
