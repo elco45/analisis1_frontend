@@ -1,6 +1,6 @@
 angular.module('AngularScaffold.Controllers')
-  .controller('RoomController', ['RoomService','HistoryService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', '$window',
-    function (RoomService,HistoryService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage, $window) {
+.controller('RoomController', ['RoomService','HistoryService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', '$window',
+  function (RoomService,HistoryService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage, $window) {
     $scope.$sessionStorage = $sessionStorage;
     $scope.selectedRooms = [];
     $scope.empleados = [];
@@ -32,10 +32,9 @@ angular.module('AngularScaffold.Controllers')
     $scope.change_true = true;
     $scope.reports_not_seen = [];
     $scope.problema_resuelto=[];
-    console.log("")
 
     $scope.Timer = function () {
-      console.log($scope.currentEmpRooms)
+      //console.log($scope.currentEmpRooms)
       if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
         $scope.doneChecking = false;
         var employee_username ={
@@ -46,9 +45,6 @@ angular.module('AngularScaffold.Controllers')
             if($sessionStorage.currentUser.role === 1){// es empleados
               $scope.getEmpRooms();
             }else{//es admin
-              $scope.floors = []
-              $scope.employeeWithRooms = []
-              $scope.selectedRooms = []
               $scope.init();
               console.log("jossy de Garrrrryyyyyyyy  2");
               if ($scope.change_true) {
@@ -61,7 +57,7 @@ angular.module('AngularScaffold.Controllers')
                       }
                       HistoryService.ReportModifySeen(temp).then(function(response2){
                         var str="HAY PROBLEMA EN LA HABITACION: "+response2.data.room_number;
-                          Notify(str, null, null, 'danger');
+                        Notify(str, null, null, 'danger');
 
                       });
                     }
@@ -99,11 +95,12 @@ angular.module('AngularScaffold.Controllers')
     //--lo que hizo elena ---
 
     $scope.init = function() {
+
       $scope.problema_resuelto=[];
       HistoryService.getResolved().then(function(response){
-          $scope.problema_resuelto=response.data;
-          $scope.getRooms();
-          $scope.llenarEmpleado();
+        $scope.problema_resuelto=response.data;
+        $scope.getRooms();
+        $scope.llenarEmpleado();
 
 
       });
@@ -116,12 +113,12 @@ angular.module('AngularScaffold.Controllers')
     //-------------------------
 
     $scope.room_hover = function(event, ui, room){
-        angular.element(event.target).addClass("room-hover");
+      angular.element(event.target).addClass("room-hover");
     };
 
     $scope.room_hover_out = function(event, ui, room){
 
-        angular.element(event.target).removeClass("room-hover");
+      angular.element(event.target).removeClass("room-hover");
     };
 
     $scope.startCallback = function(event, ui, employee) {
@@ -138,16 +135,16 @@ angular.module('AngularScaffold.Controllers')
       $scope.room_dragged_from = dragged_from;
     };
     $scope.stopCallback_distribution = function(event, ui, employee) {
-        angular.element(event.target).removeClass("room-hover");
-        var cont_succeeded_operations = 0;
+      angular.element(event.target).removeClass("room-hover");
+      var cont_succeeded_operations = 0;
         for(var i =0; i < $scope.employeeWithRooms.length; i++){//lo eliminaremos del que lo tenia antes
           if($scope.employeeWithRooms[i].empleado.username == $scope.room_dragged_from.empleado.username){
             var index = -1;
             for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length; j++) {
               if($scope.employeeWithRooms[i].habitacion[j].room_id == $scope.dragged_Room.room_id){//encontramos el room
-                  index = j;
-                  cont_succeeded_operations++;
-                  break;
+                index = j;
+                cont_succeeded_operations++;
+                break;
               }
             }
             $scope.employeeWithRooms[i].habitacion.splice(index,1)
@@ -196,65 +193,65 @@ angular.module('AngularScaffold.Controllers')
           })
 
         }
-    };
+      };
 
-    $scope.dropCallback = function(event, ui,room) {
-      $scope.floors.pop();
-      var index = -1;
-      angular.element(event.target).removeClass("room-hover");
-      var already_on_the_list = false;
-      var index_on_the_list;
-      for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
+      $scope.dropCallback = function(event, ui,room) {
+        $scope.floors.pop();
+        var index = -1;
+        angular.element(event.target).removeClass("room-hover");
+        var already_on_the_list = false;
+        var index_on_the_list;
+        for (var i = 0; i < $scope.employeeWithRooms.length ; i++) {
           if($scope.employeeWithRooms[i].empleado.username === $scope.dragged_Employee.username) {
             already_on_the_list = true;
             index_on_the_list = i;
             break;
           }
-      }
-      if(!already_on_the_list){
-        var empleado_con_su_habitacion = {
-          empleado : {},
-          habitacion : [],
-          contador: 0
         }
-        empleado_con_su_habitacion.empleado = $scope.dragged_Employee;
-        empleado_con_su_habitacion.habitacion.push(room);
-        $scope.employeeWithRooms.push(empleado_con_su_habitacion);
+        if(!already_on_the_list){
+          var empleado_con_su_habitacion = {
+            empleado : {},
+            habitacion : [],
+            contador: 0
+          }
+          empleado_con_su_habitacion.empleado = $scope.dragged_Employee;
+          empleado_con_su_habitacion.habitacion.push(room);
+          $scope.employeeWithRooms.push(empleado_con_su_habitacion);
 
-      }else{
-        $scope.employeeWithRooms[index_on_the_list].habitacion.push(room);
-      }
-
-      for (var i = 0; i < $scope.selectedRooms.length; i++) {
-        if($scope.selectedRooms[i].room_id ==room.room_id){
-          $scope.selectedRooms.splice(i,1);
-          break;
+        }else{
+          $scope.employeeWithRooms[index_on_the_list].habitacion.push(room);
         }
-      }
+
+        for (var i = 0; i < $scope.selectedRooms.length; i++) {
+          if($scope.selectedRooms[i].room_id ==room.room_id){
+            $scope.selectedRooms.splice(i,1);
+            break;
+          }
+        }
      // $scope.working_employee.push($scope.dragged_Employee);
      already_on_the_list = false;
-      for (var i = 0; i < room.idUser.length; i++) {
-        if(room.idUser[i].username === $scope.dragged_Employee.username){
-          already_on_the_list = true;
-          index_on_the_list = i;
-          break;
-        }
+     for (var i = 0; i < room.idUser.length; i++) {
+      if(room.idUser[i].username === $scope.dragged_Employee.username){
+        already_on_the_list = true;
+        index_on_the_list = i;
+        break;
       }
-      for (var i = 0; i < $scope.floors.length; i++) {
-        if(room.room_id == $scope.floors[i].room_id){
-          index = i;
-        }
+    }
+    for (var i = 0; i < $scope.floors.length; i++) {
+      if(room.room_id == $scope.floors[i].room_id){
+        index = i;
       }
+    }
 
-      if(!already_on_the_list && index != -1){
-        $scope.floors[index].idUser.push($scope.dragged_Employee);
-      }
-      $scope.selectRoom(true, $scope.floors[index]);
-    };
+    if(!already_on_the_list && index != -1){
+      $scope.floors[index].idUser.push($scope.dragged_Employee);
+    }
+    $scope.selectRoom(true, $scope.floors[index]);
+  };
 
 
-    $scope.sortRooms= function(){
-      var j;
+  $scope.sortRooms= function(){
+    var j;
       var flag = true;   // set flag to true to begin first pass
       var temp;   //holding variable
 
@@ -273,7 +270,7 @@ angular.module('AngularScaffold.Controllers')
       }
     }
 
-     $scope.sortRoomsPriority= function(){
+    $scope.sortRoomsPriority= function(){
       var j;
       var flag = true;   // set flag to true to begin first pass
       var temp;   //holding variable
@@ -307,27 +304,27 @@ angular.module('AngularScaffold.Controllers')
           closeOnConfirm: true
         },
         function(){
-           for (var i = 0; i < $scope.employeeWithRooms[index].habitacion.length; i++) {
-            for (var j = 0; j < $scope.floors.length; j++) {
-              if($scope.employeeWithRooms[index].habitacion[i].room_id === $scope.floors[j].room_id){
-                for (var k = 0; k < $scope.floors[j].idUser.length; k++) {
-                  if($scope.floors[j].idUser[k].username === $scope.employeeWithRooms[index].empleado.username){
-                    $scope.floors[j].idUser.splice(k,1);
-                    var param_modif = {
-                      employee: $sessionStorage.currentUser.username,
-                      room: $scope.floors[j]
-                    }
-                    RoomService.UpdateRoom(param_modif).then(function(response){
-
-                    });
+         for (var i = 0; i < $scope.employeeWithRooms[index].habitacion.length; i++) {
+          for (var j = 0; j < $scope.floors.length; j++) {
+            if($scope.employeeWithRooms[index].habitacion[i].room_id === $scope.floors[j].room_id){
+              for (var k = 0; k < $scope.floors[j].idUser.length; k++) {
+                if($scope.floors[j].idUser[k].username === $scope.employeeWithRooms[index].empleado.username){
+                  $scope.floors[j].idUser.splice(k,1);
+                  var param_modif = {
+                    employee: $sessionStorage.currentUser.username,
+                    room: $scope.floors[j]
                   }
+                  RoomService.UpdateRoom(param_modif).then(function(response){
+
+                  });
                 }
               }
             }
-           }
+          }
+        }
 
-          $scope.employeeWithRooms.splice(index,1);
-        });
+        $scope.employeeWithRooms.splice(index,1);
+      });
       }
     }
 
@@ -342,26 +339,26 @@ angular.module('AngularScaffold.Controllers')
         }
         if(index === -1){
 
-            var empleado_con_su_habitacion = {
-              empleado : $scope.n,
-              habitacion : [],
-              contador: 0
-            }
-            $scope.employeeWithRooms.push(empleado_con_su_habitacion);
+          var empleado_con_su_habitacion = {
+            empleado : $scope.n,
+            habitacion : [],
+            contador: 0
+          }
+          $scope.employeeWithRooms.push(empleado_con_su_habitacion);
         }
 
       }
     }
 
     function containsObject(obj, list) {
-        var i;
-        for (i = 0; i < list.length; i++) {
-            if (list[i] === obj) {
-                return true;
-            }
+      var i;
+      for (i = 0; i < list.length; i++) {
+        if (list[i] === obj) {
+          return true;
         }
+      }
 
-        return false;
+      return false;
     }
 
     $scope.chooseEmployee = function(employee){
@@ -380,9 +377,9 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.llenarEmpleado = function(){
-        RoomService.GetEmpleado().then(function(response1){
-          $scope.empleados = response1.data;
-        });
+      RoomService.GetEmpleado().then(function(response1){
+        $scope.empleados = response1.data;
+      });
     }
 
     $scope.selectRoom = function(dragged,room,prioridad) {
@@ -425,10 +422,10 @@ angular.module('AngularScaffold.Controllers')
 
                  $scope.employeeWithRooms[i].habitacion[ j ].priority = j
                  $scope.employeeWithRooms[i].habitacion[ j+1 ].priority = j+1
-                }
-              }
-            }
-          }
+               }
+             }
+           }
+         }
         }else{ // poner prioridad
           room.status = 5
         }
@@ -536,32 +533,32 @@ angular.module('AngularScaffold.Controllers')
         var temp;
         for (var i = 0; i < selectedRooms.length ; i++) {
           for (var j = 0; j <selectedRooms.length - 1; j++) {
-              if ( selectedRooms[j].room_id >selectedRooms[j+1].room_id ){
-               temp = selectedRooms[j];
-               selectedRooms[j] = selectedRooms[j+1];
-               selectedRooms[j+1] = temp;
-              }
-          }
-        }
+            if ( selectedRooms[j].room_id >selectedRooms[j+1].room_id ){
+             temp = selectedRooms[j];
+             selectedRooms[j] = selectedRooms[j+1];
+             selectedRooms[j+1] = temp;
+           }
+         }
+       }
 
-        for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
-          $scope.employeeWithRooms[i].contador = $scope.employeeWithRooms[i].habitacion.length
-          $scope.employeeWithRooms[i].contador2 = $scope.employeeWithRooms[i].habitacion.length
-        }
-        var rooms_repartidos = 0;
-        var cont = 0;
-        var encontro = false
-        while (true) {
-          for (var j = 0; j < $scope.employeeWithRooms.length; j++) {
-            if ($scope.employeeWithRooms[j].contador == rooms_repartidos) {
-              encontro = true
-              $scope.employeeWithRooms[j].contador= $scope.employeeWithRooms[j].contador+1;
-              cont++;
-              if (cont >=selectedRooms.length) {
-                break;
-              }
+       for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
+        $scope.employeeWithRooms[i].contador = $scope.employeeWithRooms[i].habitacion.length
+        $scope.employeeWithRooms[i].contador2 = $scope.employeeWithRooms[i].habitacion.length
+      }
+      var rooms_repartidos = 0;
+      var cont = 0;
+      var encontro = false
+      while (true) {
+        for (var j = 0; j < $scope.employeeWithRooms.length; j++) {
+          if ($scope.employeeWithRooms[j].contador == rooms_repartidos) {
+            encontro = true
+            $scope.employeeWithRooms[j].contador= $scope.employeeWithRooms[j].contador+1;
+            cont++;
+            if (cont >=selectedRooms.length) {
+              break;
             }
           }
+        }
           //if(!encontro)
           rooms_repartidos++;
 
@@ -661,16 +658,16 @@ angular.module('AngularScaffold.Controllers')
               };
             };
               //guardarlo
-            if(temp.status != 5){
-              var parameters = {
+              if(temp.status != 5){
+                var parameters = {
                   employee: $sessionStorage.currentUser.username,
                   room: temp
-              }
-              RoomService.SaveDistributedRooms(parameters).then(function(response){
+                }
+                RoomService.SaveDistributedRooms(parameters).then(function(response){
 
-              })
-            }
-          };
+                })
+              }
+            };
         }//TERMINADO
 
       }else{//prioridad
@@ -680,8 +677,13 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.getRooms = function(){
       RoomService.GetRooms().then(function(response){
+
+        
+              $scope.floors = []
+              $scope.employeeWithRooms = []
+              $scope.selectedRooms = []
         for (var i = 0; i <response.data.length; i++) {
-            $scope.floors.push(response.data[i])
+          $scope.floors.push(response.data[i])
           if(response.data[i].status == 1 || response.data[i].status == 5){
             var flag = false;
             for (var j = 0; j < response.data[i].idUser.length; j++) {
@@ -738,7 +740,7 @@ angular.module('AngularScaffold.Controllers')
         },
 
         function(){
-            $state.go("dist", {  content: object_param})
+          $state.go("dist", {  content: object_param})
         });
       }else{
         $state.go("dist", {content:object_param})
@@ -769,12 +771,12 @@ angular.module('AngularScaffold.Controllers')
     $scope.changeRoomEmp = function(id){
       for(var i=0;i<$scope.currentEmpRooms.length;i++){
         if (id === $scope.currentEmpRooms[i].room_id) {
-            $scope.room = $scope.currentEmpRooms[i];
-            console.log($scope.room)
-            $scope.RoomSelected = true;
-            $scope.start = false;
-            $scope.showList = false;
-            $scope.showListProblems = false;
+          $scope.room = $scope.currentEmpRooms[i];
+          console.log($scope.room)
+          $scope.RoomSelected = true;
+          $scope.start = false;
+          $scope.showList = false;
+          $scope.showListProblems = false;
         };
       }
 
@@ -783,8 +785,8 @@ angular.module('AngularScaffold.Controllers')
     $scope.cambioEstados = function(estado){
       $scope.room.status = estado;
       var temporal = {
-          employee: $sessionStorage.currentUser.username,
-          room: $scope.room,
+        employee: $sessionStorage.currentUser.username,
+        room: $scope.room,
 
       }
       RoomService.UpdateRoom(temporal).then(function(response){
@@ -794,22 +796,22 @@ angular.module('AngularScaffold.Controllers')
         var yyyy = today.getFullYear();
 
         if(dd<10) {
-            dd='0'+dd
+          dd='0'+dd
         }
 
         if(mm<10) {
-            mm='0'+mm
+          mm='0'+mm
         }
 
         today = mm+'/'+dd+'/'+yyyy;
         var resuelto = true;
         if( response.data.status ==3 || response.data.status ==4  ){
-           resuelto = false;
-         }
+         resuelto = false;
+       }
 
-        var reporte ={
-          employee_id: response.data.idUser[0].username,
-          room_number: response.data.room_id,
+       var reporte ={
+        employee_id: response.data.idUser[0].username,
+        room_number: response.data.room_id,
           problem_id: 0,//ESTO ESTA EN DURO, HAY QUE HACERLO!
           room_state: response.data.status,
           date_reported: today,
@@ -830,16 +832,16 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.getEmpRooms = function() {
-        RoomService.GetRooms().then(function(response){
+      RoomService.GetRooms().then(function(response){
 
-          $scope.currentEmpRooms = [];
-          for(var i =0; i<response.data.length;i++){
-              for(var j=0;j<response.data[i].idUser.length; j++){
-                 if($sessionStorage.currentUser.username == response.data[i].idUser[j].username){
-                    $scope.currentEmpRooms.push(response.data[i]);
-                 }
-              }
+        $scope.currentEmpRooms = [];
+        for(var i =0; i<response.data.length;i++){
+          for(var j=0;j<response.data[i].idUser.length; j++){
+           if($sessionStorage.currentUser.username == response.data[i].idUser[j].username){
+            $scope.currentEmpRooms.push(response.data[i]);
           }
+        }
+      }
           var flag = true;   // set flag to true to begin first pass
           var temp;   //holding variable
 
@@ -855,8 +857,8 @@ angular.module('AngularScaffold.Controllers')
             }
           }
         })
-        $scope.RoomSelected = false;
-        console.log($scope.currentEmpRooms)
+      $scope.RoomSelected = false;
+      console.log($scope.currentEmpRooms)
     }
 
     $scope.setText = function(notCleaned){
@@ -864,24 +866,24 @@ angular.module('AngularScaffold.Controllers')
     }
     //---------------
     $('#myModal').on("hidden.bs.modal",function(){// obtener el cierre del modal para hacer redistribucion
-        if ($scope.employeeWithRooms.length>0) {
-          $scope.distribute();
-        }
+      if ($scope.employeeWithRooms.length>0) {
+        $scope.distribute();
+      }
     })
     $scope.handleClick = function(evt,f) {
     	if (evt.which == 3) {
         $scope.infoRC=f;
-    		evt.preventDefault()
-    		$('#infoMsg').modal('show');
-    	}
+        evt.preventDefault()
+        $('#infoMsg').modal('show');
+      }
     };
 
     $scope.organizePriority = function(i){
       for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length; j++) {
         $scope.employeeWithRooms[i].habitacion[j].priority = j;
         var parameters = {
-            employee: $sessionStorage.currentUser.username,
-            room: $scope.employeeWithRooms[i].habitacion[j]
+          employee: $sessionStorage.currentUser.username,
+          room: $scope.employeeWithRooms[i].habitacion[j]
         }
         //console.log($scope.employeeWithRooms[i].habitacion[j])
         RoomService.SaveDistributedRooms(parameters).then(function(response){
@@ -897,21 +899,44 @@ angular.module('AngularScaffold.Controllers')
       return false;
     }
 
+
+    $scope.serverTime =function (){
+      $.getJSON("https://api.github.com/users/jeresig?callback=?",function(json){
+        console.log(json);
+      });
+      var xmlHttp = new XMLHttpRequest();         
+
+      xmlHttp.onreadystatechange = function(){
+        if(xmlHttp.readyState === 4 && xmlHttp.status === 200){
+         console.log(xmlHttp.getResponseText)
+
+       }
+     }
+     xmlHttp.open('setRequestHeader',"http://httpbin.org/get",true);
+     xmlHttp.setRequestHeader("Content-Type", "text/plain");
+     xmlHttp.send('');
+   }
+
     //funcion para mostrar la fecha actual
     $scope.startTime = function() {
-        var today = new Date();
+       // var today = new Date($scope.serverTime());
+       RoomService.RequestTime().then(function(response){   
+        
+        var today = new Date(response.data)
+        
         var dias = [ 'Domingo','Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-        var fecha = dias[today.getDay()] +" " + today.getDate()+ " de " + meses[today.getMonth()] + " "+ today.toLocaleTimeString();
+        var fecha = dias[today.getDay()] +" " + today.getDate()+ " de " + meses[today.getMonth()] + " "+ today.toLocaleTimeString() ;
 
         if(document.getElementById('time') !== null)
           document.getElementById('time').innerHTML = fecha;
         t = setTimeout(function () {
-            $scope.startTime()
-        }, 500);
-    }
+          $scope.startTime()
+        }, 250);
+      })
+     }
 
-    $scope.startTime();
+     $scope.startTime();
     //fin mostrar fecha actual
 
     //settings
@@ -936,9 +961,9 @@ angular.module('AngularScaffold.Controllers')
     $scope.blinking = function() {
       var timer = setInterval(blink, 10);
       function blink() {
-          $('.blink').fadeOut(800, function() {
-             $('.blink').fadeIn(800);
-          });
+        $('.blink').fadeOut(800, function() {
+         $('.blink').fadeIn(800);
+       });
       }
     }
 
@@ -957,31 +982,31 @@ angular.module('AngularScaffold.Controllers')
       });
     }
 
-$scope.manita = function( room ){
-  var temp = false;
-for (var i = 0; i < $scope.problema_resuelto.length; i++) {
- 
-  if ($scope.problema_resuelto[i].room_number === room) {
-    temp = true;
+    $scope.manita = function( room ){
+      var temp = false;
+      for (var i = 0; i < $scope.problema_resuelto.length; i++) {
 
-  }
+        if ($scope.problema_resuelto[i].room_number === room) {
+          temp = true;
+
+        }
 
 
 
-}
-if (temp) {
-  return false;
-}
-return true;
-}
-}]);
+      }
+      if (temp) {
+        return false;
+      }
+      return true;
+    }
+  }]);
 
 app.filter('slice', function() {
-      return function(arr, start, end) {
-        return arr.slice(start, end);
-      };
-    });
+  return function(arr, start, end) {
+    return arr.slice(start, end);
+  };
+});
 
 window.oncontextmenu = function () {
-return false;
+  return false;
 }
