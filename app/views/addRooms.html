@@ -51,11 +51,11 @@
             <div id="grid" ng-repeat = "f in floors track by $index" ng-if="(f.room_id <= 125)" class="btn btn-default" data-drop="true"
                jqyoui-options="{revertDuration: 1000}"
                jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
-               ng-click = "selectRoom(false,f,false)"
+               ng-click = "buttonDisabled === true || selectRoom(false,f,false)"
                ng-class="{'room-selected': f.status == 1, 'room-clean': f.status == 2, 'room-clean-w-prob': f.status ==3,       'room-not-clean': f.status == 4, 'room-priority':f.status==5}"
                ng-mousedown="handleClick($event,f)"
                oncontextmenu="return false"
-               ng-model="floors" >
+               ng-model="floors" ng-disabled="buttonDisabled">
               {{f.room_id}}
 
               <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span><br>
@@ -66,9 +66,9 @@
             <div id="grid" ng-repeat = "f in floors track by $index" ng-if="(f.room_id > 125)" class="btn btn-default" data-drop="true"
                jqyoui-options="{revertDuration: 1000}"
                jqyoui-droppable="{multiple:true,onOver:'room_hover(f)',onOut:'room_hover_out(f)', onDrop:'dropCallback(f)'}"
-               ng-click = "selectRoom(false,f,false)"
+               ng-click = "buttonDisabled === true || selectRoom(false,f,false)"
                ng-class="{'room-selected': f.status == 1, 'room-clean': f.status == 2, 'room-clean-w-prob': f.status ==3,       'room-not-clean': f.status == 4, 'room-priority':f.status==5}"
-               ng-model="floors" ng-mousedown="handleClick($event,f)" >
+               ng-model="floors" ng-mousedown="handleClick($event,f)" ng-disabled="buttonDisabled">
               {{f.room_id}}
               <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span><br>
               <span class = "glyphicon glyphicon-thumbs-down" ng-hide = "f.status <3 || f.status ==5"></span>
