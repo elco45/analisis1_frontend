@@ -1,8 +1,8 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')({
-		lazy: true
-	});
-	var debug = require('gulp-debug');
+	lazy: true
+});
+var debug = require('gulp-debug');
 var mainBowerFiles = require('main-bower-files');
 
 gulp.task('index', function() {
