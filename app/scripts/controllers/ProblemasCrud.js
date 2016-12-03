@@ -5,30 +5,26 @@ angular.module('AngularScaffold.Controllers')
     $scope.problema_nuevo={};
     $scope.seleccionado;
     $scope.seleccionado2;
-   $scope.problemas = [];
-   $scope.no_limpio = [];
-   $scope.problema_modificado;
+    $scope.problemas = [];
+    $scope.no_limpio = [];
+    $scope.problema_modificado;
 
 
     $scope.crear_problema= function(){
-      	var temp = {
-      		tipo: $scope.problema_nuevo.tipo,
-      		descripcion: $scope.problema_nuevo.descripcion
-      	}
-          
-        ProblemService.CrearProblemas(temp).then(function(response){
+    	var temp = {
+    		tipo: $scope.problema_nuevo.tipo,
+    		descripcion: $scope.problema_nuevo.descripcion
+    	}
+      ProblemService.CrearProblemas(temp).then(function(response){
 
-
-        })
+      })
     }
     $scope.get_problema= function(){
-      	
-        ProblemService.GetProblema().then(function(response){
-            $scope.problemas = response.data;
-        });
+      ProblemService.GetProblema().then(function(response){
+        $scope.problemas = response.data;
+      });
     }
       	
-    
     $scope.update = function(){
     	$scope.no_limpio = [];
     	for (var i = 0; i < $scope.problemas.length; i++) {
@@ -37,6 +33,7 @@ angular.module('AngularScaffold.Controllers')
     		}
     	}
     }
+
     $scope.guardar_modificado = function(){
     	var param ={
     		id: $scope.seleccionado2._id,
@@ -44,15 +41,15 @@ angular.module('AngularScaffold.Controllers')
     		problem_type: $scope.seleccionado2.problem_type
     	}
     	ProblemService.Modificar(param).then(function(response2){
-               console.log("fue guardar_modificado")
-        });
+              
+      });
     }
     $scope.Eliminar = function(){
     	var param ={
     		id: $scope.seleccionado2._id,
     	}
     	ProblemService.Eliminar(param).then(function(response2){
-        console.log("fue eliminado")
+        
       });
     }
 
@@ -65,6 +62,4 @@ angular.module('AngularScaffold.Controllers')
     $scope.getActiveTab = function () {
       return sessionStorage.getItem("activeTab");
     };
-
-
 }]);
