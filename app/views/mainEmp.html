@@ -1,30 +1,23 @@
 <div class="container" ng-controller="RoomController" ng-init="getEmpRooms()">
-
-
-
 <!-- Grid de habitaciones -->
-
-
-
-
-<div class="jumbotron col-md-12">
-  <h1 ng-init="blinking()">Habitaciones</h1>
-  <table class=col-md-12 style="margin-top: 25px;">
-    <tr>
-      <td ng-repeat="r in currentEmpRooms">
-        <center>
-          <button  ng-click=" changeRoomEmp(r.room_id)" ng-class="{'room-selected2':
-          r.status == 1, 'room-clean2':
-          r.status == 2, 'room-clean-w-prob2':
-          r.status ==3,'room-not-clean2':
-          r.status == 4,'room-priority2 blink':
-          r.status == 5}">
-            {{r.room_id}}
-          </button>
-        </center>
-      </td>
-    </tr>
-  </table>
+  <div class="jumbotron col-md-12">
+    <h1 ng-init="blinking()">Habitaciones</h1>
+    <table class=col-md-12 style="margin-top: 25px;">
+      <tr>
+        <td ng-repeat="r in currentEmpRooms">
+          <center>
+            <button  ng-click=" changeRoomEmp(r.room_id)" ng-class="{'room-selected2':
+              r.status == 1, 'room-clean2':
+              r.status == 2, 'room-clean-w-prob2':
+              r.status ==3,'room-not-clean2':
+              r.status == 4,'room-priority2 blink':
+              r.status == 5}">
+              {{r.room_id}}
+            </button>
+          </center>
+        </td>
+      </tr>
+    </table>
   </div>
 
   <!-- Simbología -->
@@ -38,66 +31,63 @@
 
   <div ng-show="RoomSelected">
     <div class="col-md-12">
-    <br><br><br>
-    <h1>Habitación {{room.room_id}}</h1>
-    <table class="col-md-offset-3 col-md-6 col-md-offset-3" style="margin-top: 25px;">
-      <!-- ngrepeat para las habitaciones que le toca limpiar a la empleada -->
-      <tr ng-show="!start" ng-hide = "showList">
-        <td>
-          <div class="roombutton2">
-            <button ng-click="start = true" class="mybtn2">Empezar a limpiar</button>
-          </div>
-        </td>
-        <td>
-          <div class="roombutton2">
-            <button ng-click="showNotCleanList()"  class="mybtn2">No se pudo limpiar</button>
-          </div>
-        </td>
-      </tr>
+      <br><br><br>
+      <h1>Habitación {{room.room_id}}</h1>
+      <table class="col-md-offset-3 col-md-6 col-md-offset-3" style="margin-top: 25px;">
+        <!-- ngrepeat para las habitaciones que le toca limpiar a la empleada -->
+        <tr ng-show="!start" ng-hide = "showList">
+          <td>
+            <div class="roombutton2">
+              <button ng-click="start = true" class="mybtn2">Empezar a limpiar</button>
+            </div>
+          </td>
+          <td>
+            <div class="roombutton2">
+              <button ng-click="showNotCleanList()"  class="mybtn2">No se pudo limpiar</button>
+            </div>
+          </td>
+        </tr>
 
-      <tr ng-show="start">
-        <td ng-hide="showListProblems">
-          <div class="roombutton2">
-            <button ng-click="cambioEstados(2)"  class="mybtn2">Terminar de limpiar</button>
+        <tr ng-show="start">
+          <td ng-hide="showListProblems">
+            <div class="roombutton2">
+              <button ng-click="cambioEstados(2)"  class="mybtn2">Terminar de limpiar</button>
+            </div>
+          </td>
+          <td ng-hide="showListProblems">
+            <div class="roombutton2">
+              <button ng-click="showProblemList()" class="danger mybtn2">Terminar de limpiar y reportar problema</button>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <div class="col-md-12 outer" ng-show="showList">
+
+            <div class = "contain" ng-repeat="n in no_limpio">
+                <label class="lb">
+                    <input type="radio" ng-model="$parent.seleccionado" name="NotClean" value="{{n._id}}" required />{{n.problem_description}}
+                </label>
+            </div> <!-- poner bonito lo del input -->
+
+            <div class="col-md-12 contain2">
+              <button ng-click="cambioEstados(4)" ng-show="showList " class="mybtn2 col-md-2"> Finalizar </button>
+            </div>
           </div>
-        </td>
-        <td ng-hide="showListProblems">
-          <div class="roombutton2">
-            <button ng-click="showProblemList()" class="danger mybtn2">Terminar de limpiar y reportar problema</button>
+        </tr>
+        <tr>
+          <div class="col-md-12 outer" ng-show="showListProblems">
+            <div class="contain" ng-repeat = "lp in limpio_problema">
+                <label class="lb">
+                    <input type="radio" ng-model="$parent.seleccionado" name="CleanWithProblem" value="{{lp._id}}" required />{{lp.problem_description}}
+                </label>
+            </div><!--PONER INPUT BONITO-->
           </div>
-        </td>
-      </tr>
-
-      <tr>
-        <div class="col-md-12 outer" ng-show="showList">
-
-          <div class = "contain" ng-repeat="n in no_limpio">
-              <label class="lb">
-                  <input type="radio" ng-model="$parent.seleccionado" name="NotClean" value="{{n._id}}" required />{{n.problem_description}}
-              </label>
-          </div> <!-- poner bonito lo del input -->
-
           <div class="col-md-12 contain2">
-            <button ng-click="cambioEstados(4)" ng-show="showList " class="mybtn2 col-md-2"> Finalizar </button>
+            <button ng-click="cambioEstados(3)" ng-show="showListProblems" class="mybtn2 col-md-3"> Finalizar </button>
           </div>
-        </div>
-      </tr>
-
-      <tr>
-        <div class="col-md-12 outer" ng-show="showListProblems">
-          <div class="contain" ng-repeat = "lp in limpio_problema">
-              <label class="lb">
-                  <input type="radio" ng-model="$parent.seleccionado" name="CleanWithProblem" value="{{lp._id}}" required />{{lp.problem_description}}
-              </label>
-          </div><!--PONER INPUT BONITO-->
-        </div>
-        <div class="col-md-12 contain2">
-          <button ng-click="cambioEstados(3)" ng-show="showListProblems" class="mybtn2 col-md-3"> Finalizar </button>
-        </div>
-      </tr>
-    </table>
+        </tr>
+      </table>
     </div>
   </div>
-</div>
-
 </div>

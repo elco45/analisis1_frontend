@@ -19,6 +19,5 @@ angular.module('AngularScaffold.Services').factory('UserService', ['$http',
         	ModifyPin: function(payload){
         		return $http.post(baseUrl+"v1/modifyPin",payload);
         	}
-      	
-	  };
+	  	};
 }]);
