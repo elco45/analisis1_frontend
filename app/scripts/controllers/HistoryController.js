@@ -45,12 +45,9 @@ angular.module('AngularScaffold.Controllers')
           resolved: true
         }
         HistoryService.modResolved(params).then(function(response2){
-                 $scope.lista_problemas = [];
-                 $scope.getResolved ();
-
+          $scope.lista_problemas = [];
+          $scope.getResolved ();
         });
-        console.log("numero de habitacion es: "+params.employee_username);
-
       }
 
       $scope.filter = function(){};
@@ -128,17 +125,14 @@ angular.module('AngularScaffold.Controllers')
         }
       };
 
-
-      // Save active tab to localStorage
+    // Salva el tab activo en el localStorage
     $scope.setActiveTab = function (activeTab) {
-      console.log(activeTab)
-        sessionStorage.setItem("activeTab", activeTab);
+      sessionStorage.setItem("activeTab", activeTab);
     };
     
-    // Get active tab from localStorage
+    // Get el tab activo en el localStorage
     $scope.getActiveTab = function () {
-      console.log(sessionStorage.getItem("activeTab"))
-        return sessionStorage.getItem("activeTab");
+      return sessionStorage.getItem("activeTab");
     };
 
-    }]);
+}]);

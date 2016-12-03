@@ -38,28 +38,33 @@ angular.module('AngularScaffold.Controllers')
     	}
     }
     $scope.guardar_modificado = function(){
-    	
     	var param ={
     		id: $scope.seleccionado2._id,
     		problem_description: $scope.problema_modificado,
     		problem_type: $scope.seleccionado2.problem_type
     	}
-    	console.log(param)
     	ProblemService.Modificar(param).then(function(response2){
                console.log("fue guardar_modificado")
         });
     }
     $scope.Eliminar = function(){
-    	
     	var param ={
     		id: $scope.seleccionado2._id,
-    		
     	}
-    	console.log(param)
     	ProblemService.Eliminar(param).then(function(response2){
-               console.log("fue eliminado")
-        });
+        console.log("fue eliminado")
+      });
     }
 
+    // Salva el tab activo en el localStorage
+    $scope.setActiveTab = function (activeTab) {
+      sessionStorage.setItem("activeTab", activeTab);
+    };
+    
+    // Get el tab activo en el localStorage
+    $scope.getActiveTab = function () {
+      return sessionStorage.getItem("activeTab");
+    };
 
-    }]);
+
+}]);
