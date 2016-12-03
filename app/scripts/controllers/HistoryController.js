@@ -14,7 +14,6 @@ angular.module('AngularScaffold.Controllers')
       $scope.getReports = function(){
         HistoryService.GetReports().then(function(response){
           $scope.reportsList = response.data;
-
           for(var i=0; i<$scope.reportsList.length; i++) {
             $scope.records.push($scope.reportsList);
 
