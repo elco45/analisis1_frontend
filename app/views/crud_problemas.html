@@ -20,41 +20,37 @@
         
         <label for="name">Descripcion del Problema:</label>
         <input type="text" id="name" name="user_name"  ng-model ="problema_nuevo.descripcion" >
-
       </fieldset>
+
       <p></p>
       <button class="bform"  ng-click="crear_problema()">Registrar</button>
     </form>
 
     <!-- Modificar Usuarios form--> 
     <form ng-show="tab == 2">
-
       <h1>Modificar Problema</h1>
-
       <fieldset>
-        
+
         <br>
-           <label >Tipo de Problema:</label> 
-       <select class="text" ng-model="seleccionado" ng-change="update()">
+        <label >Tipo de Problema:</label> 
+        <select class="text" ng-model="seleccionado" ng-change="update()">
           <option value="0">Limpio con problemas</option>
           <option value="1">No limpio</option>
-         
         </select>
-        
         <label >Problema Actual:</label> 
         <select ng-model="seleccionado2" ng-options="o as o.problem_description for o in no_limpio"></select>
         <label >Problema Nuevo:</label>
         <input type="text" ng-model="problema_modificado">
-       </fieldset>
+
+      </fieldset>
       <p></p>
       <button class="bform"  ng-click="guardar_modificado()">Modificar</button>
     </form>
 
-
     <form ng-show="tab == 3">
-
       <h1>Eliminar Problema</h1>
       <fieldset>
+
          <label>Tipo de problema:</label>
           <select class="text" ng-model="seleccionado" ng-change="update()">
             <option value="0">Limpio con Problemas</option>
@@ -63,8 +59,8 @@
           <label >Problemas:</label>
           <select ng-model="seleccionado2" ng-options="o as o.problem_description for o in no_limpio"></select>
           <button class="bform" ng-click="Eliminar()">Eliminar</button>
+          
       </fieldset>
-      
     </form>
   </div>
 </div>
