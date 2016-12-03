@@ -45,6 +45,5 @@ angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
                         return $http.get(baseUrl + "v1/requestTime");
                   }
       	}
-
 	}
 ]);
