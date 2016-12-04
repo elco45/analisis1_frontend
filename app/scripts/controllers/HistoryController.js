@@ -126,16 +126,16 @@ angular.module('AngularScaffold.Controllers')
 
     // Salva el tab activo en el localStorage
     $scope.setActiveTab = function (activeTab) {
-      if (activeTab) {
-        sessionStorage.setItem("activeTab", activeTab);
-      }else{
-        sessionStorage.setItem("activeTab", 1);
-      }
+      sessionStorage.setItem("activeTab", activeTab);
     };
     
     // Get el tab activo en el localStorage
     $scope.getActiveTab = function () {
-      return sessionStorage.getItem("activeTab");
+      if(sessionStorage.getItem("activeTab")){
+        return sessionStorage.getItem("activeTab");
+      }else{
+        return 1;
+      }
     };
 
 }]);
