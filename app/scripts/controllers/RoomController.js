@@ -81,8 +81,10 @@ angular.module('AngularScaffold.Controllers')
             $scope.doneChecking = true;
           }
         })
-      }setTimeout($scope.Timer, 500);
-    }setTimeout($scope.Timer, 500);
+      }
+      setTimeout($scope.Timer, 500);
+    }
+    setTimeout($scope.Timer, 500);
 
     $scope.init = function() {
       $scope.problema_resuelto=[];
