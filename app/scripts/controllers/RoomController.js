@@ -37,7 +37,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.limpio_problema = [];
     $scope.seleccionado = {};
     $scope.buttonDisabled = false;
-
+    $scope.observation1=[];
     $scope.Timer = function () {
       //console.log($scope.currentEmpRooms)
       if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
@@ -925,6 +925,16 @@ angular.module('AngularScaffold.Controllers')
     $scope.saberSelecc = function(){
       console.log($scope.seleccionado)
     }
+
+
+  $scope.get_observation  = function(algo){
+    var param ={
+        id: algo,
+      }
+      ProblemService.GetProblema_por_habitacion(param).then(function(response2){
+           $scope.observation1 =  response2.data;
+      });
+  }
 }]);
 
 app.filter('slice', function() {

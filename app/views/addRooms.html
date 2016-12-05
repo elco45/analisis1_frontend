@@ -130,7 +130,9 @@
                 <hr><br>
                  <h3 class="name-emps-info col-xs-6">Informacion:</h3>
                  <hr><br>
-                 <h3 class="name-emps-info col-xs-6">{{infoRC.observation}}</h3>
+                 <h3 class="name-emps-info col-xs-6" ng-init="get_observation(infoRC.observation)"> <span ng-repeat="ob in observation1">
+                  {{ob.problem_description}}
+                 </span> </h3>
         	   </div>
         	 </div>
         </div>
