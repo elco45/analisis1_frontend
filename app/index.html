@@ -32,31 +32,34 @@
   </head>
 
   <body>
+    <ul class="topnav" id="myTopnav" ng-controller ="UsersController">
+      <li><a class="navbar-brand active" href = "" ng-click="clickIconButton() ">
+         <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
+             width: 8em;
+             height: 2.8em;
+             padding-top: 0.2em;
+         ">
+      </a></li>
+      <li ng-if="show_logout()" ng-cloak><a href="">Usuario: {{$sessionStorage.currentUser.username}}</a></li>
+      <li ng-cloak ng-show="show_for_admin()" ><a href="/#/home"> Manejar Habitaciones</a></li>
+      <li ng-if="show_for_admin()" ng-cloak><a href="/#/manage">Manejar Usuarios</a></li>
+      <li ng-if="show_for_admin()" ng-cloak><a href="/#/reports">Historial</a></li>
+      <li ng-if="show_for_admin()" ng-cloak><a href="/#/problemas">Manejar Problemas</a></li>
+      <li ng-if="show_for_admin()" ng-cloak  ng-click ="show_options()">
+        <a class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a>
+      </li>
+      <li ng-if="show_logout()" ng-cloak ng-click="logout()"><a href="">Logout</a></li>
+      <li class="icon">
+        <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
+      </li>
+    </ul>
 
-   
+    <div class="container-extra">
+    </div>
 
-    <div class="container-extra"  ng-controller ="UsersController">
-        <!-- Navbar -->
-       <ul class="topnav" id="myTopnav">
-        <li><a class="navbar-brand active" href = "" ng-click="clickIconButton() ">
-           <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
-               width: 8em;
-               height: 2.8em;
-               padding-top: 0.2em;
-           ">
-        </a></li>
-        <li ng-if="show_logout()" ng-cloak><a href="">Usuario: {{$sessionStorage.currentUser.username}}</a></li>
-        <li ng-cloak ng-show="show_for_admin()" ><a href="/#/home"> Manejar Habitaciones</a></li>
-        <li ng-if="show_for_admin()" ng-cloak><a href="/#/manage">Manejar Usuarios</a></li>
-        <li ng-if="show_for_admin()" ng-cloak><a href="/#/reports">Historial</a></li>
-        <li ng-if="show_for_admin()" ng-cloak><a href="/#/problemas">Manejar Problemas</a></li>
-        <li ng-if="show_for_admin()" ng-cloak  ng-click ="show_options()">
-          <a class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a></li>
-        <li ng-if="show_logout()" ng-cloak ng-click="logout()"><a href="">Logout</a></li>
-        <li class="icon">
-          <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
-        </li>
-        <div class="modal fade" id="settings_modal" tabindex="1" role="dialog" aria-labelledby="settings_modal_label"  >
+  <!-- inicio modal opciones-->
+    <div class="" ng-controller = "RoomController">
+      <div class="modal fade" id="settings_modal" tabindex="1" role="dialog" aria-labelledby="settings_modal_label"  >
         <div class="modal-dialog sizing" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -74,15 +77,8 @@
             </div>
           </div>
         </div>
-     </div>
-      </ul>
-      <!-- Fin Navbar -->
-      
+      </div>
     </div>
-
-  <!-- inicio modal opciones-->
-      
-
      <!-- fin modal opciones-->
     <div ui-view ></div>
     <script>

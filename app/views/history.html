@@ -29,6 +29,7 @@
       </div>
       <button type="button" class="btn btn-primary col-md-2" ng-click="filterByDate()">Filtrar por Fecha</button>
     </div>
+
     <div class="hist col-md-9">
       <div class="reports" ng-if="tab<4">
         <div class="rep-body" id="printThisElement">
@@ -80,7 +81,8 @@
           </table>
         </div>
       </div>
-      <div id="reports" class="reports-by-room" ng-if="tab == 4" >
+
+      <div class="reports" class="reports-by-room" ng-if="tab == 4" >
         <div class="rep-body">
           <table id="table_by_room" class="table table-stripes">
             <tr>
@@ -100,7 +102,7 @@
                 Estado
               </th>
             </tr>
-            <tr ng-repeat="rep in lista_problemas | filter:searchInputVal | orderBy:sortOrderVal">
+            <tr ng-repeat="rep in lista_problemas | filter:searchInputVal | orderBy:sortOrderVal | filter:filterByUsername | limitTo:recordLimit">
               <td>
                 {{rep.room_number}}
               </td>
@@ -111,16 +113,17 @@
                 {{rep.problem_id}}
               </td>
               <td>
-                {{rep.date_reported | date: 'MM/dd/yyyy'}}
+                {{rep.date_reported | date: 'EEEE dd/MM/yyyy'}}
               </td>
               <td>
-                <button type="button" class="btn btn-info" ng-click="cambiar_estado_problema(rep) ">Problema Resuelto</button>
+                <button type="button" class="btn btn-info" ng-click="cambiar_estado_problema(rep)">Problema Resuelto</button>
               </td>
             </tr>
           </table>
         </div>
       </div>
     </div>
+
     <div class="filts col-md-3">
       <div class="user-filter">
         <strong>Filtro por Usuario</strong>
@@ -133,34 +136,26 @@
       <div class="state-filter">
         <strong>Filtro por Estado</strong>
         <div ng-repeat="state in statesList">
-          <label for="state6" class="checkbox-inline" ng-if="state == 6" ng-show="state == 6"> No atendida </label> <input id="state6" type="checkbox" name="states" ng-model="filterState[state]">
-          <label for="state2" class="checkbox-inline" ng-if="state == 2" ng-show="state == 2"> Limpia </label> <input id="state2" type="checkbox" name="states" ng-model="filterState[state]">
-          <label for="state3" class="checkbox-inline" ng-if="state == 3" ng-show="state == 3"> Limpia con problemas</label> <input id="state3" type="checkbox" name="states" ng-model="filterState[state]">
-          <label for="state4" class="checkbox-inline" ng-if="state == 4" ng-show="state == 4"> No limpia </label> <input id="state4" type="checkbox" name="states" ng-model="filterState[state]">
+          <label for="state6" class="checkbox-inline" ng-if="state == 6" ng-show="state == 6"> 
+            <input id="state6" type="checkbox" name="states" ng-model="filterState[state]"> No atendida 
+          </label>
+          <label for="state2" class="checkbox-inline" ng-if="state == 2" ng-show="state == 2"> 
+            <input id="state2" type="checkbox" name="states" ng-model="filterState[state]"> Limpia 
+          </label>
+          <label for="state3" class="checkbox-inline" ng-if="state == 3" ng-show="state == 3"> 
+            <input id="state3" type="checkbox" name="states" ng-model="filterState[state]"> Limpia con problemas
+          </label>
+          <label for="state4" class="checkbox-inline" ng-if="state == 4" ng-show="state == 4"> 
+            <input id="state4" type="checkbox" name="states" ng-model="filterState[state]"> No limpia 
+          </label>
         </div>
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-primary" ng-show="records.length > recordLimit" ng-click="recordLimit = recordLimit + 5">Mostrar más Reportes</button>
+  <button type="button" class="btn btn-primary" ng-if="tab<4" ng-show="records.length > recordLimit" ng-click="recordLimit = recordLimit + 8">Mostrar más Reportes</button>
   <button type="button" class="btn btn-primary" ng-click="printToCart('printThisElement')">Imprimir</button>
   <div class="container-extra">
   </div>
 </div>
 
-<div class="container">
-  <!-- create reference anchors for tabs -->
-  <ul class="nav nav-tabs" id="tabs">
-    <li class="active"><a href="#tab1" data-toggle="tab">Tab 1</a></li>
-    <li><a href="#tab2" data-toggle="tab">Tab 2</a></li>
-  </ul>
-   
-  <!-- tab content div -->
-  <div class="tab-content">
-    <div class="tab-pane active" id="tab1">
-      <h3>Tab1</h3>
-    </div>
-    <div class="tab-pane" id="tab2">
-      <h3>Tab2</h3>
-    </div>
-  </div>
-</div>
+
