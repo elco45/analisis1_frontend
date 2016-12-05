@@ -66,7 +66,7 @@
 
             <div class = "contain" ng-repeat="n in no_limpio">
                 <label class="lb">
-                    <input type="radio" ng-model="$parent.seleccionado" name="NotClean" value="{{n._id}}" required />{{n.problem_description}}
+                    <input type="radio" ng-model="$parent.seleccionado" name="NotClean" value="{{n.problem_description}}" required />{{n.problem_description}}
                 </label>
             </div> <!-- poner bonito lo del input -->
 
@@ -79,7 +79,7 @@
           <div class="col-md-12 outer" ng-show="showListProblems">
             <div class="contain" ng-repeat = "lp in limpio_problema">
                 <label class="lb">
-                    <input type="radio" ng-model="$parent.seleccionado" name="CleanWithProblem" value="{{lp._id}}" required />{{lp.problem_description}}
+                    <input type="radio" ng-model="$parent.seleccionado" name="CleanWithProblem" value="{{lp.problem_description}}" required />{{lp.problem_description}}
                 </label>
             </div><!--PONER INPUT BONITO-->
           </div>
