@@ -27,25 +27,66 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }
 
     $scope.verifyPassword =  function(){
-      if (document.getElementById("password_2").value == document.getElementById("password").value || document.getElementById("password_2m").value == document.getElementById("passwordm").value){
-        $scope.validpwd=true;
+      var pwd = document.getElementById("password").value;
+      var pwd2 = document.getElementById("password_2").value;
+      var pwdm = document.getElementById("passwordm").value;
+      var pwd2m = document.getElementById("password_2m").value;
+
+      console.log("Pass: " + pwd)
+      console.log("Pass2: " + pwd2)
+
+      if (pwd === null || pwdm === null) {
+        $scope.validpwd=false;
+      } else if (pwd === pwd2) {
+        for (var i = 0; i < pwd.length ; i++) {
+          if (pwd.charAt(i) === pwd2.charAt(i)) {
+            $scope.validpwd=true;
+          } else {
+            $scope.validpwd=false;
+          }
+        }
+      } else if (pwdm === pwd2m) {
+        for (var i = 0; i < pwdm.length ; i++) {
+          if (pwdm.charAt(i) === pwd2m.charAt(i)) {
+            $scope.validpwd=true;
+          } else {
+            $scope.validpwd=false;
+          }
+        }
       } else {
         $scope.validpwd=false;
       }
     }
 
     $scope.crear_usuario = function(){
-      $scope.valid1 = document.getElementById("name").valid;
-      $scope.valid2 = document.getElementById("idnum").valid;
-      $scope.valid3 = document.getElementById("user").valid;
-      $scope.valid4 = document.getElementById("password").valid;
-      $scope.valid5 = document.getElementById("password_2").valid;
-      $scope.valid6 = document.getElementById("cel").valid;
-      $scope.valid7 = document.getElementById("tel").valid;
-      $scope.valid8 = document.getElementById("dir").valid;
-      $scope.valid9 = document.getElementById("nac").valid;
-      $scope.valid10 = document.getElementById("photo").valid;
-      $scope.valid11 = document.getElementById("hijos").valid;
+      $scope.valid1 = document.getElementById("name").required;
+      $scope.valid2 = document.getElementById("idnum").required;
+      $scope.valid3 = document.getElementById("user").required;
+      $scope.valid4 = document.getElementById("password").required;
+      $scope.valid5 = document.getElementById("password_2").required;
+      $scope.valid6 = document.getElementById("cel").required;
+      $scope.valid7 = document.getElementById("tel").required;
+      $scope.valid8 = document.getElementById("dir").required;
+      $scope.valid9 = document.getElementById("nac").required;
+      $scope.valid10 = document.getElementById("photo").required;
+      $scope.valid11 = document.getElementById("hijos").required;
+      console.log($scope.valid1)
+      console.log($scope.valid2)
+      console.log($scope.valid3)
+      console.log($scope.valid4)
+      console.log($scope.valid5)
+      console.log($scope.valid6)
+      console.log($scope.valid7)
+      console.log($scope.valid8)
+      console.log($scope.valid9)
+      console.log($scope.valid10)
+      console.log($scope.valid11)
+      if (document.getElementById("cel").value === "") {
+        $scope.valid6 = true;
+      }
+      if (document.getElementById("tel").value === "") {
+        $scope.valid7 = true;
+      }
       if ($scope.valid1 && $scope.valid2 && $scope.valid3 && $scope.valid4 && $scope.valid5 && $scope.valid6 && $scope.valid7 && $scope.valid8 && $scope.valid9 && $scope.valid10 && $scope.valid11) {
         var file = document.querySelector('input[type=file]').files[0];
         var reader  = new FileReader();

@@ -19,7 +19,7 @@
         <input type="text" id="name" name="user_name" ng-model ="usuario.name" maxlength="35" required minlength="7" required placeholder="El usuario debe tener entre 7 y 35 letras y espacios" pattern="([a-zA-Z]+( [a-zA-Z]+)?){7}( [a-zA-Z]+)?( [a-zA-Z]+)?( [a-zA-Z]+)?">
 
         <label class="mylabel" for="user">Usuario:</label>
-        <input type="text" id="user" name="user_username" ng-model ="usuario.username" maxlength="15" required minlength="4" required placeholder="El usuario debe tener entre 4 y 15 letras" pattern="[a-zA-Z]{3}[a-zA-Z]+\d*">
+        <input type="text" id="user" name="user_username" ng-model ="usuario.username" maxlength="15" required minlength="4" required placeholder="El usuario debe tener entre 4 y 15 letras y números" pattern="[a-zA-Z]{3}[a-zA-Z]*\d*[a-zA-Z]*\d*[a-zA-Z]*\d*">
 
         <label class="mylabel" for="password">Password:</label>
         <input type="password" id="password" name="user_password" ng-model ="usuario.password" maxlength="15" required minlength="6" placeholder="La contraseña debe tener entre 6 y 15 caracteres" pattern=".{5}.+">
@@ -30,10 +30,10 @@
           validpwd == false}">
 
         <label class="mylabel" for="cel">Celular:</label>
-        <input type="tel" id="cel" name="user_username" ng-model ="usuario.cel" maxlength="8" required minlength="8" required placeholder="El celular debe tener 8 números Ej. 99982019" pattern="\b\d{4}\d{4}\b">
+        <input type="tel" id="cel" name="user_username" ng-model ="usuario.cel" required maxlength="8" minlength="8" placeholder="El celular debe tener 8 números Ej. 99889988" pattern="\b\d{4}\d{4}\b">
 
         <label class="mylabel" for="tel">Telefono Fijo:</label>
-        <input type="tel" id="tel" name="user_username" ng-model ="usuario.tel" maxlength="8" required minlength="8" required placeholder="El teléfono debe tener 8 números Ej. 22324323" pattern="\b\d{4}\d{4}\b">
+        <input type="tel" id="tel" name="user_username" ng-model ="usuario.tel" required maxlength="8" minlength="8" placeholder="El teléfono debe tener 8 números Ej. 22332233" pattern="\b\d{4}\d{4}\b">
 
         <label class="mylabel" for="dir">Direccion:</label>
         <input type="text" id="dir" name="user_username" ng-model ="usuario.direction" required minlength="10" required placeholder="La dirección debe tener más de 10 caracteres" pattern=".{9}.+">
@@ -73,7 +73,7 @@
         
       </fieldset>
       <p></p>
-      <button ng-disabled="!valid" id="register" class="bform" ng-click="crear_usuario()">Registrar</button>
+      <button id="register" class="bform" ng-click="crear_usuario()">Registrar</button>
     </form>
 
     <!-- Modificar Usuarios form--> 
@@ -102,10 +102,10 @@
           validpwd == false}">
 
         <label class="mylabel" for="celm">Celular:</label>
-        <input ng-model="usuarioSeleccionado.cel" type="tel" id="celm" name="user_username" maxlength="8" required minlength="8" required placeholder="El celular debe tener 8 números Ej. 99982019" pattern="\b\d{4}\d{4}\b">
+        <input ng-model="usuarioSeleccionado.cel" type="tel" id="celm" name="user_username" maxlength="8" minlength="8" placeholder="El celular debe tener 8 números Ej. 99982019" pattern="\b\d{4}\d{4}\b">
 
         <label class="mylabel" for="telm">Telefono Fijo:</label>
-        <input ng-model="usuarioSeleccionado.tel" type="tel" id="telm" name="user_username" maxlength="8" required minlength="8" required placeholder="El teléfono debe tener 8 números Ej. 22324323" pattern="\b\d{4}\d{4}\b">
+        <input ng-model="usuarioSeleccionado.tel" type="tel" id="telm" name="user_username" maxlength="8" minlength="8" placeholder="El teléfono debe tener 8 números Ej. 22324323" pattern="\b\d{4}\d{4}\b">
 
         <label class="mylabel" for="dirm">Direccion:</label>
         <input ng-model="usuarioSeleccionado.direction" type="text" id="dirm" name="user_username" required minlength="10" required placeholder="La dirección debe tener más de 10 caracteres" pattern=".{9}.+">
@@ -128,7 +128,7 @@
         <input ng-model="usuarioSeleccionado.children" type="number" id="hijosm" name="user_children" max="20" required min="0" required placeholder="Ingrese el número de hijos">
 
         <label class="mylabel" for="foto">Foto:</label>
-        <input id="photom" foto="usuarioSeleccionado.photo" type="file" accept="image/*">
+        <input required id="photom" foto="usuarioSeleccionado.photo" type="file" accept="image/*">
         <br>
 
         <div class="role-user">
@@ -145,7 +145,7 @@
         
       </fieldset>
       <p></p>
-      <button ng-disabled="!valid" id="register" class="bform" ng-click="crear_usuario()">Modificar</button>
+      <button id="register" class="bform" ng-click="crear_usuario()">Modificar</button>
     </form>
 
   </div>
