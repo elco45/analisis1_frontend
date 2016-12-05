@@ -15,6 +15,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     $scope.password2;
     $scope.is_admin_logged = false;
     $scope.show_logout = false;
+    $scope.notsaved = true;
 
     $scope.getUser = function(){
       UserService.GetUser().then(function(response){
@@ -59,7 +60,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }
 
     $scope.crear_usuario = function(){
-      $scope.valid1 = document.getElementById("name").required;
+      /*$scope.valid1 = document.getElementById("name").required;
       $scope.valid2 = document.getElementById("idnum").required;
       $scope.valid3 = document.getElementById("user").required;
       $scope.valid4 = document.getElementById("password").required;
@@ -86,21 +87,25 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
       }
       if (document.getElementById("tel").value === "") {
         $scope.valid7 = true;
-      }
-      if ($scope.valid1 && $scope.valid2 && $scope.valid3 && $scope.valid4 && $scope.valid5 && $scope.valid6 && $scope.valid7 && $scope.valid8 && $scope.valid9 && $scope.valid10 && $scope.valid11) {
+      }*/
+      if (/*$scope.valid1 && $scope.valid2 && $scope.valid3 && $scope.valid4 && $scope.valid5 && $scope.valid6 
+        && $scope.valid7 && $scope.valid8 && $scope.valid9 && $scope.valid10 && $scope.valid11*/true) {
         var file = document.querySelector('input[type=file]').files[0];
         var reader  = new FileReader();
         reader.readAsDataURL(file)
         reader.addEventListener("load" , function(){
           $scope.usuario.photo = reader.result
           UserService.Register($scope.usuario).then(function(algo){
+            $scope.notsaved = false;
             swal("¡Exito!","success");
             $scope.usuario="";
+            document.getElementById("nac").value = "";
           }).catch(function(err){
             swal("Error", "Error al guardar el usuario", "error");
         },false)
         });
-      } else {
+      }
+      if ($scope.notsaved) {
         swal("","Debe llenar todos los campos correctamente para poder guardar el usuario");
       }
     };

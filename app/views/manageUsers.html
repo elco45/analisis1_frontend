@@ -16,33 +16,33 @@
 
       <fieldset>
         <label class="mylabel" for="name">Nombre:</label>
-        <input type="text" id="name" name="user_name" ng-model ="usuario.name" maxlength="35" required minlength="7" required placeholder="El usuario debe tener entre 7 y 35 letras y espacios" pattern="([a-zA-Z]+( [a-zA-Z]+)?){7}( [a-zA-Z]+)?( [a-zA-Z]+)?( [a-zA-Z]+)?">
+        <input type="text" id="name" name="user_name" ng-model ="usuario.name" maxlength="35" required minlength="7" required placeholder="El usuario debe tener entre 7 y 35 letras y espacios" oninvalid="notsaved=false" pattern="([a-zA-Z]+( [a-zA-Z]+)?){7}( [a-zA-Z]+)?( [a-zA-Z]+)?( [a-zA-Z]+)?">
 
         <label class="mylabel" for="user">Usuario:</label>
-        <input type="text" id="user" name="user_username" ng-model ="usuario.username" maxlength="15" required minlength="4" required placeholder="El usuario debe tener entre 4 y 15 letras y números" pattern="[a-zA-Z]{3}[a-zA-Z]*\d*[a-zA-Z]*\d*[a-zA-Z]*\d*">
+        <input type="text" id="user" name="user_username" ng-model ="usuario.username" maxlength="15" required minlength="4" required placeholder="El usuario debe tener entre 4 y 15 letras y números" oninvalid="notsaved=false" pattern="[a-zA-Z]{3}[a-zA-Z]*\d*[a-zA-Z]*\d*[a-zA-Z]*\d*">
 
         <label class="mylabel" for="password">Password:</label>
-        <input type="password" id="password" name="user_password" ng-model ="usuario.password" maxlength="15" required minlength="6" placeholder="La contraseña debe tener entre 6 y 15 caracteres" pattern=".{5}.+">
+        <input type="password" id="password" name="user_password" ng-model ="usuario.password" maxlength="15" required minlength="6" placeholder="La contraseña debe tener entre 6 y 15 caracteres" oninvalid="notsaved=false" pattern=".{5}.+">
 
         <label class="mylabel" for="password_2">Verificación de password:</label>
-        <input type="password" id="password_2" name="user_password" ng-model ="password2" maxlength="15" minlength="6" placeholder="Ingrese de nuevo la contraseña" ng-valid="verifyPassword()" ng-change="verifyPassword()" pattern=".{5}.+" ng-class="{'validpass':
+        <input type="password" id="password_2" name="user_password" ng-model ="password2" maxlength="15" minlength="6" placeholder="Ingrese de nuevo la contraseña" ng-valid="verifyPassword()" ng-change="verifyPassword()" oninvalid="notsaved=false" pattern=".{5}.+" ng-class="{'validpass':
           validpwd == true, 'invalidpass':
           validpwd == false}">
 
         <label class="mylabel" for="cel">Celular:</label>
-        <input type="tel" id="cel" name="user_username" ng-model ="usuario.cel" required maxlength="8" minlength="8" placeholder="El celular debe tener 8 números Ej. 99889988" pattern="\b\d{4}\d{4}\b">
+        <input type="tel" id="cel" name="user_username" ng-model ="usuario.cel" required maxlength="8" minlength="8" placeholder="El celular debe tener 8 números Ej. 99889988" oninvalid="notsaved=false" pattern="\b\d{4}\d{4}\b">
 
         <label class="mylabel" for="tel">Telefono Fijo:</label>
-        <input type="tel" id="tel" name="user_username" ng-model ="usuario.tel" required maxlength="8" minlength="8" placeholder="El teléfono debe tener 8 números Ej. 22332233" pattern="\b\d{4}\d{4}\b">
+        <input type="tel" id="tel" name="user_username" ng-model ="usuario.tel" required maxlength="8" minlength="8" placeholder="El teléfono debe tener 8 números Ej. 22332233" oninvalid="notsaved=false" pattern="\b\d{4}\d{4}\b">
 
         <label class="mylabel" for="dir">Direccion:</label>
-        <input type="text" id="dir" name="user_username" ng-model ="usuario.direction" required minlength="10" required placeholder="La dirección debe tener más de 10 caracteres" pattern=".{9}.+">
+        <input type="text" id="dir" name="user_username" ng-model ="usuario.direction" required minlength="10" required placeholder="La dirección debe tener más de 10 caracteres" oninvalid="notsaved=false" pattern=".{9}.+">
 
         <label class="mylabel" for="idnum"># Identidad:</label>
-        <input type="text" id="idnum" name="user_username" ng-model="usuario.id" maxlength="15" required minlength="15" required placeholder="Formato del número de identidad 0000-1234-56789" pattern="\b\d{4}[-]\d{4}[-]\d{5}\b">
+        <input type="text" id="idnum" name="user_username" ng-model="usuario.id" maxlength="15" required minlength="15" required placeholder="Formato del número de identidad 0000-1234-56789" oninvalid="notsaved=false" pattern="\b\d{4}[-]\d{4}[-]\d{5}\b">
 
         <label class="mylabel" for="nac">Fecha de Nacimiento:</label>
-        <input type="date" id="nac" name="usuario.birth_date" maxlength="10" required minlength="10" required placeholder="Formato de la fecha dd/mm/aaaa Ej. 22/03/1980" pattern="\b\d{2}[/]\d{2}[/]\d{4}\b">
+        <input type="date" id="nac" name="usuario.birth_date" maxlength="10" required minlength="10" required placeholder="Formato de la fecha dd/mm/aaaa Ej. 22/03/1980" oninvalid="notsaved=false" pattern="\b\d{2}[/]\d{2}[/]\d{4}\b">
 
         <label class="mylabel" for="civils">Estado Civil:</label>
         <select id="civils" ng-model="usuario.civil_status">
@@ -53,7 +53,7 @@
         <br><br>
 
         <label class="mylabel" for="hijos">Hijos:</label>
-        <input type="number" id="hijos" name="user_children" ng-model ="usuario.children" max="20" required min="0" required placeholder="Ingrese el número de hijos">
+        <input type="number" id="hijos" name="user_children" oninvalid="notsaved=false" ng-model ="usuario.children" max="20" required min="0" required placeholder="Ingrese el número de hijos">
 
         <label class="mylabel" for="foto">Foto:</label>
         <input id="photo" type="file" foto="usuario.photo" accept="image/*">
