@@ -907,6 +907,7 @@ angular.module('AngularScaffold.Controllers')
           $scope.no_limpio.push($scope.problem_list[i])
         }
       }
+      $scope.seleccionado = $scope.no_limpio[0].problem_description;
       $scope.showList = true;
     }
 
@@ -917,6 +918,7 @@ angular.module('AngularScaffold.Controllers')
         	$scope.limpio_problema.push($scope.problem_list[i])
       	}
     	}
+      $scope.seleccionado = $scope.limpio_problema[0].problem_description;
     	$scope.showListProblems = true;
     }
 

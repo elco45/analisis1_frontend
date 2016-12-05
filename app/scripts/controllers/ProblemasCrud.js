@@ -16,7 +16,8 @@ angular.module('AngularScaffold.Controllers')
     		descripcion: $scope.problema_nuevo.descripcion
     	}
       ProblemService.CrearProblemas(temp).then(function(response){
-
+        $scope.get_problema();
+        window.location.reload(false);
       })
     }
     $scope.get_problema= function(){
@@ -41,16 +42,16 @@ angular.module('AngularScaffold.Controllers')
     		problem_type: $scope.seleccionado2.problem_type
     	}
     	ProblemService.Modificar(param).then(function(response2){
-              
-      });
+            window.location.reload(false); 
+        });
     }
     $scope.Eliminar = function(){
     	var param ={
     		id: $scope.seleccionado2._id,
     	}
     	ProblemService.Eliminar(param).then(function(response2){
-        
-      });
+            window.location.reload(false); 
+        });
     }
 
     // Salva el tab activo en el localStorage

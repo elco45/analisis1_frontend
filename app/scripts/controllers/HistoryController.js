@@ -1,6 +1,6 @@
 angular.module('AngularScaffold.Controllers')
-  .controller('HistoryController', ['HistoryService' , '$scope', '$state', '$rootScope', '$sessionStorage',
-    function (HistoryService, $scope, $state, $rootScope, $sessionStorage) {
+  .controller('HistoryController', ['HistoryService' ,'ProblemService', '$scope', '$state', '$rootScope', '$sessionStorage',
+    function (HistoryService,ProblemService, $scope, $state, $rootScope, $sessionStorage) {
       $scope.reportsList = [];
       $scope.lista_problemas = [];
       $scope.userList = [];
@@ -10,6 +10,7 @@ angular.module('AngularScaffold.Controllers')
       $scope.startDate =  new Date(2015, 11, 31);
       $scope.endDate = new Date();
       $scope.recordLimit = 8;
+      $scope.problem_list = [];
 
       $scope.getReports = function(){
         HistoryService.GetReports().then(function(response){
@@ -25,14 +26,36 @@ angular.module('AngularScaffold.Controllers')
               $scope.statesList.push($scope.reportsList[i].room_state);
             }
           }
+          ProblemService.GetProblema().then(function(response2){
+            for (var j = 0; j < $scope.reportsList.length; j++) {
+              for (var k = 0; k < response2.data.length; k++) {
+                if ($scope.reportsList[j].problem_id === response2.data[k]._id) {
+                  $scope.reportsList[j].problem_id = response2.data[k].problem_description;
+                };
+              };
+            };
+            $scope.getResolved();
+          });
+          
+          
         });
       };
 
       $scope.getResolved = function(){
           HistoryService.getResolved().then(function(response){
             $scope.lista_problemas  = response.data
+
+            ProblemService.GetProblema().then(function(response2){
+              for (var j = 0; j < $scope.lista_problemas.length; j++) {
+                for (var k = 0; k < response2.data.length; k++) {
+                  if ($scope.lista_problemas[j].problem_id === response2.data[k]._id) {
+                    $scope.lista_problemas[j].problem_id = response2.data[k].problem_description;
+                  };
+                };
+              };
+            });
+
           });
-          console.log($scope.lista_problemas);
       }
       $scope.cambiar_estado_problema = function(algo){
         var params={
@@ -137,5 +160,12 @@ angular.module('AngularScaffold.Controllers')
         return 1;
       }
     };
+
+    $scope.getProblemList = function(){
+        ProblemService.GetProblema().then(function(response){
+          $scope.problem_list = response.data;
+          console.log($scope.problem_list)
+        });
+      }
 
 }]);
