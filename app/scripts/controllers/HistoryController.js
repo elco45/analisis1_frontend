@@ -63,7 +63,7 @@ angular.module('AngularScaffold.Controllers')
 
       $scope.filterState = function(){};
 
-      $scope.filterByUsername = function(state){
+      $scope.filterByState = function(state){
         return $scope.filterState[state.room_state] || $scope.noFilter($scope.filterState);
       };
 

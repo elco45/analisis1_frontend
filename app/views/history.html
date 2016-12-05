@@ -52,7 +52,7 @@
                 Fecha de cambio de estado
               </th>
             </tr>
-            <tr ng-repeat="rep in reportsList | filter:searchInputVal | orderBy:sortOrderVal | filter:filterByUsername | limitTo:recordLimit">
+            <tr ng-repeat="rep in reportsList | filter:searchInputVal | orderBy:sortOrderVal | filter:filterByUsername | limitTo:recordLimit | filter:filterByState">
               <td>
                 {{rep.room_number}}
               </td>
@@ -102,7 +102,7 @@
                 Estado
               </th>
             </tr>
-            <tr ng-repeat="rep in lista_problemas | filter:searchInputVal | orderBy:sortOrderVal | filter:filterByUsername | limitTo:recordLimit">
+            <tr ng-repeat="rep in lista_problemas | filter:searchInputVal | orderBy:sortOrderVal | filter:filterByUsername | limitTo:recordLimit | filter:filterByState">
               <td>
                 {{rep.room_number}}
               </td>
