@@ -17,6 +17,9 @@ angular.module('AngularScaffold.Services').factory('ProblemService', ['$http',
 		    Eliminar: function(payload){
 				console.log("lo que estoy enviando"+payload);
 					return $http.post(baseUrl + "v1/eliminarProblema",payload);
-		    }
+		    },
+		    GetProblema_por_habitacion: function(payload){
+    			return $http.post(baseUrl + "v1/getProblemas_por_habitacion",payload);
+  			}
 	    };
 }]);
