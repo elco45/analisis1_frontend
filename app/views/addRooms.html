@@ -123,14 +123,15 @@
         	 <div class="col-md-6 room-image">
         	 	<img style="height:100%; width:100%;" data-ng-src="img2.JPEG"/>
         	 </div>
-
         	 <div class="col-md-6 emps-info" ng-repeat="f in infoRC.idUser">
-        	   <div class="row">
-                <h3 class="name-emps-info col-xs-6">{{f.username}}</h3>
+        	   <div >
+                <h3 class="name-emps-info ">{{f.username}}</h3>
+                </br>
+                <h3 class="name-emps-info ">{{f.cel}}</h3>
                 <hr><br>
-                 <h3 class="name-emps-info col-xs-6">Informacion:</h3>
+                 <h3 class="name-emps-info ">Informacion:</h3>
                  <hr><br>
-                 <h3 class="name-emps-info col-xs-6" ng-init="get_observation(infoRC.observation)"> <span ng-repeat="ob in observation1">
+                 <h3 class="name-emps-info" ng-init="get_observation(infoRC.observation)"> <span ng-repeat="ob in observation1">
                   {{ob.problem_description}}
                  </span> </h3>
         	   </div>

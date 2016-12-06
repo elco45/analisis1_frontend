@@ -602,8 +602,13 @@ angular.module('AngularScaffold.Controllers')
         	};
       	}//TERMINADO
     	}
-    	$scope.buttonDisabled = false;
+      setTimeout($scope.setBtnDisable,500)
+    	
     }
+
+    $scope.setBtnDisable = function(){
+      $scope.buttonDisabled = false;
+    } 
 
     $scope.getRooms = function(){
       RoomService.GetRooms().then(function(response){
@@ -764,21 +769,22 @@ angular.module('AngularScaffold.Controllers')
         		}
         	}
       	}
+        
+      }).then(function(){
         var flag = true;   // set flag to true to begin first pass
         var temp;   //holding variable
 
         while ( flag ){
           flag= false;    //set flag to false awaiting a possible swap
           for( var j=0;  j < $scope.currentEmpRooms.length-1;  j++ ){
-          	if ( $scope.currentEmpRooms[j].priority > $scope.currentEmpRooms[j+1].priority ){   // change to > for ascending sort
-            	temp = $scope.currentEmpRooms[j];                //swap elements
-            	$scope.currentEmpRooms[j] = $scope.currentEmpRooms[j+1];
-            	$scope.currentEmpRooms[j+1] = temp;
-            	flag = true;              //shows a swap occurred
-          	}
+            if ( $scope.currentEmpRooms[j].priority > $scope.currentEmpRooms[j+1].priority ){   // change to > for ascending sort
+              temp = $scope.currentEmpRooms[j];                //swap elements
+              $scope.currentEmpRooms[j] = $scope.currentEmpRooms[j+1];
+              $scope.currentEmpRooms[j+1] = temp;
+              flag = true;              //shows a swap occurred
+            }
           }
         }
-      }).then(function(){
       	ProblemService.GetProblema().then(function(response){
           $scope.problem_list = response.data;
         });

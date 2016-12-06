@@ -33,25 +33,31 @@
 
   <body>
     <ul class="topnav" id="myTopnav" ng-controller ="UsersController">
-      <li><a class="navbar-brand active" href = "" ng-click="clickIconButton() ">
-         <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
+      <li>
+        <a class="navbar-brand active" href = "" ng-click="clickIconButton() ">
+          <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
              width: 8em;
              height: 2.8em;
-             padding-top: 0.2em;
-         ">
-      </a></li>
-      <li ng-if="show_logout()" ng-cloak><a href="">Usuario: {{$sessionStorage.currentUser.username}}</a></li>
-      <li ng-cloak ng-show="show_for_admin()" ><a href="/#/home"> Manejar Habitaciones</a></li>
-      <li ng-if="show_for_admin()" ng-cloak><a href="/#/manage">Manejar Usuarios</a></li>
-      <li ng-if="show_for_admin()" ng-cloak><a href="/#/reports">Historial</a></li>
-      <li ng-if="show_for_admin()" ng-cloak><a href="/#/problemas">Manejar Problemas</a></li>
-      <li ng-if="show_for_admin()" ng-cloak  ng-click ="show_options()">
-        <a class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a>
+             padding-top: 0.2em;"
+          >
+        </a>
       </li>
-      <li ng-if="show_logout()" ng-cloak ng-click="logout()"><a href="">Logout</a></li>
-      <li class="icon">
-        <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
+      <li ng-if="show_logout()" ng-cloak>
+        <a href="">Hola, {{$sessionStorage.currentUser.username}}!</a>
       </li>
+      <div class="pull-right">
+        <li ng-cloak ng-show="show_for_admin()" ><a href="/#/home"> Manejar Habitaciones</a></li>
+        <li ng-if="show_for_admin()" ng-cloak><a href="/#/manage">Manejar Usuarios</a></li>
+        <li ng-if="show_for_admin()" ng-cloak><a href="/#/reports">Historial</a></li>
+        <li ng-if="show_for_admin()" ng-cloak><a href="/#/problemas">Manejar Problemas</a></li>
+        <li ng-if="show_for_admin()" ng-cloak  ng-click ="show_options()">
+          <a class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a>
+        </li>
+        <li ng-if="show_logout()" ng-cloak ng-click="logout()"><a href="">Logout</a></li>
+        <li class="icon">
+          <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
+        </li>
+      </div>
     </ul>
 
     <div class="container-extra">
