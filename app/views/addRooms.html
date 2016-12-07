@@ -39,6 +39,49 @@
         <button type="button" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal" ></button>
     </div>
 
+
+     <!-- inicio modal plantillas-->
+      <div class="modal fade" id="plantilla_modal" tabindex="2" role="dialog" aria-labelledby="plantilla_modal_label"  >
+        <div class="modal-dialog sizing" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="plantilla_modal_label">Opciones</h4>
+            </div>
+            <div class="modal-body">
+              <div ng-init = "get_plantillas()">
+                <table class="row">
+                    <tr ng-repeat = "n in plantillas track by $index">
+                      <td>{{n.plantilla_nombre}}</td>
+                      <td>{{n.plantilla_descripcion}}</td>
+                      <td><button ng-click = "cargar_plantilla(n)">cargar plantilla</button></td>
+                      
+                    </tr>
+                </table>
+
+              </div>
+              <br></br>
+              <span>GUARDAR PLANTILLA ACTUAL</span>
+              <div>
+                <span>Nombre</span>
+                <input type = "text" id = "plantilla_name_input"></input>
+                <span>Descripcion</span>
+                <input type = "text" id = "plantilla_descripcion_input" ></input>
+                <button type = "button" class = "btn btn-primary" ng-click ="create_plantillas()">guardar</button>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "save_settings()">Guardar Opciones</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+     <!-- fin modal plantillas-->
+
+     <button class = "btn btn-primary" data-toggle="modal" data-target="#plantilla_modal" >mostrar plantillas</button>
+
    <!-- Grid de habitaciones -->
     <div class="habs col-md-8">
       <h1>Habitaciones</h1>

@@ -18,7 +18,8 @@ angular.module('AngularScaffold.Controllers')
     $scope.isDragged = false;
     $scope.Room_hovered = -1;
     $scope.hasHovered = false;
-    $scope.employeeWithRooms =  []
+    $scope.employeeWithRooms =  [];
+    $scope.plantillas =  [];
     $scope.start = false;
     $scope.showList = false;
     $scope.showListProblems = false;
@@ -941,6 +942,39 @@ angular.module('AngularScaffold.Controllers')
            $scope.observation1 =  response2.data;
       });
   }
+
+  //plantilla inicio
+ /* $scope.get_plantillas = function(){
+    RoomService.GetPlantillas().then(function(function){
+
+    })
+  }*/
+  $scope.cargar_plantilla = function(plantilla){  
+    console.log(plantilla)    
+      RoomService.CargarPlantillas(plantilla).then(function(response){
+      });
+  }
+  $scope.get_plantillas  = function(){
+      RoomService.GetPlantillas().then(function(response){
+           $scope.plantillas = response.data;
+
+           console.log($scope.plantillas)
+      });
+  }
+  $scope.create_plantillas  = function(algo){
+      
+      var plantilla ={
+         plantilla_nombre: document.getElementById("plantilla_name_input").value,
+         plantilla_descripcion: document.getElementById("plantilla_descripcion_input").value
+      };
+      RoomService.CreatePlantillas(plantilla).then(function(response){
+           console.log(response)
+      });
+  }
+  
+
+  //plantilla final
+
 }]);
 
 app.filter('slice', function() {
