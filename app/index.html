@@ -32,6 +32,10 @@
   </head>
 
   <body>
+  <div ng-controller ="RoomTypeController">
+    <h1 ng-click="createRoomType()">meow</h1>
+  </div>
+
     <ul class="topnav" id="myTopnav" ng-controller ="UsersController">
       <li>
         <a class="navbar-brand active" href = "" ng-click="clickIconButton() ">
@@ -125,6 +129,8 @@
   <script src="/angular-keypad/dist/angular-keypad.js"></script>
   <script src="scripts/controllers/ProblemasCrud.js"></script>
   <script src="scripts/services/ProblemService.js"></script>
+  <script src="scripts/controllers/RoomTypeController.js"></script>
+  <script src="scripts/services/RoomTypeService.js"></script>
   <!-- endinject -->
 
 </html>
