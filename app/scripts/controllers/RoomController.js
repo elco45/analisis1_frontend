@@ -135,11 +135,12 @@ angular.module('AngularScaffold.Controllers')
           }
           $scope.employeeWithRooms[i].habitacion.splice(index,1)
           for (var k = index; k < $scope.employeeWithRooms[i].habitacion.length; k++) {
-            $scope.employeeWithRooms[i].habitacion[k].priority--;
-            var RoomsWithNewPriority = {
-              room: $scope.employeeWithRooms[i].habitacion[k]
-            }
             if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
+              $scope.employeeWithRooms[i].habitacion[k].priority--;
+              var RoomsWithNewPriority = {
+                room: $scope.employeeWithRooms[i].habitacion[k]
+              }
+            
               RoomService.UpdatePriorityAfterSplice(RoomsWithNewPriority).then(function(response){
 
               });
@@ -151,8 +152,7 @@ angular.module('AngularScaffold.Controllers')
 
       for(var i =0; i < $scope.employeeWithRooms.length; i++){//lo agregamos al nuevo en donde se dropeo
         if($scope.employeeWithRooms[i].empleado.username == employee.empleado.username){
-          $scope.dragged_Room.priority = $scope.employeeWithRooms[i].habitacion.length;
-          if($scope.employeeWithRooms.habitacion.length >= 8){
+          if($scope.employeeWithRooms[i].habitacion.length >= 8){
             swal({
               title: "Límite de Habitaciones",
               text: "Ha llegado al máximo de habitaciones por empleado.",
@@ -165,6 +165,7 @@ angular.module('AngularScaffold.Controllers')
                 
             });
           }else{
+            $scope.dragged_Room.priority = $scope.employeeWithRooms[i].habitacion.length;
             $scope.employeeWithRooms[i].habitacion.push($scope.dragged_Room);
             cont_succeeded_operations++;
             break;
@@ -213,12 +214,6 @@ angular.module('AngularScaffold.Controllers')
         }
       }
       if(!already_on_the_list){
-        var empleado_con_su_habitacion = {
-          empleado : {},
-          habitacion : [],
-          contador: 0
-        }
-        empleado_con_su_habitacion.empleado = $scope.dragged_Employee;
         if(empleado_con_su_habitacion.habitacion.length >= 8){
           swal({
             title: "Límite de Habitaciones",
@@ -232,6 +227,12 @@ angular.module('AngularScaffold.Controllers')
               
           });
         }else{
+          var empleado_con_su_habitacion = {
+            empleado : {},
+            habitacion : [],
+            contador: 0
+          }
+          empleado_con_su_habitacion.empleado = $scope.dragged_Employee;
           empleado_con_su_habitacion.habitacion.push(room);
           $scope.employeeWithRooms.push(empleado_con_su_habitacion);
         }
@@ -336,12 +337,13 @@ angular.module('AngularScaffold.Controllers')
               if($scope.employeeWithRooms[index].habitacion[i].room_id === $scope.floors[j].room_id){
                 for (var k = 0; k < $scope.floors[j].idUser.length; k++) {
                   if($scope.floors[j].idUser[k].username === $scope.employeeWithRooms[index].empleado.username){
-                    $scope.floors[j].idUser.splice(k,1);
-                    var param_modif = {
-                      employee: $sessionStorage.currentUser.username,
-                      room: $scope.floors[j]
-                    }
                     if ($scope.employeeWithRooms[index].habitacion.length <= 8) {
+                      $scope.floors[j].idUser.splice(k,1);
+                      var param_modif = {
+                        employee: $sessionStorage.currentUser.username,
+                        room: $scope.floors[j]
+                      }
+                    
                       RoomService.UpdateRoom(param_modif).then(function(response){
 
                       });
@@ -602,7 +604,6 @@ angular.module('AngularScaffold.Controllers')
             			$scope.employeeWithRooms[i].habitacion.splice(0,0,temp);
             			$scope.organizePriority(i);
           			}else{
-            			temp.priority = $scope.employeeWithRooms[i].habitacion.length;
                   if($scope.employeeWithRooms[i].habitacion.length >= 8){
                     swal({
                       title: "Límite de Habitaciones",
@@ -616,6 +617,7 @@ angular.module('AngularScaffold.Controllers')
                         
                     });
                   }else{
+                    temp.priority = $scope.employeeWithRooms[i].habitacion.length;
                     $scope.employeeWithRooms[i].habitacion.push(temp);
                   }
           			}
@@ -639,7 +641,6 @@ angular.module('AngularScaffold.Controllers')
             				}
           				}
           			}else{
-          				temp.priority = $scope.employeeWithRooms[i].habitacion.length;
                   if($scope.employeeWithRooms[i].habitacion.length >= 8){
                     swal({
                       title: "Límite de Habitaciones",
@@ -653,6 +654,7 @@ angular.module('AngularScaffold.Controllers')
                         
                     });
                   }else{
+                    temp.priority = $scope.employeeWithRooms[i].habitacion.length;
                     $scope.employeeWithRooms[i].habitacion.push(temp);
                   }
           			}
@@ -661,8 +663,6 @@ angular.module('AngularScaffold.Controllers')
         			}
 
         		}else{//aqui es cuando no hayan habitacion
-            	temp = selectedRooms[0];
-              temp.priority = $scope.employeeWithRooms[i].habitacion.length;
               if($scope.employeeWithRooms[i].habitacion.length >= 8){
                 swal({
                   title: "Límite de Habitaciones",
@@ -676,6 +676,8 @@ angular.module('AngularScaffold.Controllers')
                     
                 });
               }else{
+                temp = selectedRooms[0];
+                temp.priority = $scope.employeeWithRooms[i].habitacion.length;
                 $scope.employeeWithRooms[i].habitacion.push(temp);
                 id = selectedRooms[0].room_id;
                 selectedRooms.splice(0,1)
@@ -700,11 +702,11 @@ angular.module('AngularScaffold.Controllers')
         		}
         		//guardarlo
         		if(temp.status != 5){
-          		var parameters = {
-            			employee: $sessionStorage.currentUser.username,
-            			room: temp
-          		}
               if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
+            		var parameters = {
+              			employee: $sessionStorage.currentUser.username,
+              			room: temp
+            		}
                 RoomService.SaveDistributedRooms(parameters).then(function(response){
                 })
               }
@@ -734,7 +736,6 @@ angular.module('AngularScaffold.Controllers')
             		var existia_empleado = false
             		for (var k = 0; k< $scope.employeeWithRooms.length; k++) {
               		if($scope.employeeWithRooms[k].empleado.username === response.data[i].idUser[j].username ){
-              			existia_empleado = true;
                     if($scope.employeeWithRooms[k].habitacion.length >= 8){
                       swal({
                         title: "Límite de Habitaciones",
@@ -748,6 +749,7 @@ angular.module('AngularScaffold.Controllers')
                           
                       });
                     }else{
+                      existia_empleado = true;
                       $scope.employeeWithRooms[k].habitacion.push(response.data[i]);
                       $scope.employeeWithRooms[k].contador  =0
                       break;
@@ -755,12 +757,11 @@ angular.module('AngularScaffold.Controllers')
               		}//if
             		}//for
             		if(!existia_empleado){
-              		var empleado_con_su_habitacion = {
-              			empleado : {},
-              			habitacion : [],
-              			contador: 0
-              		}
-	                empleado_con_su_habitacion.empleado = response.data[i].idUser[j];
+                  var empleado_con_su_habitacion = {
+                    empleado : {},
+                    habitacion : [],
+                    contador: 0
+                  }
                   if(empleado_con_su_habitacion.habitacion.length >= 8){
                     swal({
                       title: "Límite de Habitaciones",
@@ -774,6 +775,8 @@ angular.module('AngularScaffold.Controllers')
                         
                     });
                   }else{
+                    
+                    empleado_con_su_habitacion.empleado = response.data[i].idUser[j];
                     empleado_con_su_habitacion.habitacion.push(response.data[i]);
                     $scope.employeeWithRooms.push(empleado_con_su_habitacion)
                   }
@@ -856,47 +859,50 @@ angular.module('AngularScaffold.Controllers')
       	room: $scope.room
     	}
 
+      for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
+        if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
+        	RoomService.UpdateRoom(temporal).then(function(response){
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
 
-    	RoomService.UpdateRoom(temporal).then(function(response){
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
+            if(dd<10) {
+              dd='0'+dd
+            }
 
-        if(dd<10) {
-          dd='0'+dd
+            if(mm<10) {
+              mm='0'+mm
+            }
+
+            today = mm+'/'+dd+'/'+yyyy;
+            var resuelto = true;
+            if( response.data.status ==3 || response.data.status ==4  ){
+           		resuelto = false;
+         		}
+
+           	var reporte ={
+              employee_id: response.data.idUser[0].username,
+              room_number: response.data.room_id,
+              problem_id: response.data.observation,
+              room_state: response.data.status,
+              date_reported: today,
+              resolved:resuelto
+          	};
+
+            HistoryService.CreateRegister(reporte).then(function(response2){
+
+            });
+
+        	}).then(function(){
+            $scope.RoomSelected = true;
+            $scope.start = false;
+            $scope.showList = false;
+            $scope.showListProblems = false;
+            $state.reload();
+        	});
         }
-
-        if(mm<10) {
-          mm='0'+mm
-        }
-
-        today = mm+'/'+dd+'/'+yyyy;
-        var resuelto = true;
-        if( response.data.status ==3 || response.data.status ==4  ){
-       		resuelto = false;
-     		}
-
-       	var reporte ={
-          employee_id: response.data.idUser[0].username,
-          room_number: response.data.room_id,
-          problem_id: response.data.observation,
-          room_state: response.data.status,
-          date_reported: today,
-          resolved:resuelto
-      	};
-
-        HistoryService.CreateRegister(reporte).then(function(response2){
-
-        });
-
-    	}).then(function(){
-        $scope.RoomSelected = true;
-        $scope.start = false;
-        $scope.showList = false;
-        $scope.showListProblems = false;
-        $state.reload();
-    	});
+      }
 
     }
 
@@ -959,12 +965,13 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.organizePriority = function(i){
       for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length; j++) {
-        $scope.employeeWithRooms[i].habitacion[j].priority = j;
-        var parameters = {
-          employee: $sessionStorage.currentUser.username,
-          room: $scope.employeeWithRooms[i].habitacion[j]
-        }
         if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
+          $scope.employeeWithRooms[i].habitacion[j].priority = j;
+          var parameters = {
+            employee: $sessionStorage.currentUser.username,
+            room: $scope.employeeWithRooms[i].habitacion[j]
+          }
+        
           RoomService.SaveDistributedRooms(parameters).then(function(response){
 
           })
