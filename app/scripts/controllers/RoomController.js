@@ -139,9 +139,11 @@ angular.module('AngularScaffold.Controllers')
             var RoomsWithNewPriority = {
               room: $scope.employeeWithRooms[i].habitacion[k]
             }
-            RoomService.UpdatePriorityAfterSplice(RoomsWithNewPriority).then(function(response){
+            if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
+              RoomService.UpdatePriorityAfterSplice(RoomsWithNewPriority).then(function(response){
 
-            });
+              });
+            }
           };
           break;
         }
@@ -150,9 +152,23 @@ angular.module('AngularScaffold.Controllers')
       for(var i =0; i < $scope.employeeWithRooms.length; i++){//lo agregamos al nuevo en donde se dropeo
         if($scope.employeeWithRooms[i].empleado.username == employee.empleado.username){
           $scope.dragged_Room.priority = $scope.employeeWithRooms[i].habitacion.length;
-          $scope.employeeWithRooms[i].habitacion.push($scope.dragged_Room)
-          cont_succeeded_operations++;
-          break;
+          if($scope.employeeWithRooms.habitacion.length >= 8){
+            swal({
+              title: "Límite de Habitaciones",
+              text: "Ha llegado al máximo de habitaciones por empleado.",
+              type: "warning",
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Continuar!",
+              closeOnConfirm: true
+            },
+            function(){
+                
+            });
+          }else{
+            $scope.employeeWithRooms[i].habitacion.push($scope.dragged_Room);
+            cont_succeeded_operations++;
+            break;
+          }
         }
       }
 
@@ -172,9 +188,14 @@ angular.module('AngularScaffold.Controllers')
             }
           }
         }
-        RoomService.SwapDistributedRooms(swap_iduser_element).then(function(response){
+        for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
+          if ($scope.employeeWithRooms[i].habitacion.length <=8) {
+            RoomService.SwapDistributedRooms(swap_iduser_element).then(function(response){
 
-        })
+            })
+          }
+        }
+        
       }
     };
 
@@ -198,10 +219,38 @@ angular.module('AngularScaffold.Controllers')
           contador: 0
         }
         empleado_con_su_habitacion.empleado = $scope.dragged_Employee;
-        empleado_con_su_habitacion.habitacion.push(room);
-        $scope.employeeWithRooms.push(empleado_con_su_habitacion);
+        if(empleado_con_su_habitacion.habitacion.length >= 8){
+          swal({
+            title: "Límite de Habitaciones",
+            text: "Ha llegado al máximo de habitaciones por empleado.",
+            type: "warning",
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Continuar!",
+            closeOnConfirm: true
+          },
+          function(){
+              
+          });
+        }else{
+          empleado_con_su_habitacion.habitacion.push(room);
+          $scope.employeeWithRooms.push(empleado_con_su_habitacion);
+        }
       }else{
-        $scope.employeeWithRooms[index_on_the_list].habitacion.push(room);
+        if($scope.employeeWithRooms[index_on_the_list].habitacion.length >= 8){
+          swal({
+            title: "Límite de Habitaciones",
+            text: "Ha llegado al máximo de habitaciones por empleado.",
+            type: "warning",
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Continuar!",
+            closeOnConfirm: true
+          },
+          function(){
+              
+          });
+        }else{
+          $scope.employeeWithRooms[index_on_the_list].habitacion.push(room);
+        }
       }
 
       for (var i = 0; i < $scope.selectedRooms.length; i++) {
@@ -292,9 +341,11 @@ angular.module('AngularScaffold.Controllers')
                       employee: $sessionStorage.currentUser.username,
                       room: $scope.floors[j]
                     }
-                    RoomService.UpdateRoom(param_modif).then(function(response){
+                    if ($scope.employeeWithRooms[index].habitacion.length <= 8) {
+                      RoomService.UpdateRoom(param_modif).then(function(response){
 
-                    });
+                      });
+                    }
                   }
                 }
               }
@@ -369,7 +420,7 @@ angular.module('AngularScaffold.Controllers')
       	if(index === 0){
         	$scope.selectedRooms.shift()
       	}else{
-        	$scope.selectedRooms.splice(index, 1);
+          $scope.selectedRooms.splice(index, 1);
       	}
     	} else {
       	$scope.selectedRooms.push(room);
@@ -427,20 +478,25 @@ angular.module('AngularScaffold.Controllers')
       	}
     	}
     	if (room.status == 5) {
-      	$scope.selectedRooms.push(room);
+        $scope.selectedRooms.push(room);
+        
     	}
     	var room_data = {
       	employee: $sessionStorage.currentUser.username,
       	room : room
     	}
-
-    	RoomService.UpdateRoom(room_data).then(function(response){
-      	
-    	}).then(function(){
-    		if ($scope.employeeWithRooms.length>0) {
-        	$scope.distribute();
-      	}
-    	})
+      for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
+        if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
+          RoomService.UpdateRoom(room_data).then(function(response){
+        
+          }).then(function(){
+            if ($scope.employeeWithRooms.length>0) {
+              $scope.distribute();
+            }
+          })
+        }
+      }
+    	
     };
 
     $scope.createAllRooms = function (){
@@ -547,7 +603,21 @@ angular.module('AngularScaffold.Controllers')
             			$scope.organizePriority(i);
           			}else{
             			temp.priority = $scope.employeeWithRooms[i].habitacion.length;
-            			$scope.employeeWithRooms[i].habitacion.push(temp);
+                  if($scope.employeeWithRooms[i].habitacion.length >= 8){
+                    swal({
+                      title: "Límite de Habitaciones",
+                      text: "Ha llegado al máximo de habitaciones por empleado.",
+                      type: "warning",
+                      confirmButtonClass: "btn-danger",
+                      confirmButtonText: "Continuar!",
+                      closeOnConfirm: true
+                    },
+                    function(){
+                        
+                    });
+                  }else{
+                    $scope.employeeWithRooms[i].habitacion.push(temp);
+                  }
           			}
           			id = selectedRooms[index].room_id;
           			selectedRooms.splice(index,1)
@@ -570,7 +640,21 @@ angular.module('AngularScaffold.Controllers')
           				}
           			}else{
           				temp.priority = $scope.employeeWithRooms[i].habitacion.length;
-          				$scope.employeeWithRooms[i].habitacion.push(temp);
+                  if($scope.employeeWithRooms[i].habitacion.length >= 8){
+                    swal({
+                      title: "Límite de Habitaciones",
+                      text: "Ha llegado al máximo de habitaciones por empleado.",
+                      type: "warning",
+                      confirmButtonClass: "btn-danger",
+                      confirmButtonText: "Continuar!",
+                      closeOnConfirm: true
+                    },
+                    function(){
+                        
+                    });
+                  }else{
+                    $scope.employeeWithRooms[i].habitacion.push(temp);
+                  }
           			}
                 id = selectedRooms[0].room_id;
                 selectedRooms.splice(0,1)
@@ -579,9 +663,23 @@ angular.module('AngularScaffold.Controllers')
         		}else{//aqui es cuando no hayan habitacion
             	temp = selectedRooms[0];
               temp.priority = $scope.employeeWithRooms[i].habitacion.length;
-              $scope.employeeWithRooms[i].habitacion.push(temp);
-            	id = selectedRooms[0].room_id;
-            	selectedRooms.splice(0,1)
+              if($scope.employeeWithRooms[i].habitacion.length >= 8){
+                swal({
+                  title: "Límite de Habitaciones",
+                  text: "Ha llegado al máximo de habitaciones por empleado.",
+                  type: "warning",
+                  confirmButtonClass: "btn-danger",
+                  confirmButtonText: "Continuar!",
+                  closeOnConfirm: true
+                },
+                function(){
+                    
+                });
+              }else{
+                $scope.employeeWithRooms[i].habitacion.push(temp);
+                id = selectedRooms[0].room_id;
+                selectedRooms.splice(0,1)
+              }
         		}
 
         		for (var k = 0; k < $scope.floors.length; k++) {
@@ -606,8 +704,11 @@ angular.module('AngularScaffold.Controllers')
             			employee: $sessionStorage.currentUser.username,
             			room: temp
           		}
-          		RoomService.SaveDistributedRooms(parameters).then(function(response){
-          		})
+              if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
+                RoomService.SaveDistributedRooms(parameters).then(function(response){
+                })
+              }
+          		
         		}
         	};
       	}//TERMINADO
@@ -634,9 +735,23 @@ angular.module('AngularScaffold.Controllers')
             		for (var k = 0; k< $scope.employeeWithRooms.length; k++) {
               		if($scope.employeeWithRooms[k].empleado.username === response.data[i].idUser[j].username ){
               			existia_empleado = true;
-              			$scope.employeeWithRooms[k].habitacion.push(response.data[i])
-              			$scope.employeeWithRooms[k].contador  =0
-              			break;
+                    if($scope.employeeWithRooms[k].habitacion.length >= 8){
+                      swal({
+                        title: "Límite de Habitaciones",
+                        text: "Ha llegado al máximo de habitaciones por empleado.",
+                        type: "warning",
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "Continuar!",
+                        closeOnConfirm: true
+                      },
+                      function(){
+                          
+                      });
+                    }else{
+                      $scope.employeeWithRooms[k].habitacion.push(response.data[i]);
+                      $scope.employeeWithRooms[k].contador  =0
+                      break;
+                    }
               		}//if
             		}//for
             		if(!existia_empleado){
@@ -646,8 +761,22 @@ angular.module('AngularScaffold.Controllers')
               			contador: 0
               		}
 	                empleado_con_su_habitacion.empleado = response.data[i].idUser[j];
-	                empleado_con_su_habitacion.habitacion.push(response.data[i])
-	                $scope.employeeWithRooms.push(empleado_con_su_habitacion)
+                  if(empleado_con_su_habitacion.habitacion.length >= 8){
+                    swal({
+                      title: "Límite de Habitaciones",
+                      text: "Ha llegado al máximo de habitaciones por empleado.",
+                      type: "warning",
+                      confirmButtonClass: "btn-danger",
+                      confirmButtonText: "Continuar!",
+                      closeOnConfirm: true
+                    },
+                    function(){
+                        
+                    });
+                  }else{
+                    empleado_con_su_habitacion.habitacion.push(response.data[i]);
+                    $scope.employeeWithRooms.push(empleado_con_su_habitacion)
+                  }
             		}
           	}//for
           	if(response.data[i].idUser.length == 0){
@@ -727,6 +856,7 @@ angular.module('AngularScaffold.Controllers')
       	room: $scope.room
     	}
 
+
     	RoomService.UpdateRoom(temporal).then(function(response){
         var today = new Date();
         var dd = today.getDate();
@@ -767,6 +897,7 @@ angular.module('AngularScaffold.Controllers')
         $scope.showListProblems = false;
         $state.reload();
     	});
+
     }
 
     $scope.getEmpRooms = function() {
@@ -779,7 +910,7 @@ angular.module('AngularScaffold.Controllers')
         		}
         	}
       	}
-        
+
       }).then(function(){
         var flag = true;   // set flag to true to begin first pass
         var temp;   //holding variable
@@ -833,9 +964,11 @@ angular.module('AngularScaffold.Controllers')
           employee: $sessionStorage.currentUser.username,
           room: $scope.employeeWithRooms[i].habitacion[j]
         }
-        RoomService.SaveDistributedRooms(parameters).then(function(response){
+        if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
+          RoomService.SaveDistributedRooms(parameters).then(function(response){
 
-        })
+          })
+        }
       };
     }
 
