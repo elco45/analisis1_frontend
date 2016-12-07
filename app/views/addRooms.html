@@ -123,19 +123,26 @@
         	 <div class="col-md-6 room-image">
         	 	<img style="height:100%; width:100%;" data-ng-src="img2.JPEG"/>
         	 </div>
-        	 <div class="col-md-6 emps-info" ng-repeat="f in infoRC.idUser">
-        	   <div >
-                <h3 class="name-emps-info ">{{f.username}}</h3>
-                </br>
-                <h3 class="name-emps-info ">{{f.cel}}</h3>
-                <hr><br>
-                 <h3 class="name-emps-info ">Informacion:</h3>
-                 <hr><br>
-                 <h3 class="name-emps-info" ng-init="get_observation(infoRC.observation)"> <span ng-repeat="ob in observation1">
-                  {{ob.problem_description}}
-                 </span> </h3>
-        	   </div>
-        	 </div>
+        	 
+        	 <div class="col-md-6 emps-info" >
+        	   	<div class="row" ng-repeat="f in infoRC.idUser">
+        	   		<h4 class="name-emps-info " class="col-xs-6 "><strong>Empleado(a):</strong> {{f.username}}</h4>
+                	<h4 class="name-emps-info " class="col-xs-6 "><strong>Celular:</strong> {{f.cel}}</h4>
+        	   	</div>
+        	   	<div class="row">
+        		<h3 class="name-emps-info ">Tipo de cuarto:</h3>
+    	   		<h4 class="name-emps-info " class="col-xs-6 ">{{typeRoom}}</h4>
+    	   	</div>
+        	</div>
+        	<hr><br>
+        	
+        </div>
+        <div class = "row">
+        	<h3 class="name-emps-info ">Problemas Recientes:</h3>
+             <hr><br>
+             <h3 class="name-emps-info" ng-init="get_observation(infoRC.observation)"> <span ng-repeat="ob in observation1">
+              {{ob.problem_description}}
+             </span> </h3>
         </div>
       </div>
       <div class="modal-footer">
