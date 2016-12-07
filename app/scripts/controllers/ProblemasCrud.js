@@ -11,14 +11,21 @@ angular.module('AngularScaffold.Controllers')
 
 
     $scope.crear_problema= function(){
-    	var temp = {
-    		tipo: $scope.problema_nuevo.tipo,
-    		descripcion: $scope.problema_nuevo.descripcion
-    	}
-      ProblemService.CrearProblemas(temp).then(function(response){
-        $scope.get_problema();
-        window.location.reload(false);
-      })
+        console.log($scope.problema_nuevo.tipo)
+        if($scope.problema_nuevo.tipo === undefined){
+            console.log("METELE SWEET ALERT AQUI")
+            return;
+        }else{
+            var temp = {
+                tipo: $scope.problema_nuevo.tipo,
+                descripcion: $scope.problema_nuevo.descripcion
+            }
+            ProblemService.CrearProblemas(temp).then(function(response){
+                $scope.get_problema();
+                window.location.reload(false);
+            }) 
+        }
+    	
     }
     $scope.get_problema= function(){
       ProblemService.GetProblema().then(function(response){
@@ -36,14 +43,19 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.guardar_modificado = function(){
-    	var param ={
-    		id: $scope.seleccionado2._id,
-    		problem_description: $scope.problema_modificado,
-    		problem_type: $scope.seleccionado2.problem_type
-    	}
-    	ProblemService.Modificar(param).then(function(response2){
-            window.location.reload(false); 
-        });
+        if ($scope.seleccionado === undefined) {
+            console.log("poner sweet alert aqui!!!")
+            return;
+        }else{
+        	var param ={
+        		id: $scope.seleccionado2._id,
+        		problem_description: $scope.problema_modificado,
+        		problem_type: $scope.seleccionado2.problem_type
+        	}
+        	ProblemService.Modificar(param).then(function(response2){
+                window.location.reload(false); 
+            });            
+        }
     }
     $scope.Eliminar = function(){
     	var param ={

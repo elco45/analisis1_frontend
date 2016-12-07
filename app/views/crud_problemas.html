@@ -14,7 +14,8 @@
         <label for="name">Tipo de problema:</label>
 
         <select class="text" ng-model="problema_nuevo.tipo">
-          <option selected value value="0">Limpio con problemas</option>
+          <option value="" default selected>Seleccione uno...</option>
+          <option value="0">Limpio con problemas</option>
           <option value="1">No limpio</option>
         </select>
         
@@ -34,7 +35,8 @@
         <br>
         <label >Tipo de Problema:</label> 
         <select class="text" ng-model="seleccionado" ng-change="update()">
-          <option selected value value="0">Limpio con problemas</option>
+          <option value="" default selected>Seleccione uno...</option>
+          <option selected value="0">Limpio con problemas</option>
           <option value="1">No limpio</option>
         </select>
         <label >Problema Actual:</label> 

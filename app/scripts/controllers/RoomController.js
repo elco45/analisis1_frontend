@@ -718,55 +718,60 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.cambioEstados = function(estado){
-    	$scope.room.status = estado;
-    	if($scope.seleccionado && estado != 2){
-      	$scope.room.observation = $scope.seleccionado;
-    	}
-    	var temporal = {
-      	employee: $sessionStorage.currentUser.username,
-      	room: $scope.room
-    	}
+      if($scope.seleccionado === "El cliente no queria" || $scope.seleccionado === "La Puerta esta dañada"){
+        console.log("poner sweet alert aqui!")
+        return;
+      }else{
+      	$scope.room.status = estado;
+      	if($scope.seleccionado && estado != 2){
+        	$scope.room.observation = $scope.seleccionado;
+      	}
+      	var temporal = {
+        	employee: $sessionStorage.currentUser.username,
+        	room: $scope.room
+      	}
 
-    	RoomService.UpdateRoom(temporal).then(function(response){
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
+      	RoomService.UpdateRoom(temporal).then(function(response){
+          var today = new Date();
+          var dd = today.getDate();
+          var mm = today.getMonth()+1; //January is 0!
+          var yyyy = today.getFullYear();
 
-        if(dd<10) {
-          dd='0'+dd
-        }
+          if(dd<10) {
+            dd='0'+dd
+          }
 
-        if(mm<10) {
-          mm='0'+mm
-        }
+          if(mm<10) {
+            mm='0'+mm
+          }
 
-        today = mm+'/'+dd+'/'+yyyy;
-        var resuelto = true;
-        if( response.data.status ==3 || response.data.status ==4  ){
-       		resuelto = false;
-     		}
+          today = mm+'/'+dd+'/'+yyyy;
+          var resuelto = true;
+          if( response.data.status ==3 || response.data.status ==4  ){
+         		resuelto = false;
+       		}
 
-       	var reporte ={
-          employee_id: response.data.idUser[0].username,
-          room_number: response.data.room_id,
-          problem_id: response.data.observation,
-          room_state: response.data.status,
-          date_reported: today,
-          resolved:resuelto
-      	};
+         	var reporte ={
+            employee_id: response.data.idUser[0].username,
+            room_number: response.data.room_id,
+            problem_id: response.data.observation,
+            room_state: response.data.status,
+            date_reported: today,
+            resolved:resuelto
+        	};
 
-        HistoryService.CreateRegister(reporte).then(function(response2){
+          HistoryService.CreateRegister(reporte).then(function(response2){
 
-        });
+          });
 
-    	}).then(function(){
-        $scope.RoomSelected = true;
-        $scope.start = false;
-        $scope.showList = false;
-        $scope.showListProblems = false;
-        $state.reload();
-    	});
+      	}).then(function(){
+          $scope.RoomSelected = true;
+          $scope.start = false;
+          $scope.showList = false;
+          $scope.showListProblems = false;
+          $state.reload();
+      	});
+      }
     }
 
     $scope.getEmpRooms = function() {
