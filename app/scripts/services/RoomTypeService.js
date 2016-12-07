@@ -11,7 +11,7 @@ angular.module('AngularScaffold.Services').factory('RoomTypeService', ['$http',
     			return $http.post(baseUrl + "v1/createRoomType",payload);
   			},
 			GetRoomType: function(payload){
-    			return $http.get(baseUrl + "v1/getRoomType",payload);
+    			return $http.post(baseUrl + "v1/getRoomType",payload);
   			}
 		}
 	}

@@ -1,6 +1,6 @@
 angular.module('AngularScaffold.Controllers')
-.controller('RoomController', ['RoomService','HistoryService','ProblemService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', '$window',
-  function (RoomService,HistoryService,ProblemService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage, $window) {
+.controller('RoomController', ['RoomService','HistoryService','ProblemService','RoomTypeService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', '$window',
+  function (RoomService,HistoryService,ProblemService,RoomTypeService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage, $window) {
     $scope.$sessionStorage = $sessionStorage;
     $scope.selectedRooms = [];
     $scope.empleados = [];
@@ -38,6 +38,8 @@ angular.module('AngularScaffold.Controllers')
     $scope.seleccionado = {};
     $scope.buttonDisabled = false;
     $scope.observation1=[];
+    $scope.typeRoom="Ninguno";
+
     $scope.Timer = function () {
       //console.log($scope.currentEmpRooms)
       if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
@@ -441,32 +443,39 @@ angular.module('AngularScaffold.Controllers')
     };
 
     $scope.createAllRooms = function (){
-      for (var i = 1; i < 26; i++) {
-        var room_id = {
-          status: 0,
-          room_id:i +100,
-          idUser: [],
-          priority: -1,
-          observation: "",
-          time_reserved: "0hr"
-        }
-        RoomService.CreateRoom(room_id).then(function(response){
+      RoomTypeService.GetAllRoomType().then(function(response){
+        var tempRoomType = response.data
+        for (var i = 1; i < 26; i++) {
+          var random = Math.floor(Math.random() * 6) 
+          var room_id = {
+            status: 0,
+            room_id:i +100,
+            idUser: [],
+            priority: -1,
+            observation: "",
+            idRoomType: tempRoomType[random]._id,
+            time_reserved: "0hr"
+          }
+          RoomService.CreateRoom(room_id).then(function(response1){
 
-        })
-      }
-      for (var i = 1; i < 21; i++) {
-        var room_id = {
-          status: 0,
-          room_id:i +200,
-          idUser: [],
-          priority: -1,
-          observation: "",
-          time_reserved: "0hr"
+          })
         }
-        RoomService.CreateRoom(room_id).then(function(response){
+        for (var i = 1; i < 21; i++) {
+          random = Math.floor(Math.random() * 6) 
+          var room_id = {
+            status: 0,
+            room_id:i +200,
+            idUser: [],
+            priority: -1,
+            observation: "",
+            idRoomType: tempRoomType[random]._id,
+            time_reserved: "0hr"
+          }
+          RoomService.CreateRoom(room_id).then(function(response2){
 
-        })
-      }
+          })
+        }
+      })
     }
 
     $scope.getParameters = function(){
@@ -602,7 +611,7 @@ angular.module('AngularScaffold.Controllers')
         	};
       	}//TERMINADO
     	}
-      setTimeout($scope.setBtnDisable,500)
+      $scope.buttonDisabled = false;
     	
     }
 
@@ -806,6 +815,12 @@ angular.module('AngularScaffold.Controllers')
     	if (evt.which == 3) {
         $scope.infoRC=f;
         evt.preventDefault()
+        var temp = {
+          idRoomType: $scope.infoRC.idRoomType
+        }
+        RoomTypeService.GetRoomType(temp).then(function(response){
+          $scope.typeRoom = response.data.description;
+        })
         $('#infoMsg').modal('show');
       }
     };

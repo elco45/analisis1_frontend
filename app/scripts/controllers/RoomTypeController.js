@@ -3,6 +3,7 @@ angular.module('AngularScaffold.Controllers')
     function (RoomTypeService, $scope, $state, $rootScope, $sessionStorage) {
     $scope.roomTypes = [];
     $scope.roomType = {};
+    $scope.roomType = "sdasd";
 
     $scope.getAllRoomType = function(){
     	RoomTypeService.getAllRoomType().then(function(response){
