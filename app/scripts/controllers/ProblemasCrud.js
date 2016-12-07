@@ -19,13 +19,13 @@ angular.module('AngularScaffold.Controllers')
         $scope.get_problema();
 
         swal({
-          title: "Desea guardar los cabios realizados",
+          title: "Guardado con Exito!",
           //text: "You will not be able to recover this imaginary file!",
           type: "success",
-          showCancelButton: true,
+          //showCancelButton: true,
           confirmButtonColor: "#DD6B55",
-          confirmButtonText: "Si, Guardar!",
-          cancelButtonText: "No, Continuar!",
+          confirmButtonText: "OK!",
+          //cancelButtonText: "No, Continuar!",
           closeOnConfirm: false,
           //closeOnCancel: false
         },
