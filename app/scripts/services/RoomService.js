@@ -43,6 +43,15 @@ angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
                   },
                   RequestTime: function(){
                         return $http.get(baseUrl + "v1/requestTime");
+                  },
+                  GetPlantillas: function(){
+                        return $http.get(baseUrl + "v1/getPlantillas");
+                  },
+                  CreatePlantillas: function(payload){
+                        return $http.post(baseUrl + "v1/createPlantillas",payload);
+                  },
+                  CargarPlantillas: function(payload){
+                        return $http.post(baseUrl + "v1/cargarPlantillas",payload);
                   }
       	}
 	}
