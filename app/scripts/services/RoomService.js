@@ -14,7 +14,7 @@ angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
 	      		return $http.get(baseUrl + "v1/getAllRooms");
       		},
 			UpdateRoom: function(payload){
-					
+					console.log(payload)
 	      		return $http.post(baseUrl + "v1/updateRoom",payload);
       		},
       		SaveDistributedRooms: function(payload){

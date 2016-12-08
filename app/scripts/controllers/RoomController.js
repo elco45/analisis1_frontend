@@ -169,6 +169,7 @@ angular.module('AngularScaffold.Controllers')
             }
           }
         }
+
         RoomService.SwapDistributedRooms(swap_iduser_element).then(function(response){
 
         })
@@ -430,13 +431,11 @@ angular.module('AngularScaffold.Controllers')
       	employee: $sessionStorage.currentUser.username,
       	room : room
     	}
-
+     
     	RoomService.UpdateRoom(room_data).then(function(response){
-      	
-    	}).then(function(){
-    		if ($scope.employeeWithRooms.length>0) {
-        	$scope.distribute();
-      	}
+      	if ($scope.employeeWithRooms.length>0) {
+          $scope.distribute();
+        }
     	})
     };
 
@@ -711,6 +710,7 @@ angular.module('AngularScaffold.Controllers')
       	employee: $sessionStorage.currentUser.username,
       	room: $scope.room
     	}
+      console.log(temporal)
 
     	RoomService.UpdateRoom(temporal).then(function(response){
         var today = new Date();
