@@ -1107,16 +1107,28 @@ angular.module('AngularScaffold.Controllers')
 
     })
   }*/
-  $scope.cargar_plantilla = function(plantilla){  
-    console.log(plantilla)    
+  $scope.cargar_plantilla = function(plantilla){ 
       RoomService.CargarPlantillas(plantilla).then(function(response){
+        swal({
+          title: "Desea cargar esta planilla?",
+          type: "success",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Continuar",
+          cancelButtonText: "Cancelar",
+          closeOnConfirm: false,
+        },
+        function(isConfirm){
+          if (isConfirm) {
+            window.location.reload(false);
+          }
+        }); 
       });
   }
   $scope.get_plantillas  = function(){
       RoomService.GetPlantillas().then(function(response){
            $scope.plantillas = response.data;
 
-           console.log($scope.plantillas)
       });
   }
   $scope.create_plantillas  = function(algo){
@@ -1126,7 +1138,18 @@ angular.module('AngularScaffold.Controllers')
          plantilla_descripcion: document.getElementById("plantilla_descripcion_input").value
       };
       RoomService.CreatePlantillas(plantilla).then(function(response){
-           console.log(response)
+            swal({
+              title: "Guardado con Exito!",
+              type: "success",
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "OK!",
+              closeOnConfirm: false,
+            },
+            function(isConfirm){
+              if (isConfirm) {
+                window.location.reload(false);
+              }
+            });
       });
   }
   

@@ -12,8 +12,14 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.crear_problema= function(){
         if($scope.problema_nuevo.tipo === undefined){
-            console.log("METELE SWEET ALERT AQUI")
-            return;
+            swal({
+                  title: "Debe de seleccionar una opción!!",
+                  type: "warning",
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Cerrar",
+                  closeOnConfirm: false,
+                
+            });
         }else{
             var temp = {
                 tipo: $scope.problema_nuevo.tipo,
@@ -23,14 +29,10 @@ angular.module('AngularScaffold.Controllers')
                 $scope.get_problema();
                 swal({
                   title: "Guardado con Exito!",
-                  //text: "You will not be able to recover this imaginary file!",
                   type: "success",
-                  //showCancelButton: true,
                   confirmButtonColor: "#DD6B55",
                   confirmButtonText: "OK!",
-                  //cancelButtonText: "No, Continuar!",
                   closeOnConfirm: false,
-                  //closeOnCancel: false
                 },
                 function(isConfirm){
                   if (isConfirm) {
@@ -58,8 +60,14 @@ angular.module('AngularScaffold.Controllers')
 
     $scope.guardar_modificado = function(){
         if ($scope.seleccionado === undefined) {
-            console.log("poner sweet alert aqui!!!")
-            return;
+            swal({
+                  title: "Debe de seleccionar una opción!!",
+                  type: "warning",
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Cerrar",
+                  closeOnConfirm: false,
+                
+            });
         }else{
         	var param ={
         		id: $scope.seleccionado2._id,
@@ -69,14 +77,12 @@ angular.module('AngularScaffold.Controllers')
         	ProblemService.Modificar(param).then(function(response2){
                 swal({
                   title: "Desea guardar los cambios realizados",
-                  //text: "You will not be able to recover this imaginary file!",
                   type: "success",
                   showCancelButton: true,
                   confirmButtonColor: "#DD6B55",
                   confirmButtonText: "Si, Guardar!",
                   cancelButtonText: "No, Continuar!",
                   closeOnConfirm: false,
-                  //closeOnCancel: false
                 },
                 function(isConfirm){
                   if (isConfirm) {
