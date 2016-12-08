@@ -3,7 +3,7 @@
   <ul class="nav nav-tabs" ng-init="tab = getActiveTab()">
     <li role="presentation" class="tab" ng-class="{active: tab==1}" ng-click="tab = 1; setActiveTab(1)" ><a>Crear Problemas</a></li>
     <li role="presentation" class="tab" ng-class="{active: tab==2}" ng-click="tab = 2; setActiveTab(2)"><a>Modificar Problemas</a></li>
-    <li role="presentation" class="tab" ng-class="{active: tab==3}" ng-click="tab = 3; setActiveTab(3)"><a>Eliminar Problemas</a></li>
+  <!--   <li role="presentation" class="tab" ng-class="{active: tab==3}" ng-click="tab = 3; setActiveTab(3)"><a>Eliminar Problemas</a></li> -->
   </ul>
 
   <div class="main-manage" >
@@ -18,7 +18,7 @@
           <option value="0">Limpio con problemas</option>
           <option value="1">No limpio</option>
         </select>
-        
+
         <label for="name">Descripcion del Problema:</label>
         <input type="text" id="name" name="user_name"  ng-model ="problema_nuevo.descripcion" required placeholder="El problema debe tener entre 3 y 45 letras/espacios" minlength="3" maxlength="45" pattern="[a-zA-Z]{3}[a-zA-Z]*([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?">
       </fieldset>
@@ -27,19 +27,19 @@
       <button class="bform"  ng-click="crear_problema()">Registrar</button>
     </form>
 
-    <!-- Modificar Usuarios form--> 
+    <!-- Modificar Usuarios form-->
     <form ng-show="tab == 2">
       <h1>Modificar Problema</h1>
       <fieldset>
 
         <br>
-        <label >Tipo de Problema:</label> 
+        <label >Tipo de Problema:</label>
         <select class="text" ng-model="seleccionado" ng-change="update()">
           <option value="" default selected>Seleccione uno...</option>
           <option selected value="0">Limpio con problemas</option>
           <option value="1">No limpio</option>
         </select>
-        <label >Problema Actual:</label> 
+        <label >Problema Actual:</label>
         <select ng-model="seleccionado2" ng-options="o as o.problem_description for o in no_limpio"></select>
         <label >Problema Nuevo:</label>
         <input type="text" ng-model="problema_modificado" required placeholder="El problema debe tener entre 3 y 45 letras/espacios" minlength="3" maxlength="45" pattern="[a-zA-Z]{3}[a-zA-Z]*([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?">
@@ -61,7 +61,7 @@
           <label >Problemas:</label>
           <select ng-model="seleccionado2" ng-options="o as o.problem_description for o in no_limpio"></select>
           <button class="bform" ng-click="Eliminar()">Eliminar</button>
-          
+
       </fieldset>
     </form>
   </div>

@@ -80,7 +80,7 @@
       </div>
      <!-- fin modal plantillas-->
 
-     <button class = "btn btn-primary" data-toggle="modal" data-target="#plantilla_modal" >mostrar plantillas</button>
+     
 
    <!-- Grid de habitaciones -->
     <div class="habs col-md-8">
@@ -127,6 +127,7 @@
  </div>
 
  <br>
+ <button class = "btn btn-primary" data-toggle="modal" data-target="#plantilla_modal">Mostrar Plantillas</button>
  <br>
 
 <!-- Reparticion de Habitaciones -->
@@ -143,7 +144,7 @@
         <li class="list-group-item" data-drag="true"
             data-jqyoui-options="{revert: 'invalid'}"
             data-id="{{h.room_id}}"
-            ng-model="eployeeWithRooms.habitacion" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback_distribution(h,e)',
+            ng-model="employeeWithRooms.habitacion" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback_distribution(h,e)',
              onStop:'startCallback_distribution(h,e)',onDrop:'dropCallback_distribution(e)'}"
             ng-repeat = "h in e.habitacion track by $index"> {{h.room_id}} </li>
       </ul>
@@ -196,6 +197,8 @@
     </div>
   </div>
 </div>
+</div>
+
 
 <div id="notifications" >
 </div>

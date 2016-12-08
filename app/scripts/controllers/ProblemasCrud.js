@@ -11,7 +11,6 @@ angular.module('AngularScaffold.Controllers')
 
 
     $scope.crear_problema= function(){
-        console.log($scope.problema_nuevo.tipo)
         if($scope.problema_nuevo.tipo === undefined){
             console.log("METELE SWEET ALERT AQUI")
             return;
@@ -22,17 +21,32 @@ angular.module('AngularScaffold.Controllers')
             }
             ProblemService.CrearProblemas(temp).then(function(response){
                 $scope.get_problema();
-                window.location.reload(false);
+                swal({
+                  title: "Guardado con Exito!",
+                  //text: "You will not be able to recover this imaginary file!",
+                  type: "success",
+                  //showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "OK!",
+                  //cancelButtonText: "No, Continuar!",
+                  closeOnConfirm: false,
+                  //closeOnCancel: false
+                },
+                function(isConfirm){
+                  if (isConfirm) {
+                    window.location.reload(false);
+                  }
+                });
             }) 
         }
-    	
     }
+
     $scope.get_problema= function(){
       ProblemService.GetProblema().then(function(response){
         $scope.problemas = response.data;
       });
     }
-      	
+
     $scope.update = function(){
     	$scope.no_limpio = [];
     	for (var i = 0; i < $scope.problemas.length; i++) {
@@ -53,16 +67,32 @@ angular.module('AngularScaffold.Controllers')
         		problem_type: $scope.seleccionado2.problem_type
         	}
         	ProblemService.Modificar(param).then(function(response2){
-                window.location.reload(false); 
+                swal({
+                  title: "Desea guardar los cambios realizados",
+                  //text: "You will not be able to recover this imaginary file!",
+                  type: "success",
+                  showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Si, Guardar!",
+                  cancelButtonText: "No, Continuar!",
+                  closeOnConfirm: false,
+                  //closeOnCancel: false
+                },
+                function(isConfirm){
+                  if (isConfirm) {
+                    window.location.reload(false);
+                  }
+                }); 
             });            
         }
     }
+
     $scope.Eliminar = function(){
     	var param ={
     		id: $scope.seleccionado2._id,
     	}
     	ProblemService.Eliminar(param).then(function(response2){
-            window.location.reload(false); 
+            window.location.reload(false);
         });
     }
 
@@ -70,7 +100,7 @@ angular.module('AngularScaffold.Controllers')
     $scope.setActiveTab = function (activeTab) {
         sessionStorage.setItem("activeTab2", activeTab);
     };
-    
+
     // Get el tab activo en el localStorage
     $scope.getActiveTab = function () {
     	if(sessionStorage.getItem("activeTab2")){
@@ -78,6 +108,6 @@ angular.module('AngularScaffold.Controllers')
     	}else{
     		return 1;
     	}
-        
+
     };
 }]);
