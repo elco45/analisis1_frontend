@@ -11,32 +11,34 @@ angular.module('AngularScaffold.Controllers')
 
 
     $scope.crear_problema= function(){
-    	var temp = {
-    		tipo: $scope.problema_nuevo.tipo,
-    		descripcion: $scope.problema_nuevo.descripcion
-    	}
-      ProblemService.CrearProblemas(temp).then(function(response){
-        $scope.get_problema();
-
-        swal({
-          title: "Guardado con Exito!",
-          //text: "You will not be able to recover this imaginary file!",
-          type: "success",
-          //showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
-          confirmButtonText: "OK!",
-          //cancelButtonText: "No, Continuar!",
-          closeOnConfirm: false,
-          //closeOnCancel: false
-        },
-        function(isConfirm){
-          if (isConfirm) {
-            window.location.reload(false);
-          }
-        });
-
-
-      })
+        if($scope.problema_nuevo.tipo === undefined){
+            console.log("METELE SWEET ALERT AQUI")
+            return;
+        }else{
+            var temp = {
+                tipo: $scope.problema_nuevo.tipo,
+                descripcion: $scope.problema_nuevo.descripcion
+            }
+            ProblemService.CrearProblemas(temp).then(function(response){
+                $scope.get_problema();
+                swal({
+                  title: "Guardado con Exito!",
+                  //text: "You will not be able to recover this imaginary file!",
+                  type: "success",
+                  //showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "OK!",
+                  //cancelButtonText: "No, Continuar!",
+                  closeOnConfirm: false,
+                  //closeOnCancel: false
+                },
+                function(isConfirm){
+                  if (isConfirm) {
+                    window.location.reload(false);
+                  }
+                });
+            }) 
+        }
     }
 
     $scope.get_problema= function(){
@@ -55,37 +57,34 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.guardar_modificado = function(){
-    	var param ={
-    		id: $scope.seleccionado2._id,
-    		problem_description: $scope.problema_modificado,
-    		problem_type: $scope.seleccionado2.problem_type
-    	}
-    	ProblemService.Modificar(param).then(function(response2){
-        /*var pasar = false;
-        swal("¡Exito!",);
-        pasar = true;
-        if (pasar) {
-          window.location.reload(false);
-        }*/
-        swal({
-          title: "Desea guardar los cambios realizados",
-          //text: "You will not be able to recover this imaginary file!",
-          type: "success",
-          showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
-          confirmButtonText: "Si, Guardar!",
-          cancelButtonText: "No, Continuar!",
-          closeOnConfirm: false,
-          //closeOnCancel: false
-        },
-        function(isConfirm){
-          if (isConfirm) {
-            window.location.reload(false);
-          }
-        });
-
-
-        });
+        if ($scope.seleccionado === undefined) {
+            console.log("poner sweet alert aqui!!!")
+            return;
+        }else{
+        	var param ={
+        		id: $scope.seleccionado2._id,
+        		problem_description: $scope.problema_modificado,
+        		problem_type: $scope.seleccionado2.problem_type
+        	}
+        	ProblemService.Modificar(param).then(function(response2){
+                swal({
+                  title: "Desea guardar los cambios realizados",
+                  //text: "You will not be able to recover this imaginary file!",
+                  type: "success",
+                  showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Si, Guardar!",
+                  cancelButtonText: "No, Continuar!",
+                  closeOnConfirm: false,
+                  //closeOnCancel: false
+                },
+                function(isConfirm){
+                  if (isConfirm) {
+                    window.location.reload(false);
+                  }
+                }); 
+            });            
+        }
     }
 
     $scope.Eliminar = function(){

@@ -850,15 +850,18 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.cambioEstados = function(estado){
-    	$scope.room.status = estado;
-    	if($scope.seleccionado && estado != 2){
-      	$scope.room.observation = $scope.seleccionado;
-    	}
-    	var temporal = {
-      	employee: $sessionStorage.currentUser.username,
-      	room: $scope.room
-    	}
-
+      if($scope.seleccionado === "El cliente no queria" || $scope.seleccionado === "La Puerta esta dañada"){
+        console.log("poner sweet alert aqui!")
+        return;
+      }else{
+      	$scope.room.status = estado;
+      	if($scope.seleccionado && estado != 2){
+        	$scope.room.observation = $scope.seleccionado;
+      	}
+      	var temporal = {
+        	employee: $sessionStorage.currentUser.username,
+        	room: $scope.room
+      	}
       for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
         if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
         	RoomService.UpdateRoom(temporal).then(function(response){
@@ -903,7 +906,7 @@ angular.module('AngularScaffold.Controllers')
         	});
         }
       }
-
+    }
     }
 
     $scope.getEmpRooms = function() {
