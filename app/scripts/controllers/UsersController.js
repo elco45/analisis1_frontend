@@ -15,7 +15,6 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     $scope.password2;
     $scope.is_admin_logged = false;
     $scope.show_logout = false;
-    $scope.notsaved = true;
 
     $scope.getUser = function(){
       UserService.GetUser().then(function(response){
@@ -60,54 +59,20 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }
 
     $scope.crear_usuario = function(){
-      /*$scope.valid1 = document.getElementById("name").required;
-      $scope.valid2 = document.getElementById("idnum").required;
-      $scope.valid3 = document.getElementById("user").required;
-      $scope.valid4 = document.getElementById("password").required;
-      $scope.valid5 = document.getElementById("password_2").required;
-      $scope.valid6 = document.getElementById("cel").required;
-      $scope.valid7 = document.getElementById("tel").required;
-      $scope.valid8 = document.getElementById("dir").required;
-      $scope.valid9 = document.getElementById("nac").required;
-      $scope.valid10 = document.getElementById("photo").required;
-      $scope.valid11 = document.getElementById("hijos").required;
-      console.log($scope.valid1)
-      console.log($scope.valid2)
-      console.log($scope.valid3)
-      console.log($scope.valid4)
-      console.log($scope.valid5)
-      console.log($scope.valid6)
-      console.log($scope.valid7)
-      console.log($scope.valid8)
-      console.log($scope.valid9)
-      console.log($scope.valid10)
-      console.log($scope.valid11)
-      if (document.getElementById("cel").value === "") {
-        $scope.valid6 = true;
-      }
-      if (document.getElementById("tel").value === "") {
-        $scope.valid7 = true;
-      }*/
-      if (/*$scope.valid1 && $scope.valid2 && $scope.valid3 && $scope.valid4 && $scope.valid5 && $scope.valid6 
-        && $scope.valid7 && $scope.valid8 && $scope.valid9 && $scope.valid10 && $scope.valid11*/true) {
-        var file = document.querySelector('input[type=file]').files[0];
-        var reader  = new FileReader();
-        reader.readAsDataURL(file)
-        reader.addEventListener("load" , function(){
-          $scope.usuario.photo = reader.result
-          UserService.Register($scope.usuario).then(function(algo){
-            $scope.notsaved = false;
-            swal("¡Exito!","success");
-            $scope.usuario="";
-            document.getElementById("nac").value = "";
-          }).catch(function(err){
-            swal("Error", "Error al guardar el usuario", "error");
-        },false)
-        });
-      }
-      if ($scope.notsaved) {
-        swal("","Debe llenar todos los campos correctamente para poder guardar el usuario");
-      }
+      var file = document.querySelector('input[type=file]').files[0];
+      var reader  = new FileReader();
+      reader.readAsDataURL(file)
+      reader.addEventListener("load" , function(){
+        $scope.usuario.photo = reader.result
+        UserService.Register($scope.usuario).then(function(algo){
+          swal("¡Exito!","success");
+          $scope.usuario="";
+          document.getElementById("nac").value = "";
+          document.getElementById("password2").value = "";
+        }).catch(function(err){
+          swal("Error", "Error al guardar el usuario, debe llenar todos los campos correctamente para poder guardar el usuario", "error");
+      },false)
+      });
     };
 
     $scope.decode = function(file,fileName){
