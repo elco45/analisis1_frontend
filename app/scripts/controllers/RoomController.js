@@ -850,9 +850,14 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.cambioEstados = function(estado){
-      if($scope.seleccionado === "El cliente no queria" || $scope.seleccionado === "La Puerta esta dañada"){
-        console.log("poner sweet alert aqui!")
-        return;
+      if($scope.seleccionado === "El cliente no queria." || $scope.seleccionado === "La puerta esta dañada."){
+        swal({
+              title: "Debe de seleccionar una opción!!",
+              type: "warning",
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "Cerrar",
+              closeOnConfirm: false,            
+        });
       }else{
       	$scope.room.status = estado;
       	if($scope.seleccionado && estado != 2){
