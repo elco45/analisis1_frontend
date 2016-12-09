@@ -59,20 +59,37 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }
 
     $scope.crear_usuario = function(){
-      var file = document.querySelector('input[type=file]').files[0];
-      var reader  = new FileReader();
-      reader.readAsDataURL(file)
-      reader.addEventListener("load" , function(){
-        $scope.usuario.photo = reader.result
-        UserService.Register($scope.usuario).then(function(algo){
-          swal("¡Exito!","success");
-          $scope.usuario="";
-          document.getElementById("nac").value = "";
-          document.getElementById("password2").value = "";
-        }).catch(function(err){
-          swal("Error", "Error al guardar el usuario, debe llenar todos los campos correctamente para poder guardar el usuario", "error");
-      },false)
-      });
+      /*
+     console.log(!!$scope.usuario.name )
+      console.log( !!$scope.usuario.username )
+       console.log( !!$scope.usuario.cel)
+         console.log( !!$scope.usuario.tel )
+         console.log(  !!$scope.usuario.direction)
+        console.log(   !!$scope.usuario.id)
+         console.log(   !!$scope.usuario.civil_status)
+         console.log(    !!$scope.usuario.children )
+         console.log(    !!$scope.usuario.role );
+         */
+      if (!!$scope.usuario.name && !!$scope.usuario.username && !!$scope.usuario.cel && !!$scope.usuario.tel && !!$scope.usuario.direction
+           &&  !!$scope.usuario.id &&  !!$scope.usuario.civil_status) {
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader  = new FileReader();
+        reader.readAsDataURL(file)
+        reader.addEventListener("load" , function(){
+          $scope.usuario.photo = reader.result
+          UserService.Register($scope.usuario).then(function(algo){
+            $scope.notsaved = false;
+            swal("¡Exito!","success");
+            $scope.usuario="";
+            document.getElementById("nac").value = "";
+          }).catch(function(err){
+            swal("Error", "Error al guardar el usuario", "error");
+        },false)
+        });
+      }else{
+      
+        swal("","Debe llenar todos los campos correctamente para poder guardar el usuario");
+      }
     };
 
     $scope.decode = function(file,fileName){

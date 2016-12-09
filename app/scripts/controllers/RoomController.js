@@ -189,13 +189,10 @@ angular.module('AngularScaffold.Controllers')
             }
           }
         }
-        for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
-          if ($scope.employeeWithRooms[i].habitacion.length <=8) {
-            RoomService.SwapDistributedRooms(swap_iduser_element).then(function(response){
+        RoomService.SwapDistributedRooms(swap_iduser_element).then(function(response){
 
-            })
-          }
-        }
+
+        })
         
       }
     };
@@ -487,18 +484,13 @@ angular.module('AngularScaffold.Controllers')
       	employee: $sessionStorage.currentUser.username,
       	room : room
     	}
-      for (var i = 0; i < $scope.employeeWithRooms.length; i++) {
-        if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
-          RoomService.UpdateRoom(room_data).then(function(response){
-        
-          }).then(function(){
-            if ($scope.employeeWithRooms.length>0) {
-              $scope.distribute();
-            }
-          })
+
+    	RoomService.UpdateRoom(room_data).then(function(response){
+      	if ($scope.employeeWithRooms.length>0) {
+          $scope.distribute();
         }
-      }
-    	
+    	})
+
     };
 
     $scope.createAllRooms = function (){
@@ -866,6 +858,7 @@ angular.module('AngularScaffold.Controllers')
       	var temporal = {
         	employee: $sessionStorage.currentUser.username,
         	room: $scope.room
+          
       	}
 
       	RoomService.UpdateRoom(temporal).then(function(response){
