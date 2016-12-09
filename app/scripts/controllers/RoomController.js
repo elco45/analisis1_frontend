@@ -1,6 +1,6 @@
 angular.module('AngularScaffold.Controllers')
-.controller('RoomController', ['RoomService','HistoryService','ProblemService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', '$window',
-  function (RoomService,HistoryService,ProblemService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage, $window) {
+.controller('RoomController', ['RoomService','HistoryService','ProblemService','RoomTypeService','$interval' ,'$q',  '$scope', '$state', '$stateParams','$rootScope', '$timeout','$sessionStorage', '$window',
+  function (RoomService,HistoryService,ProblemService,RoomTypeService, $interval,$q,$scope,$state, $stateParams,$rootScope, $timeout, $sessionStorage, $window) {
     $scope.$sessionStorage = $sessionStorage;
     $scope.selectedRooms = [];
     $scope.empleados = [];
@@ -18,7 +18,8 @@ angular.module('AngularScaffold.Controllers')
     $scope.isDragged = false;
     $scope.Room_hovered = -1;
     $scope.hasHovered = false;
-    $scope.employeeWithRooms =  []
+    $scope.employeeWithRooms =  [];
+    $scope.plantillas =  [];
     $scope.start = false;
     $scope.showList = false;
     $scope.showListProblems = false;
@@ -38,6 +39,8 @@ angular.module('AngularScaffold.Controllers')
     $scope.seleccionado = {};
     $scope.buttonDisabled = false;
     $scope.observation1=[];
+    $scope.typeRoom="Ninguno";
+
     $scope.Timer = function () {
       //console.log($scope.currentEmpRooms)
       if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
@@ -132,13 +135,16 @@ angular.module('AngularScaffold.Controllers')
           }
           $scope.employeeWithRooms[i].habitacion.splice(index,1)
           for (var k = index; k < $scope.employeeWithRooms[i].habitacion.length; k++) {
-            $scope.employeeWithRooms[i].habitacion[k].priority--;
-            var RoomsWithNewPriority = {
-              room: $scope.employeeWithRooms[i].habitacion[k]
-            }
-            RoomService.UpdatePriorityAfterSplice(RoomsWithNewPriority).then(function(response){
+            if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
+              $scope.employeeWithRooms[i].habitacion[k].priority--;
+              var RoomsWithNewPriority = {
+                room: $scope.employeeWithRooms[i].habitacion[k]
+              }
+            
+              RoomService.UpdatePriorityAfterSplice(RoomsWithNewPriority).then(function(response){
 
-            });
+              });
+            }
           };
           break;
         }
@@ -146,10 +152,24 @@ angular.module('AngularScaffold.Controllers')
 
       for(var i =0; i < $scope.employeeWithRooms.length; i++){//lo agregamos al nuevo en donde se dropeo
         if($scope.employeeWithRooms[i].empleado.username == employee.empleado.username){
-          $scope.dragged_Room.priority = $scope.employeeWithRooms[i].habitacion.length;
-          $scope.employeeWithRooms[i].habitacion.push($scope.dragged_Room)
-          cont_succeeded_operations++;
-          break;
+          if($scope.employeeWithRooms[i].habitacion.length >= 8){
+            swal({
+              title: "Límite de Habitaciones",
+              text: "Ha llegado al máximo de habitaciones por empleado.",
+              type: "warning",
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Continuar!",
+              closeOnConfirm: true
+            },
+            function(){
+                
+            });
+          }else{
+            $scope.dragged_Room.priority = $scope.employeeWithRooms[i].habitacion.length;
+            $scope.employeeWithRooms[i].habitacion.push($scope.dragged_Room);
+            cont_succeeded_operations++;
+            break;
+          }
         }
       }
 
@@ -169,10 +189,11 @@ angular.module('AngularScaffold.Controllers')
             }
           }
         }
-
         RoomService.SwapDistributedRooms(swap_iduser_element).then(function(response){
 
+
         })
+        
       }
     };
 
@@ -190,16 +211,44 @@ angular.module('AngularScaffold.Controllers')
         }
       }
       if(!already_on_the_list){
-        var empleado_con_su_habitacion = {
-          empleado : {},
-          habitacion : [],
-          contador: 0
+        if(empleado_con_su_habitacion.habitacion.length >= 8){
+          swal({
+            title: "Límite de Habitaciones",
+            text: "Ha llegado al máximo de habitaciones por empleado.",
+            type: "warning",
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Continuar!",
+            closeOnConfirm: true
+          },
+          function(){
+              
+          });
+        }else{
+          var empleado_con_su_habitacion = {
+            empleado : {},
+            habitacion : [],
+            contador: 0
+          }
+          empleado_con_su_habitacion.empleado = $scope.dragged_Employee;
+          empleado_con_su_habitacion.habitacion.push(room);
+          $scope.employeeWithRooms.push(empleado_con_su_habitacion);
         }
-        empleado_con_su_habitacion.empleado = $scope.dragged_Employee;
-        empleado_con_su_habitacion.habitacion.push(room);
-        $scope.employeeWithRooms.push(empleado_con_su_habitacion);
       }else{
-        $scope.employeeWithRooms[index_on_the_list].habitacion.push(room);
+        if($scope.employeeWithRooms[index_on_the_list].habitacion.length >= 8){
+          swal({
+            title: "Límite de Habitaciones",
+            text: "Ha llegado al máximo de habitaciones por empleado.",
+            type: "warning",
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Continuar!",
+            closeOnConfirm: true
+          },
+          function(){
+              
+          });
+        }else{
+          $scope.employeeWithRooms[index_on_the_list].habitacion.push(room);
+        }
       }
 
       for (var i = 0; i < $scope.selectedRooms.length; i++) {
@@ -285,14 +334,17 @@ angular.module('AngularScaffold.Controllers')
               if($scope.employeeWithRooms[index].habitacion[i].room_id === $scope.floors[j].room_id){
                 for (var k = 0; k < $scope.floors[j].idUser.length; k++) {
                   if($scope.floors[j].idUser[k].username === $scope.employeeWithRooms[index].empleado.username){
-                    $scope.floors[j].idUser.splice(k,1);
-                    var param_modif = {
-                      employee: $sessionStorage.currentUser.username,
-                      room: $scope.floors[j]
-                    }
-                    RoomService.UpdateRoom(param_modif).then(function(response){
+                    if ($scope.employeeWithRooms[index].habitacion.length <= 8) {
+                      $scope.floors[j].idUser.splice(k,1);
+                      var param_modif = {
+                        employee: $sessionStorage.currentUser.username,
+                        room: $scope.floors[j]
+                      }
+                    
+                      RoomService.UpdateRoom(param_modif).then(function(response){
 
-                    });
+                      });
+                    }
                   }
                 }
               }
@@ -367,7 +419,7 @@ angular.module('AngularScaffold.Controllers')
       	if(index === 0){
         	$scope.selectedRooms.shift()
       	}else{
-        	$scope.selectedRooms.splice(index, 1);
+          $scope.selectedRooms.splice(index, 1);
       	}
     	} else {
       	$scope.selectedRooms.push(room);
@@ -425,47 +477,56 @@ angular.module('AngularScaffold.Controllers')
       	}
     	}
     	if (room.status == 5) {
-      	$scope.selectedRooms.push(room);
+        $scope.selectedRooms.push(room);
+        
     	}
     	var room_data = {
       	employee: $sessionStorage.currentUser.username,
       	room : room
     	}
-     
+
     	RoomService.UpdateRoom(room_data).then(function(response){
       	if ($scope.employeeWithRooms.length>0) {
           $scope.distribute();
         }
     	})
+
     };
 
     $scope.createAllRooms = function (){
-      for (var i = 1; i < 26; i++) {
-        var room_id = {
-          status: 0,
-          room_id:i +100,
-          idUser: [],
-          priority: -1,
-          observation: "",
-          time_reserved: "0hr"
-        }
-        RoomService.CreateRoom(room_id).then(function(response){
+      RoomTypeService.GetAllRoomType().then(function(response){
+        var tempRoomType = response.data
+        for (var i = 1; i < 26; i++) {
+          var random = Math.floor(Math.random() * 6) 
+          var room_id = {
+            status: 0,
+            room_id:i +100,
+            idUser: [],
+            priority: -1,
+            observation: "",
+            idRoomType: tempRoomType[random]._id,
+            time_reserved: "0hr"
+          }
+          RoomService.CreateRoom(room_id).then(function(response1){
 
-        })
-      }
-      for (var i = 1; i < 21; i++) {
-        var room_id = {
-          status: 0,
-          room_id:i +200,
-          idUser: [],
-          priority: -1,
-          observation: "",
-          time_reserved: "0hr"
+          })
         }
-        RoomService.CreateRoom(room_id).then(function(response){
+        for (var i = 1; i < 21; i++) {
+          random = Math.floor(Math.random() * 6) 
+          var room_id = {
+            status: 0,
+            room_id:i +200,
+            idUser: [],
+            priority: -1,
+            observation: "",
+            idRoomType: tempRoomType[random]._id,
+            time_reserved: "0hr"
+          }
+          RoomService.CreateRoom(room_id).then(function(response2){
 
-        })
-      }
+          })
+        }
+      })
     }
 
     $scope.getParameters = function(){
@@ -535,8 +596,22 @@ angular.module('AngularScaffold.Controllers')
             			$scope.employeeWithRooms[i].habitacion.splice(0,0,temp);
             			$scope.organizePriority(i);
           			}else{
-            			temp.priority = $scope.employeeWithRooms[i].habitacion.length;
-            			$scope.employeeWithRooms[i].habitacion.push(temp);
+                  if($scope.employeeWithRooms[i].habitacion.length >= 8){
+                    swal({
+                      title: "Límite de Habitaciones",
+                      text: "Ha llegado al máximo de habitaciones por empleado.",
+                      type: "warning",
+                      confirmButtonClass: "btn-danger",
+                      confirmButtonText: "Continuar!",
+                      closeOnConfirm: true
+                    },
+                    function(){
+                        
+                    });
+                  }else{
+                    temp.priority = $scope.employeeWithRooms[i].habitacion.length;
+                    $scope.employeeWithRooms[i].habitacion.push(temp);
+                  }
           			}
           			id = selectedRooms[index].room_id;
           			selectedRooms.splice(index,1)
@@ -558,19 +633,47 @@ angular.module('AngularScaffold.Controllers')
             				}
           				}
           			}else{
-          				temp.priority = $scope.employeeWithRooms[i].habitacion.length;
-          				$scope.employeeWithRooms[i].habitacion.push(temp);
+                  if($scope.employeeWithRooms[i].habitacion.length >= 8){
+                    swal({
+                      title: "Límite de Habitaciones",
+                      text: "Ha llegado al máximo de habitaciones por empleado.",
+                      type: "warning",
+                      confirmButtonClass: "btn-danger",
+                      confirmButtonText: "Continuar!",
+                      closeOnConfirm: true
+                    },
+                    function(){
+                        
+                    });
+                  }else{
+                    temp.priority = $scope.employeeWithRooms[i].habitacion.length;
+                    $scope.employeeWithRooms[i].habitacion.push(temp);
+                  }
           			}
                 id = selectedRooms[0].room_id;
                 selectedRooms.splice(0,1)
         			}
 
         		}else{//aqui es cuando no hayan habitacion
-            	temp = selectedRooms[0];
-              temp.priority = $scope.employeeWithRooms[i].habitacion.length;
-              $scope.employeeWithRooms[i].habitacion.push(temp);
-            	id = selectedRooms[0].room_id;
-            	selectedRooms.splice(0,1)
+              if($scope.employeeWithRooms[i].habitacion.length >= 8){
+                swal({
+                  title: "Límite de Habitaciones",
+                  text: "Ha llegado al máximo de habitaciones por empleado.",
+                  type: "warning",
+                  confirmButtonClass: "btn-danger",
+                  confirmButtonText: "Continuar!",
+                  closeOnConfirm: true
+                },
+                function(){
+                    
+                });
+              }else{
+                temp = selectedRooms[0];
+                temp.priority = $scope.employeeWithRooms[i].habitacion.length;
+                $scope.employeeWithRooms[i].habitacion.push(temp);
+                id = selectedRooms[0].room_id;
+                selectedRooms.splice(0,1)
+              }
         		}
 
         		for (var k = 0; k < $scope.floors.length; k++) {
@@ -591,18 +694,26 @@ angular.module('AngularScaffold.Controllers')
         		}
         		//guardarlo
         		if(temp.status != 5){
-          		var parameters = {
-            			employee: $sessionStorage.currentUser.username,
-            			room: temp
-          		}
-          		RoomService.SaveDistributedRooms(parameters).then(function(response){
-          		})
+              if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
+            		var parameters = {
+              			employee: $sessionStorage.currentUser.username,
+              			room: temp
+            		}
+                RoomService.SaveDistributedRooms(parameters).then(function(response){
+                })
+              }
+          		
         		}
         	};
       	}//TERMINADO
     	}
-    	$scope.buttonDisabled = false;
+      $scope.buttonDisabled = false;
+    	
     }
+
+    $scope.setBtnDisable = function(){
+      $scope.buttonDisabled = false;
+    } 
 
     $scope.getRooms = function(){
       RoomService.GetRooms().then(function(response){
@@ -617,21 +728,50 @@ angular.module('AngularScaffold.Controllers')
             		var existia_empleado = false
             		for (var k = 0; k< $scope.employeeWithRooms.length; k++) {
               		if($scope.employeeWithRooms[k].empleado.username === response.data[i].idUser[j].username ){
-              			existia_empleado = true;
-              			$scope.employeeWithRooms[k].habitacion.push(response.data[i])
-              			$scope.employeeWithRooms[k].contador  =0
-              			break;
+                    if($scope.employeeWithRooms[k].habitacion.length >= 8){
+                      swal({
+                        title: "Límite de Habitaciones",
+                        text: "Ha llegado al máximo de habitaciones por empleado.",
+                        type: "warning",
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "Continuar!",
+                        closeOnConfirm: true
+                      },
+                      function(){
+                          
+                      });
+                    }else{
+                      existia_empleado = true;
+                      $scope.employeeWithRooms[k].habitacion.push(response.data[i]);
+                      $scope.employeeWithRooms[k].contador  =0
+                      break;
+                    }
               		}//if
             		}//for
             		if(!existia_empleado){
-              		var empleado_con_su_habitacion = {
-              			empleado : {},
-              			habitacion : [],
-              			contador: 0
-              		}
-	                empleado_con_su_habitacion.empleado = response.data[i].idUser[j];
-	                empleado_con_su_habitacion.habitacion.push(response.data[i])
-	                $scope.employeeWithRooms.push(empleado_con_su_habitacion)
+                  var empleado_con_su_habitacion = {
+                    empleado : {},
+                    habitacion : [],
+                    contador: 0
+                  }
+                  if(empleado_con_su_habitacion.habitacion.length >= 8){
+                    swal({
+                      title: "Límite de Habitaciones",
+                      text: "Ha llegado al máximo de habitaciones por empleado.",
+                      type: "warning",
+                      confirmButtonClass: "btn-danger",
+                      confirmButtonText: "Continuar!",
+                      closeOnConfirm: true
+                    },
+                    function(){
+                        
+                    });
+                  }else{
+                    
+                    empleado_con_su_habitacion.empleado = response.data[i].idUser[j];
+                    empleado_con_su_habitacion.habitacion.push(response.data[i]);
+                    $scope.employeeWithRooms.push(empleado_con_su_habitacion)
+                  }
             		}
           	}//for
           	if(response.data[i].idUser.length == 0){
@@ -702,56 +842,66 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.cambioEstados = function(estado){
-    	$scope.room.status = estado;
-    	if($scope.seleccionado && estado != 2){
-      	$scope.room.observation = $scope.seleccionado;
-    	}
-    	var temporal = {
-      	employee: $sessionStorage.currentUser.username,
-      	room: $scope.room
-    	}
-      console.log(temporal)
-
-    	RoomService.UpdateRoom(temporal).then(function(response){
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
-
-        if(dd<10) {
-          dd='0'+dd
-        }
-
-        if(mm<10) {
-          mm='0'+mm
-        }
-
-        today = mm+'/'+dd+'/'+yyyy;
-        var resuelto = true;
-        if( response.data.status ==3 || response.data.status ==4  ){
-       		resuelto = false;
-     		}
-
-       	var reporte ={
-          employee_id: response.data.idUser[0].username,
-          room_number: response.data.room_id,
-          problem_id: response.data.observation,
-          room_state: response.data.status,
-          date_reported: today,
-          resolved:resuelto
-      	};
-
-        HistoryService.CreateRegister(reporte).then(function(response2){
-
+      if($scope.seleccionado === "El cliente no queria." || $scope.seleccionado === "La puerta esta dañada."){
+        swal({
+              title: "Debe de seleccionar una opción!!",
+              type: "warning",
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "Cerrar",
+              closeOnConfirm: false,            
         });
+      }else{
+      	$scope.room.status = estado;
+      	if($scope.seleccionado && estado != 2){
+        	$scope.room.observation = $scope.seleccionado;
+      	}
+      	var temporal = {
+        	employee: $sessionStorage.currentUser.username,
+        	room: $scope.room
+          
+      	}
 
-    	}).then(function(){
-        $scope.RoomSelected = true;
-        $scope.start = false;
-        $scope.showList = false;
-        $scope.showListProblems = false;
-        $state.reload();
-    	});
+      	RoomService.UpdateRoom(temporal).then(function(response){
+          var today = new Date();
+          var dd = today.getDate();
+          var mm = today.getMonth()+1; //January is 0!
+          var yyyy = today.getFullYear();
+
+          if(dd<10) {
+            dd='0'+dd
+          }
+
+          if(mm<10) {
+            mm='0'+mm
+          }
+
+          today = mm+'/'+dd+'/'+yyyy;
+          var resuelto = true;
+          if( response.data.status ==3 || response.data.status ==4  ){
+         		resuelto = false;
+       		}
+
+         	var reporte ={
+            employee_id: response.data.idUser[0].username,
+            room_number: response.data.room_id,
+            problem_id: response.data.observation,
+            room_state: response.data.status,
+            date_reported: today,
+            resolved:resuelto
+        	};
+
+          HistoryService.CreateRegister(reporte).then(function(response2){
+
+          });
+
+      	}).then(function(){
+          $scope.RoomSelected = true;
+          $scope.start = false;
+          $scope.showList = false;
+          $scope.showListProblems = false;
+          $state.reload();
+      	});
+      }
     }
 
     $scope.getEmpRooms = function() {
@@ -764,21 +914,22 @@ angular.module('AngularScaffold.Controllers')
         		}
         	}
       	}
+
+      }).then(function(){
         var flag = true;   // set flag to true to begin first pass
         var temp;   //holding variable
 
         while ( flag ){
           flag= false;    //set flag to false awaiting a possible swap
           for( var j=0;  j < $scope.currentEmpRooms.length-1;  j++ ){
-          	if ( $scope.currentEmpRooms[j].priority > $scope.currentEmpRooms[j+1].priority ){   // change to > for ascending sort
-            	temp = $scope.currentEmpRooms[j];                //swap elements
-            	$scope.currentEmpRooms[j] = $scope.currentEmpRooms[j+1];
-            	$scope.currentEmpRooms[j+1] = temp;
-            	flag = true;              //shows a swap occurred
-          	}
+            if ( $scope.currentEmpRooms[j].priority > $scope.currentEmpRooms[j+1].priority ){   // change to > for ascending sort
+              temp = $scope.currentEmpRooms[j];                //swap elements
+              $scope.currentEmpRooms[j] = $scope.currentEmpRooms[j+1];
+              $scope.currentEmpRooms[j+1] = temp;
+              flag = true;              //shows a swap occurred
+            }
           }
         }
-      }).then(function(){
       	ProblemService.GetProblema().then(function(response){
           $scope.problem_list = response.data;
         });
@@ -800,20 +951,29 @@ angular.module('AngularScaffold.Controllers')
     	if (evt.which == 3) {
         $scope.infoRC=f;
         evt.preventDefault()
+        var temp = {
+          idRoomType: $scope.infoRC.idRoomType
+        }
+        RoomTypeService.GetRoomType(temp).then(function(response){
+          $scope.typeRoom = response.data.description;
+        })
         $('#infoMsg').modal('show');
       }
     };
 
     $scope.organizePriority = function(i){
       for (var j = 0; j < $scope.employeeWithRooms[i].habitacion.length; j++) {
-        $scope.employeeWithRooms[i].habitacion[j].priority = j;
-        var parameters = {
-          employee: $sessionStorage.currentUser.username,
-          room: $scope.employeeWithRooms[i].habitacion[j]
-        }
-        RoomService.SaveDistributedRooms(parameters).then(function(response){
+        if ($scope.employeeWithRooms[i].habitacion.length <= 8) {
+          $scope.employeeWithRooms[i].habitacion[j].priority = j;
+          var parameters = {
+            employee: $sessionStorage.currentUser.username,
+            room: $scope.employeeWithRooms[i].habitacion[j]
+          }
+        
+          RoomService.SaveDistributedRooms(parameters).then(function(response){
 
-        })
+          })
+        }
       };
     }
 
@@ -935,6 +1095,62 @@ angular.module('AngularScaffold.Controllers')
            $scope.observation1 =  response2.data;
       });
   }
+
+  //plantilla inicio
+ /* $scope.get_plantillas = function(){
+    RoomService.GetPlantillas().then(function(function){
+
+    })
+  }*/
+  $scope.cargar_plantilla = function(plantilla){ 
+      RoomService.CargarPlantillas(plantilla).then(function(response){
+        swal({
+          title: "Desea cargar esta planilla?",
+          type: "success",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Continuar",
+          cancelButtonText: "Cancelar",
+          closeOnConfirm: false,
+        },
+        function(isConfirm){
+          if (isConfirm) {
+            window.location.reload(false);
+          }
+        }); 
+      });
+  }
+  $scope.get_plantillas  = function(){
+      RoomService.GetPlantillas().then(function(response){
+           $scope.plantillas = response.data;
+
+      });
+  }
+  $scope.create_plantillas  = function(algo){
+      
+      var plantilla ={
+         plantilla_nombre: document.getElementById("plantilla_name_input").value,
+         plantilla_descripcion: document.getElementById("plantilla_descripcion_input").value
+      };
+      RoomService.CreatePlantillas(plantilla).then(function(response){
+            swal({
+              title: "Guardado con Exito!",
+              type: "success",
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "OK!",
+              closeOnConfirm: false,
+            },
+            function(isConfirm){
+              if (isConfirm) {
+                window.location.reload(false);
+              }
+            });
+      });
+  }
+  
+
+  //plantilla final
+
 }]);
 
 app.filter('slice', function() {

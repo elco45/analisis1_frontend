@@ -1,4 +1,5 @@
 <div class="container" ng-controller="RoomController" ng-init="getEmpRooms()">
+
 <!-- Grid de habitaciones -->
   <div class="jumbotron col-md-12">
     <h1 ng-init="blinking()">Habitaciones</h1>
@@ -63,12 +64,10 @@
 
         <tr>
           <div class="col-md-12 outer" ng-show="showList">
-
-            <div class = "contain" ng-repeat="n in no_limpio">
-                <label class="lb">
-                    <input type="radio" ng-model="$parent.seleccionado" name="NotClean" value="{{n.problem_description}}" required />{{n.problem_description}}
-                </label>
-            </div> <!-- poner bonito lo del input -->
+            
+            <select id="sel" class="input-block-level" ng-model="seleccionado" ng-options="obj._id as obj.problem_description for obj in no_limpio">    
+                <option value="" disabled selected>Seleccione uno..</option>
+            </select>
 
             <div class="col-md-12 contain2">
               <button ng-click="cambioEstados(4)" ng-show="showList " class="mybtn2 col-md-2"> Finalizar </button>
@@ -77,11 +76,9 @@
         </tr>
         <tr>
           <div class="col-md-12 outer" ng-show="showListProblems">
-            <div class="contain" ng-repeat = "lp in limpio_problema">
-                <label class="lb">
-                    <input type="radio" ng-model="$parent.seleccionado" name="CleanWithProblem" value="{{lp.problem_description}}" required />{{lp.problem_description}}
-                </label>
-            </div><!--PONER INPUT BONITO-->
+            <select id="sel" class="input-block-level" ng-model="seleccionado" ng-options="obj._id as obj.problem_description for obj in limpio_problema">    
+                <option value="" disabled selected>Seleccione uno..</option>
+            </select>
           </div>
           <div class="col-md-12 contain2">
             <button ng-click="cambioEstados(3)" ng-show="showListProblems" class="mybtn2 col-md-3"> Finalizar </button>

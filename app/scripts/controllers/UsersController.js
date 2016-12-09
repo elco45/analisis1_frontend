@@ -15,7 +15,6 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     $scope.password2;
     $scope.is_admin_logged = false;
     $scope.show_logout = false;
-    $scope.notsaved = true;
 
     $scope.getUser = function(){
       UserService.GetUser().then(function(response){

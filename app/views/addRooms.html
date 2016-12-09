@@ -39,6 +39,49 @@
         <button type="button" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal" ></button>
     </div>
 
+
+     <!-- inicio modal plantillas-->
+      <div class="modal fade" id="plantilla_modal" tabindex="2" role="dialog" aria-labelledby="plantilla_modal_label"  >
+        <div class="modal-dialog sizing" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="plantilla_modal_label">Opciones</h4>
+            </div>
+            <div class="modal-body">
+              <div ng-init = "get_plantillas()">
+                <table class="row">
+                    <tr ng-repeat = "n in plantillas track by $index">
+                      <td>{{n.plantilla_nombre}}</td>
+                      <td>{{n.plantilla_descripcion}}</td>
+                      <td><button ng-click = "cargar_plantilla(n)">cargar plantilla</button></td>
+                      
+                    </tr>
+                </table>
+
+              </div>
+              <br></br>
+              <span>GUARDAR PLANTILLA ACTUAL</span>
+              <div>
+                <span>Nombre</span>
+                <input type = "text" id = "plantilla_name_input"></input>
+                <span>Descripcion</span>
+                <input type = "text" id = "plantilla_descripcion_input" ></input>
+                <button type = "button" class = "btn btn-primary" ng-click ="create_plantillas()">guardar</button>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "save_settings()">Guardar Opciones</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+     <!-- fin modal plantillas-->
+
+     
+
    <!-- Grid de habitaciones -->
     <div class="habs col-md-8">
       <h1>Habitaciones</h1>
@@ -84,6 +127,7 @@
  </div>
 
  <br>
+ <button class = "btn btn-primary" data-toggle="modal" data-target="#plantilla_modal">Mostrar Plantillas</button>
  <br>
 
 <!-- Reparticion de Habitaciones -->
@@ -100,7 +144,7 @@
         <li class="list-group-item" data-drag="true"
             data-jqyoui-options="{revert: 'invalid'}"
             data-id="{{h.room_id}}"
-            ng-model="eployeeWithRooms.habitacion" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback_distribution(h,e)',
+            ng-model="employeeWithRooms.habitacion" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback_distribution(h,e)',
              onStop:'startCallback_distribution(h,e)',onDrop:'dropCallback_distribution(e)'}"
             ng-repeat = "h in e.habitacion track by $index"> {{h.room_id}} </li>
       </ul>
@@ -123,18 +167,26 @@
         	 <div class="col-md-6 room-image">
         	 	<img style="height:100%; width:100%;" data-ng-src="img2.JPEG"/>
         	 </div>
-
-        	 <div class="col-md-6 emps-info" ng-repeat="f in infoRC.idUser">
-        	   <div class="row">
-                <h3 class="name-emps-info col-xs-6">{{f.username}}</h3>
-                <hr><br>
-                 <h3 class="name-emps-info col-xs-6">Informacion:</h3>
-                 <hr><br>
-                 <h3 class="name-emps-info col-xs-6" ng-init="get_observation(infoRC.observation)"> <span ng-repeat="ob in observation1">
-                  {{ob.problem_description}}
-                 </span> </h3>
-        	   </div>
-        	 </div>
+        	 
+        	 <div class="col-md-6 emps-info" >
+        	   	<div class="row" ng-repeat="f in infoRC.idUser">
+        	   		<h4 class="name-emps-info " class="col-xs-6 "><strong>Empleado(a):</strong> {{f.username}}</h4>
+                	<h4 class="name-emps-info " class="col-xs-6 "><strong>Celular:</strong> {{f.cel}}</h4>
+        	   	</div>
+        	   	<div class="row">
+        		<h3 class="name-emps-info ">Tipo de cuarto:</h3>
+    	   		<h4 class="name-emps-info " class="col-xs-6 ">{{typeRoom}}</h4>
+    	   	</div>
+        	</div>
+        	<hr><br>
+        	
+        </div>
+        <div class = "row">
+        	<h3 class="name-emps-info ">Problemas Recientes:</h3>
+             <hr><br>
+             <h3 class="name-emps-info" ng-init="get_observation(infoRC.observation)"> <span ng-repeat="ob in observation1">
+              {{ob.problem_description}}
+             </span> </h3>
         </div>
       </div>
       <div class="modal-footer">
@@ -145,6 +197,8 @@
     </div>
   </div>
 </div>
+</div>
+
 
 <div id="notifications" >
 </div>
