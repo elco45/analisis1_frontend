@@ -137,9 +137,13 @@ h1{
   text-align: left;
   vertical-align: middle;
 }
-.modal-dialog.sizing {
+.modal-dialog.sizing.settings {
   width: 320px!important;
   height: 320px!important;
+}
+.modal-dialog.sizing.plantilla {
+  width: 500px!important;
+  height: 500px!important;
 }
 
 /*distribute Rooms*/

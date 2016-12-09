@@ -1,9 +1,6 @@
 <div class="container" ng-controller="UsersController" ng-init="getUser()">
-  <div class="container-extra">
-  </div>
-  <div class="container-extra">
-  </div>
 
+  <h1>Manejar Usuarios</h1>
   <ul class="nav nav-tabs" ng-init="tab = 1">
     <li role="presentation" class="tab" ng-class="{active: tab==1}" ng-click="tab = 1" ><a>Crear Usuarios</a></li>
     <li role="presentation" class="tab" ng-class="{active: tab==2}" ng-click="tab = 2"><a>Modificar Usuarios</a></li>
@@ -12,7 +9,7 @@
   <div class="main-manage">
     <!-- Agregar Usuarios form -->
     <form class = "fix " ng-show="tab == 1">
-      <h1>Crear un Nuevo Usuario</h1>
+      <h2>Crear un Nuevo Usuario</h2>
 
       <fieldset>
         <label class="mylabel" for="name">Nombre:</label>
@@ -79,7 +76,7 @@
     <!-- Modificar Usuarios form--> 
     <form ng-show="tab == 2">
 
-      <h1>Modificar Usuarios</h1>
+      <h2>Modificar Usuarios</h2>
 
       <fieldset>
         <select ng-model="usuarioSeleccionado" ng-options="usuarios as usuarios.name for usuarios in lisUsuario" >
