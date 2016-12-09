@@ -27,7 +27,7 @@
         <div class="modal-body" ng-model="pinInserted">
           <div>
             <div class="demo__iphone-numbers">                
-                <input type="text" data-ng-model="vm.numbers">
+                <input type="password" data-ng-model="vm.numbers" oncopy="return false" onpaste="return false" pattern="\d{4}" maxlength="4" minlength="4">
             </div>
             
             <div class="demo__iphone-keypad">
@@ -39,9 +39,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         </div>
-
       </div>
-
     </div>
   </div>
 </div>

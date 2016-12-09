@@ -22,6 +22,7 @@
     "tests"
   ],
   "dependencies": {
+    "jquery": "~1.11.1",
     "bootstrap": "latest",
     "angular": "latest",
     "angular-ui-router": "latest",
@@ -33,6 +34,10 @@
     "bootstrap-sweetalert": "latest",
     "underscore": "latest",
     "moment": "^2.17.0",
-    "angular-keypad": "^2.0.4"
+    "angular-keypad": "^2.0.4",
+    "notify-js": "latest"
+  },
+  "resolutions": {
+    "jquery": "~1.11.1"
   }
 }

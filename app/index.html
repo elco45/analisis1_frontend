@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/forms.css">
     <link rel="stylesheet" href="styles/history.css">
+    <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" type="text/css" href="styles/sweetalert.css">
     <link href="styles/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -31,68 +32,77 @@
   </head>
 
   <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller ="UsersController">
-      <div class="container">
-         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-               <span class="sr-only">Toggle Navigation</span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href = "" ng-click="clickIconButton() ">
-               <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
-                   width: 8em;
-                   height: 2.8em;
-                   padding-top: 0.2em;
-               ">
-            </a>
-         </div>
-         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-              <li ng-cloak ng-show="show_for_admin()" ><a href="/#/home"> Manejar Habitaciones</a></li>
-              <li ng-if="show_for_admin()" ng-cloak><a href="/#/manage">Manejar Usuarios</a></li>
-              <li ng-if="show_for_admin()" ng-cloak><a href="/#/reports">Historial</a></li>
-              <li ng-if="show_for_admin()" ng-cloak><a href="/#/problemas">Manejar Problemas</a></li>
-              <li ng-if="show_for_admin()" ng-cloak  ng-click ="show_options()">
-              <a class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a></li>
-              <li ng-if="show_logout()" ng-cloak ng-click="logout()"><a href="">Logout</a></li>
-            </ul>
-         </div>
+    <ul class="topnav" id="myTopnav" ng-controller ="UsersController">
+      <li>
+        <a class="navbar-brand active" href = "" ng-click="clickIconButton() ">
+          <img class="logo" alt="Brand" src="../img/logomacarthur.png" style="
+             width: 8em;
+             height: 2.8em;
+             padding-top: 0.2em;"
+          >
+        </a>
+      </li>
+      <li ng-if="show_logout()" ng-cloak>
+        <a href="">Hola, {{$sessionStorage.currentUser.username}}!</a>
+      </li>
+      <div class="pull-right">
+        <li ng-cloak ng-show="show_for_admin()" ><a href="/#/home"> Manejar Habitaciones</a></li>
+        <li ng-if="show_for_admin()" ng-cloak><a href="/#/manage">Manejar Usuarios</a></li>
+        <li ng-if="show_for_admin()" ng-cloak><a href="/#/reports">Historial</a></li>
+        <li ng-if="show_for_admin()" ng-cloak><a href="/#/problemas">Manejar Problemas</a></li>
+        <li ng-if="show_for_admin()" ng-cloak  ng-click ="show_options()">
+          <a class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a>
+        </li>
+        <li ng-if="show_logout()" ng-cloak ng-click="logout()"><a href="">Logout</a></li>
+        <li class="icon">
+          <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
+        </li>
       </div>
-   </nav>
+    </ul>
+
+    <div class="container-extra">
+    </div>
 
   <!-- inicio modal opciones-->
-   <div class="emps col-md-2" ng-controller = "RoomController">
-    <div class="modal fade" id="settings_modal" tabindex="1" role="dialog" aria-labelledby="settings_modal_label"  >
-      <div class="modal-dialog sizing" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="settings_modal_label">Opciones</h4>
-          </div>
-          <div class="modal-body" ng-model="infoRC">
-            <div ng-init = "get_settings()">
-              <input type="checkbox" id="pin_login_check" value="pin_login">Login por PIN<br>
+    <div class="" ng-controller = "RoomController">
+      <div class="modal fade" id="settings_modal" tabindex="1" role="dialog" aria-labelledby="settings_modal_label"  >
+        <div class="modal-dialog sizing" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="settings_modal_label">Opciones</h4>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "save_settings()">Guardar Opciones</button>
+            <div class="modal-body" ng-model="infoRC">
+              <div ng-init = "get_settings()">
+                <input type="checkbox" id="pin_login_check" value="pin_login">Login por PIN<br>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "save_settings()">Guardar Opciones</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
-
-
      <!-- fin modal opciones-->
-    <div ui-view  ></div>
+    <div ui-view ></div>
+    <script>
+      function myFunction() {
+          var x = document.getElementById("myTopnav");
+          if (x.className === "topnav") {
+              x.className += " responsive";
+          } else {
+              x.className = "topnav";
+          }
+      }
+    </script>
   </body>
 
   <!-- bower:js -->
   <script src="/jquery/dist/jquery.js"></script>
   <script src="/jquery-ui/jquery-ui.js"></script>
+  <script src="/jquery.cookie/jquery.cookie.js"></script>
   <script src="/angular/angular.js"></script>
   <script src="/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="/bootstrap-css/js/bootstrap.min.js"></script>
@@ -100,12 +110,11 @@
   <script src="/ngstorage/ngStorage.js"></script>
   <script src="angular-dragdrop/src/angular-dragdrop.min.js"></script>
   <script src="/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
-  <script src="/notify-js/Notify.js"></script>
+  <script src="scripts/notify.js"></script>
   <!-- endinject -->
   <script src="app.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.4.6/angular-locale_es-es.js"></script>
   <!-- inject:js -->
+  <script src="scripts/controllers/NavbarController.js"></script>
   <script src="scripts/controllers/UsersController.js"></script>
   <script src="scripts/services/UserService.js"></script>
   <script src="scripts/controllers/RoomController.js"></script>

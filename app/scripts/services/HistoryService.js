@@ -14,16 +14,14 @@ angular.module('AngularScaffold.Services').factory('HistoryService', ['$http',
     			return $http.get(baseUrl + "v1/getResolved");
   			},
 			modResolved: function(payload){
-				console.log("servise fron: "+payload)
     			return $http.post(baseUrl + "v1/updateResolved",payload);
   			},
-				GetSeenReports: function(){
-	    			return $http.get(baseUrl + "v1/getSeenReports");
-  		},
+			GetSeenReports: function(){
+    			return $http.get(baseUrl + "v1/getSeenReports");
+  			},
 			ReportModifySeen: function(payload){
-				console.log(payload);
-					return $http.post(baseUrl + "v1/reportModifySeen",payload);
-		}
+				return $http.post(baseUrl + "v1/reportModifySeen",payload);
+			}
 		}
 	}
 ]);
