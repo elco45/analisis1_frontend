@@ -5,6 +5,7 @@ angular.module('AngularScaffold.Services').factory('UserService', ['$http',
 		var baseUrl = 'http://localhost:8000/';
 		return {
 			Register: function(payload){
+				console.log(payload)
 	            return $http.post(baseUrl + "v1/register", payload);
         	},
 	        GetUser: function(){

@@ -60,36 +60,19 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }
 
     $scope.crear_usuario = function(){
-      /*$scope.valid1 = document.getElementById("name").required;
-      $scope.valid2 = document.getElementById("idnum").required;
-      $scope.valid3 = document.getElementById("user").required;
-      $scope.valid4 = document.getElementById("password").required;
-      $scope.valid5 = document.getElementById("password_2").required;
-      $scope.valid6 = document.getElementById("cel").required;
-      $scope.valid7 = document.getElementById("tel").required;
-      $scope.valid8 = document.getElementById("dir").required;
-      $scope.valid9 = document.getElementById("nac").required;
-      $scope.valid10 = document.getElementById("photo").required;
-      $scope.valid11 = document.getElementById("hijos").required;
-      console.log($scope.valid1)
-      console.log($scope.valid2)
-      console.log($scope.valid3)
-      console.log($scope.valid4)
-      console.log($scope.valid5)
-      console.log($scope.valid6)
-      console.log($scope.valid7)
-      console.log($scope.valid8)
-      console.log($scope.valid9)
-      console.log($scope.valid10)
-      console.log($scope.valid11)
-      if (document.getElementById("cel").value === "") {
-        $scope.valid6 = true;
-      }
-      if (document.getElementById("tel").value === "") {
-        $scope.valid7 = true;
-      }*/
-      if (/*$scope.valid1 && $scope.valid2 && $scope.valid3 && $scope.valid4 && $scope.valid5 && $scope.valid6 
-        && $scope.valid7 && $scope.valid8 && $scope.valid9 && $scope.valid10 && $scope.valid11*/true) {
+      /*
+     console.log(!!$scope.usuario.name )
+      console.log( !!$scope.usuario.username )
+       console.log( !!$scope.usuario.cel)
+         console.log( !!$scope.usuario.tel )
+         console.log(  !!$scope.usuario.direction)
+        console.log(   !!$scope.usuario.id)
+         console.log(   !!$scope.usuario.civil_status)
+         console.log(    !!$scope.usuario.children )
+         console.log(    !!$scope.usuario.role );
+         */
+      if (!!$scope.usuario.name && !!$scope.usuario.username && !!$scope.usuario.cel && !!$scope.usuario.tel && !!$scope.usuario.direction
+           &&  !!$scope.usuario.id &&  !!$scope.usuario.civil_status) {
         var file = document.querySelector('input[type=file]').files[0];
         var reader  = new FileReader();
         reader.readAsDataURL(file)
@@ -104,8 +87,8 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
             swal("Error", "Error al guardar el usuario", "error");
         },false)
         });
-      }
-      if ($scope.notsaved) {
+      }else{
+      
         swal("","Debe llenar todos los campos correctamente para poder guardar el usuario");
       }
     };
