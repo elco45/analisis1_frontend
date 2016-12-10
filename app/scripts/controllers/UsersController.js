@@ -81,6 +81,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
             $scope.notsaved = false;
             swal("¡Exito!","success");
             $scope.usuario="";
+            $scope.password2="";
             document.getElementById("nac").value = "";
           }).catch(function(err){
             swal("Error", "Error al guardar el usuario", "error");
@@ -103,6 +104,15 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }//fin decode
 
     $scope.modificar_usuario = function(){
+      console.log(!!$scope.usuarioSeleccionado.name )
+      console.log( !!$scope.usuarioSeleccionado.username )
+       console.log( !!$scope.usuarioSeleccionado.cel)
+         console.log( !!$scope.usuarioSeleccionado.tel )
+         console.log(  !!$scope.usuarioSeleccionado.direction)
+        console.log(   !!$scope.usuarioSeleccionado.id)
+         console.log(   !!$scope.usuarioSeleccionado.civil_status)
+         console.log(    !!$scope.usuarioSeleccionado.children )
+         console.log(    !!$scope.usuarioSeleccionado.role );
       var temp = {
         password : $scope.usuarioSeleccionado.password,
         username : $scope.usuarioSeleccionado.username,
@@ -113,12 +123,16 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
         pin: $scope.usuarioSeleccionado.pin,
         photo: $scope.usuarioSeleccionado.photo
       }
-
+     if (!!$scope.usuarioSeleccionado.name && !!$scope.usuarioSeleccionado.username && !!$scope.usuarioSeleccionado.cel && !!$scope.usuarioSeleccionado.tel && !!$scope.usuarioSeleccionado.direction
+           &&  !!$scope.usuarioSeleccionado.id &&  !!$scope.usuarioSeleccionado.civil_status) {
       UserService.UpdateUser(temp).then(function(algo){
         swal("¡Exito!","success");
         $scope.usuarioSeleccionado = " ";
       }).catch(function(err){
       });
+    }else{
+       swal("Error", "El no se puedo modificar el usuario proque no siguio el formato adecuado", "error");
+    }
     }
 
     $scope.isLogged = function(){
