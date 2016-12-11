@@ -29,6 +29,9 @@
           validpwd == true, 'invalidpass':
           validpwd == false}" oncopy="return false" onpaste="return false">
 
+         <label class="" for="Pin">Pin:</label>
+        <input type="tel" id="" name="user_pin" ng-model ="usuario.pin" required maxlength="4" minlength="4" placeholder="El pin debe tener 8 números Ej. 9999"  pattern="\d{4}" >
+
         <label class="mylabel" for="cel">Celular:</label>
         <input type="tel" id="cel" name="user_username" ng-model ="usuario.cel" required maxlength="8" minlength="8" placeholder="El celular debe tener 8 números Ej. 99889988" pattern="\b\d{4}\d{4}\b">
 
@@ -38,11 +41,13 @@
         <label class="mylabel" for="dir">Direccion:</label>
         <input type="text" id="dir" name="user_username" ng-model ="usuario.direction" required minlength="10" required placeholder="La dirección debe tener más de 10 caracteres" pattern=".{9}.+">
 
-        <label class="mylabel" for="idnum"># Identidad:</label>
-        <input type="text" id="idnum" name="user_username" ng-model="usuario.id" maxlength="15" required minlength="15" required placeholder="Formato del número de identidad 0801-1954-56789" pattern="\b[0-1][0-8][0-2][0-8][-]((19|20)\d\d)[-]\d{5}\b">
+        
+       <label class="mylabel" for="idnumm"># Identidad:</label>
+        <input ng-model="usuario.id" type="text" id="idnumm" name="user_username" maxlength="15" required minlength="15" required placeholder="Formato del número de identidad 0000-1234-56789" pattern="\b\d{4}[-]\d{4}[-]\d{5}\b">
+
 
         <label class="mylabel" for="nac">Fecha de Nacimiento:</label>
-        <input type="date" id="nac" name="usuario.birth_date" maxlength="10" required minlength="10" required placeholder="Formato de la fecha dd/mm/aaaa Ej. 22/03/1980" pattern="\b(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/]((19|20)\d\d)\b">
+        <input type="date" id="nac" ng-model="usuario.birth_date" name="usuario.birth_date" maxlength="10" required minlength="10" required placeholder="Formato de la fecha dd/mm/aaaa Ej. 22/03/1980" pattern="\b(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/]((19|20)\d\d)\b">
 
         <label class="mylabel" for="civils">Estado Civil:</label>
         <select id="civils" ng-model="usuario.civil_status">
@@ -82,7 +87,7 @@
       <h1>Modificar Usuarios</h1>
 
       <fieldset>
-        <select ng-model="usuarioSeleccionado" ng-options="usuarios as usuarios.name for usuarios in lisUsuario" >
+        <select ng-model="usuarioSeleccionado" ng-options="usuarios as usuarios.username for usuarios in lisUsuario" >
           <option disabled selected value> -- Seleccione el usuario a modificar -- </option>
         </select>
         <br>
@@ -101,11 +106,15 @@
           validpwd == true, 'invalidpass':
           validpwd == false}">
 
-        <label class="mylabel" for="celm">Celular:</label>
-        <input ng-model="usuarioSeleccionado.cel" type="tel" id="celm" name="user_username" maxlength="8" minlength="8" placeholder="El celular debe tener 8 números Ej. 99982019" pattern="\b\d{4}\d{4}\b">
 
-        <label class="mylabel" for="telm">Telefono Fijo:</label>
-        <input ng-model="usuarioSeleccionado.tel" type="tel" id="telm" name="user_username" maxlength="8" minlength="8" placeholder="El teléfono debe tener 8 números Ej. 22324323" pattern="\b\d{4}\d{4}\b">
+         <label class="" for="Pin">Pin:</label>
+        <input type="tel" id="" name="user_pin" ng-model ="usuarioSeleccionado.pi" required maxlength="4" minlength="4" placeholder="El pin debe tener 8 números Ej. 9999"  pattern="\d{4}" >
+
+        <label class="mylabel" for="cel">Celular:</label>
+        <input type="tel" id="cel" name="user_username" ng-model ="usuarioSeleccionado.cel" required maxlength="8" minlength="8" placeholder="El celular debe tener 8 números Ej. 99889988" pattern="\b\d{4}\d{4}\b">
+
+         <label class="mylabel" for="tel">Telefono Fijo:</label>
+        <input type="tel" id="tel" name="user_username" ng-model ="usuarioSeleccionado.tel" required maxlength="8" minlength="8" placeholder="El teléfono debe tener 8 números Ej. 22332233" pattern="\b\d{4}\d{4}\b">
 
         <label class="mylabel" for="dirm">Direccion:</label>
         <input ng-model="usuarioSeleccionado.direction" type="text" id="dirm" name="user_username" required minlength="10" required placeholder="La dirección debe tener más de 10 caracteres" pattern=".{9}.+">
@@ -114,10 +123,10 @@
         <input ng-model="usuarioSeleccionado.id" type="text" id="idnumm" name="user_username" maxlength="15" required minlength="15" required placeholder="Formato del número de identidad 0000-1234-56789" pattern="\b\d{4}[-]\d{4}[-]\d{5}\b">
 
         <label class="mylabel" for="nacm">Fecha de Nacimiento:</label>
-        <input ng-model="usuarioSeleccionado.birth_date" type="date" id="nacm" name="usuario.birth_date" maxlength="10" required minlength="10" required placeholder="Formato de la fecha dd/mm/aaaa Ej. 22/03/1980" pattern="\b\d{2}[/]\d{2}[/]\d{4}\b">
+        <input ng-model="usuarioSeleccionado.birth_date" type="date" id="nacm" name="usuarioSeleccionado.birth_date" maxlength="10" required minlength="10" required placeholder="Formato de la fecha dd/mm/aaaa Ej. 22/03/1980" pattern="\b\d{2}[/]\d{2}[/]\d{4}\b">
 
         <label class="mylabel" for="civilsm">Estado Civil:</label>
-        <select id="civilsm" ng-model="usuario.civil_status">
+        <select id="civilsm" ng-model="usuarioSeleccionado.civil_status">
           <option selected value value="Soltero" selected>Soltero(a)</option>
           <option value="Casado">Casado(a)</option>
           <option value="Viudo">Viudo(a)</option>
@@ -145,7 +154,7 @@
         
       </fieldset>
       <p></p>
-      <button id="register" class="bform" ng-click="crear_usuario()">Modificar</button>
+      <button id="register" class="bform" ng-click="modificar_usuario()">Modificar</button>
     </form>
 
   </div>
