@@ -843,29 +843,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.cambioEstados = function(estado){
-      console.log(estado)
-      if(estado ===2){
-        console.log("aqui entra porque no hay problemas")
-      
-      }else{
-        console.log( $scope.room.arreglo_problemas)
-        if( $scope.room.arreglo_problemas === null){
-           var params ={
-              id: $scope.seleccionado._id,
-              description:  $scope.seleccionado.problem_description
-            }
-          console.log("suprimera ves")
-          $scope.room.arreglo_problemas=params;
-        }else{
-        var params ={
-          id: $scope.seleccionado._id,
-          description:  $scope.seleccionado.problem_description
-        }
-        $scope.room.arreglo_problemas.push(params)
-        }
-        
-      }
-      
+         
       if($scope.seleccionado === "El cliente no queria." || $scope.seleccionado === "La puerta esta dañada."){
         swal({
               title: "Debe de seleccionar una opción!!",
@@ -913,10 +891,10 @@ angular.module('AngularScaffold.Controllers')
             date_reported: today,
             resolved:resuelto
         	};
-
           HistoryService.CreateRegister(reporte).then(function(response2){
-
+            $scope.ne(estado,reporte)
           });
+                   
 
       	}).then(function(){
           $scope.RoomSelected = true;
@@ -927,7 +905,30 @@ angular.module('AngularScaffold.Controllers')
       	});
       }
     }
+   $scope.ne=function(estado,reporte){
+    $scope.n_problemas=[];
+     HistoryService.get_problemas_para_unahabitacion(reporte).then(function(response5){
+            $scope.n_problemas= response5.data;
+             $scope.n2problem=[];
+            for (var i = 0; i <$scope.n_problemas.length; i++) {
+                $scope.n2problem.push($scope.n_problemas[i]._id);
+             }
+             console.log("el arre es: "+$scope.n2problem)
+               $scope.room.arreglo_problemas=$scope.n2problem;
+                               
+                  if($scope.seleccionado && estado != 2){
+                    $scope.room.observation = $scope.seleccionado;
+                  }
+                  var temporal = {
+                    employee: $sessionStorage.currentUser.username,
+                    room: $scope.room
+                    
+                  }
 
+                  RoomService.UpdateRoom(temporal).then(function(response){
+                  });
+                  });
+   }
     $scope.getEmpRooms = function() {
     	RoomService.GetRooms().then(function(response){
         $scope.currentEmpRooms = [];
