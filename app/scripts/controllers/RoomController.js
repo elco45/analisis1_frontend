@@ -406,7 +406,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.selectRoom = function(dragged,room,prioridad) {
-    	$scope.buttonDisabled = true;
+    	
     	var index = -1;
     	for (i =0; i < $scope.selectedRooms.length; i++) {
       	if(room.room_id == $scope.selectedRooms[i].room_id){
@@ -502,6 +502,7 @@ angular.module('AngularScaffold.Controllers')
             status: 0,
             room_id:i +100,
             idUser: [],
+            arreglo_problemas: [],
             priority: -1,
             observation: "",
             idRoomType: tempRoomType[random]._id,
@@ -517,6 +518,7 @@ angular.module('AngularScaffold.Controllers')
             status: 0,
             room_id:i +200,
             idUser: [],
+            arreglo_problemas: [],
             priority: -1,
             observation: "",
             idRoomType: tempRoomType[random]._id,
@@ -535,6 +537,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.distribute = function(){
+      $scope.buttonDisabled = true;
     	var selectedRooms = $scope.selectedRooms
     	if(selectedRooms.length !== 0){
       	var temp;
@@ -711,10 +714,6 @@ angular.module('AngularScaffold.Controllers')
     	
     }
 
-    $scope.setBtnDisable = function(){
-      $scope.buttonDisabled = false;
-    } 
-
     $scope.getRooms = function(){
       RoomService.GetRooms().then(function(response){
         $scope.floors = []
@@ -831,7 +830,7 @@ angular.module('AngularScaffold.Controllers')
       for(var i=0;i<$scope.currentEmpRooms.length;i++){
         if (id === $scope.currentEmpRooms[i].room_id) {
           $scope.room = $scope.currentEmpRooms[i];
-          console.log($scope.room)
+
           $scope.RoomSelected = true;
           $scope.start = false;
           $scope.showList = false;
@@ -842,6 +841,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.cambioEstados = function(estado){
+         
       if($scope.seleccionado === "El cliente no queria." || $scope.seleccionado === "La puerta esta dañada."){
         swal({
               title: "Debe de seleccionar una opción!!",
@@ -889,10 +889,10 @@ angular.module('AngularScaffold.Controllers')
             date_reported: today,
             resolved:resuelto
         	};
-
           HistoryService.CreateRegister(reporte).then(function(response2){
-
+            $scope.ne(estado,reporte)
           });
+                   
 
       	}).then(function(){
           $scope.RoomSelected = true;
@@ -903,7 +903,29 @@ angular.module('AngularScaffold.Controllers')
       	});
       }
     }
+  $scope.ne=function(estado,reporte){
+    $scope.n_problemas=[];
+    HistoryService.get_problemas_para_unahabitacion(reporte).then(function(response5){
+      $scope.n_problemas= response5.data;
+      $scope.n2problem=[];
+      for (var i = 0; i <$scope.n_problemas.length; i++) {
+        $scope.n2problem.push($scope.n_problemas[i]._id);
+      }
+      console.log("el arre es: "+$scope.n2problem)
+      $scope.room.arreglo_problemas=$scope.n2problem;
+                       
+      if($scope.seleccionado && estado != 2){
+        $scope.room.observation = $scope.seleccionado;
+      }
+      var temporal = {
+        employee: $sessionStorage.currentUser.username,
+        room: $scope.room
+      }
 
+      RoomService.UpdateRoom(temporal).then(function(response){
+      });
+    });
+  }
     $scope.getEmpRooms = function() {
     	RoomService.GetRooms().then(function(response){
         $scope.currentEmpRooms = [];
@@ -1047,17 +1069,11 @@ angular.module('AngularScaffold.Controllers')
       });
     }
 
-    $scope.manita = function( room ){
-      var temp = false;
-      for (var i = 0; i < $scope.problema_resuelto.length; i++) {
-        if ($scope.problema_resuelto[i].room_number === room) {
-          temp = true;
-        }
+    $scope.manita = function( problemsLength ){
+      if(problemsLength == 0){
+        return true;
       }
-      if (temp) {
-        return false;
-      }
-      return true;
+      return false;
     }
 
     $scope.showNotCleanList = function(){
