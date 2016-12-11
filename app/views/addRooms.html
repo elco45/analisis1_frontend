@@ -8,42 +8,6 @@
     <div class="emps col-md-4">
       <!--Listado de empleados -->
       <h1>Empleados</h1>
-<<<<<<< HEAD
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Seleccione Empleados</h4>
-              </div>
-              <div class="modal-body">
-                <select ng-options="employee as employee.username for employee in empleados" ng-model="n">
-                </select>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" ng-click="submitEmployee(n)">Agregar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <ul class="list-group">
-          <li ng-repeat = "n in employeeWithRooms track by $index" class="list-group-item" >
-            {{n.empleado.username}}
-            <a ng-click="close($index)" class="fa fa-remove fa-times fa-lg pull-right" style="color: gray;"></a>
-            <span data-drag="true"
-                  data-jqyoui-options="{revert: 'invalid'}"
-                  ng-model="firstfloor" jqyoui-draggable="{index: {{$index}}, animate:true, onStart:'startCallback(n)', onStop:'stopCallback(n)'}" class="glyphicon glyphicon-hand-up badge">
-            </span>
-          </li>
-        </ul>
-
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal"></button>
-    </div>
-=======
       <ul class="list-group">
         <li ng-repeat = "n in employeeWithRooms track by $index" class="list-group-item" >
           {{n.empleado.username}}
@@ -54,7 +18,6 @@
           </span>
         </li>
       </ul>
->>>>>>> 7cb5da99174828c592d418650786912675f3b91f
 
       <!-- Button trigger modal -->
       <button type="button" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal" ></button>
@@ -191,15 +154,17 @@
     </div>
   </div>
 
-<!-- Modal Info Habitación -->
-<div  id="infoMsg" class="modal fade" role="dialog"  ng-controller="HistoryController">
-  <div class="modal-dialog">
+  <!-- Modal Info Habitación -->
+  <div  id="infoMsg" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h2 class="modal-title"><center>Habitación {{infoRC.room_id}}</center></h2>
         </div>
-      <div class="modal-body" ng-model="infoRC">
+
+        <div class="modal-body" ng-model="infoRC">
         <div class="row">
            <div class="col-md-6 room-image">
             <img style="height:100%; width:100%;" data-ng-src="img2.JPEG"/>
@@ -247,3 +212,6 @@
 
 <div id="notifications" >
 </div>
+
+
+
