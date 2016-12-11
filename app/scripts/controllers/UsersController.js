@@ -7,7 +7,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     $scope.password = "";
   	$scope.usuario = { employee_type:"0", role:"0"};
     $scope.lisUsuario = [];
-    $scope.usuarioSeleccionado ={ employee_type:"0", role:"0", status:"0" };
+    $scope.usuarioSeleccionado ={};
     $sessionStorage.logged = false;
     $scope.employees = [];
     $scope.SelectedEmployee = {};
@@ -19,6 +19,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     $scope.getUser = function(){
       UserService.GetUser().then(function(response){
       $scope.lisUsuario = response.data
+      console.log($scope.lisUsuario);
       });
     }
 
@@ -71,7 +72,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
          console.log(    !!$scope.usuario.role );
          */
       if (!!$scope.usuario.name && !!$scope.usuario.username && !!$scope.usuario.cel && !!$scope.usuario.tel && !!$scope.usuario.direction
-           &&  !!$scope.usuario.id &&  !!$scope.usuario.civil_status) {
+           &&  !!$scope.usuario.id &&  !!$scope.usuario.civil_status && !!$scope.usuario.pin) {
         var file = document.querySelector('input[type=file]').files[0];
         var reader  = new FileReader();
         reader.readAsDataURL(file)
@@ -104,15 +105,15 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }//fin decode
 
     $scope.modificar_usuario = function(){
-      console.log(!!$scope.usuarioSeleccionado.name )
+     /* console.log(!!$scope.usuarioSeleccionado.name )
       console.log( !!$scope.usuarioSeleccionado.username )
-       console.log( !!$scope.usuarioSeleccionado.cel)
-         console.log( !!$scope.usuarioSeleccionado.tel )
-         console.log(  !!$scope.usuarioSeleccionado.direction)
-        console.log(   !!$scope.usuarioSeleccionado.id)
-         console.log(   !!$scope.usuarioSeleccionado.civil_status)
-         console.log(    !!$scope.usuarioSeleccionado.children )
-         console.log(    !!$scope.usuarioSeleccionado.role );
+      console.log( !!$scope.usuarioSeleccionado.cel)
+      console.log( !!$scope.usuarioSeleccionado.tel )
+      console.log(  !!$scope.usuarioSeleccionado.direction)
+      console.log(   !!$scope.usuarioSeleccionado.id)
+      console.log(   !!$scope.usuarioSeleccionado.civil_status)
+      console.log(    !!$scope.usuarioSeleccionado.children )
+      console.log(    !!$scope.usuarioSeleccionado.role );*/
       var temp = {
         password : $scope.usuarioSeleccionado.password,
         username : $scope.usuarioSeleccionado.username,
@@ -123,10 +124,11 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
         pin: $scope.usuarioSeleccionado.pin,
         photo: $scope.usuarioSeleccionado.photo
       }
+   console.log(temp);
      if (!!$scope.usuarioSeleccionado.name && !!$scope.usuarioSeleccionado.username && !!$scope.usuarioSeleccionado.cel 
           && !!$scope.usuarioSeleccionado.tel && !!$scope.usuarioSeleccionado.direction &&  !!$scope.usuarioSeleccionado.id
-          &&  !!$scope.usuarioSeleccionado.civil_status) {
-      UserService.UpdateUser(temp).then(function(algo){
+          &&  !!$scope.usuarioSeleccionado.civil_status && !!$scope.usuarioSeleccionado.password) {
+          UserService.UpdateUser($scope.usuarioSeleccionado).then(function(algo){
         swal("¡Exito!","success");
         $scope.usuarioSeleccionado = " ";
       }).catch(function(err){
