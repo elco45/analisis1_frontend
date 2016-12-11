@@ -65,7 +65,7 @@
         <tr>
           <div class="col-md-12 outer" ng-show="showList">
             
-            <select id="sel" class="input-block-level" ng-model="seleccionado" ng-options="obj._id as obj.problem_description for obj in no_limpio">    
+            <select id="sel" class="input-block-level" ng-model="seleccionado" ng-options="obj as obj.problem_description for obj in no_limpio">    
                 <option value="" disabled selected>Seleccione uno..</option>
             </select>
 
@@ -76,7 +76,7 @@
         </tr>
         <tr>
           <div class="col-md-12 outer" ng-show="showListProblems">
-            <select id="sel" class="input-block-level" ng-model="seleccionado" ng-options="obj._id as obj.problem_description for obj in limpio_problema">    
+            <select id="sel" class="input-block-level" ng-model="seleccionado" ng-options="obj  as obj.problem_description for obj in limpio_problema">    
                 <option value="" disabled selected>Seleccione uno..</option>
             </select>
           </div>
