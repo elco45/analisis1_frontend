@@ -1,90 +1,82 @@
 <div class="container" ng-controller="RoomController" ng-init="getEmpRooms()">
 
 <!-- Grid de habitaciones -->
-  <div class="jumbotron col-md-12">
+  <div class="habs emp">
     <h1 ng-init="blinking()">Habitaciones</h1>
-    <table class=col-md-12 style="margin-top: 25px;">
-      <tr>
-        <td ng-repeat="r in currentEmpRooms">
-          <center>
-            <button  ng-click=" changeRoomEmp(r.room_id)" ng-class="{'room-selected2':
-              r.status == 1, 'room-clean2':
-              r.status == 2, 'room-clean-w-prob2':
-              r.status ==3,'room-not-clean2':
-              r.status == 4,'room-priority2 blink':
-              r.status == 5}">
-              {{r.room_id}}
-            </button>
-          </center>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- Simbología -->
-  <div class="simb">
-    <span class="label text label-primary">Por Limpiar</span>
-    <span class="label text label-success">Limpia</span>
-    <span class="label text label-priority">Prioridad</span>
-    <span class="label text label-warning">Limpia con Problema</span>
-    <span class="label text label-danger">No Limpia</span>
+    <div class="grids_emp">
+      <span>
+        <div ng-repeat="r in currentEmpRooms" class="btn btn-default main-grid" ng-click="changeRoomEmp(r.room_id)" ng-class="{'room-selected2':
+                r.status == 1, 'room-clean2':
+                r.status == 2, 'room-clean-w-prob2':
+                r.status ==3,'room-not-clean2':
+                r.status == 4,'room-priority2 blink':
+                r.status == 5}">
+          <span class="text-emp">{{r.room_id}}</span>
+        </div>
+      </span>
+    </div>
+    <!-- Simbología -->
+    <div class="simb emp">
+      <span class="label label-default">Sin Seleccionar</span>
+      <span class="label label-primary">Seleccionada</span>
+      <span class="label label-success">Limpia</span>
+      <span class="label label-priority">Prioridad</span>
+      <span class="label label-warning">Limpia con Problema</span>
+      <span class="label label-danger">No Limpia</span>
+    </div>
   </div>
 
   <div ng-show="RoomSelected">
-    <div class="col-md-12">
-      <br><br><br>
+    <div class="habs emp row">
       <h1>Habitación {{room.room_id}}</h1>
-      <table class="col-md-offset-3 col-md-6 col-md-offset-3" style="margin-top: 25px;">
-        <!-- ngrepeat para las habitaciones que le toca limpiar a la empleada -->
-        <tr ng-show="!start" ng-hide = "showList">
-          <td>
-            <div class="roombutton2">
-              <button ng-click="start = true" class="mybtn2">Empezar a limpiar</button>
-            </div>
-          </td>
-          <td>
-            <div class="roombutton2">
-              <button ng-click="showNotCleanList()"  class="mybtn2">No se pudo limpiar</button>
-            </div>
-          </td>
-        </tr>
+      <!-- Botones comienzo -->
+      <div class="col-md-8 col-md-offset-2" ng-show="!start" ng-hide = "showList">
+        <div class="roombutton2">
+          <button ng-click="start = true" class="mybtn2">Empezar a limpiar</button>
+        </div>
+        <div class="roombutton2">
+          <button ng-click="showNotCleanList()"  class="mybtn2">No se pudo limpiar</button>
+        </div>
+      </div>
 
-        <tr ng-show="start">
-          <td ng-hide="showListProblems">
-            <div class="roombutton2">
-              <button ng-click="cambioEstados(2)"  class="mybtn2">Terminar de limpiar</button>
-            </div>
-          </td>
-          <td ng-hide="showListProblems">
-            <div class="roombutton2">
-              <button ng-click="showProblemList()" class="danger mybtn2">Terminar de limpiar y reportar problema</button>
-            </div>
-          </td>
-        </tr>
+      <!-- Segundo set de botones luego de elegir empezar a limpiar-->
+      <div class="col-md-10 col-md-offset-1" ng-show="start" >
+        <div class="roombutton2" ng-hide="showListProblems">
+          <button ng-click="cambioEstados(2)"  class="mybtn2" data-dismiss="modal">Terminar de limpiar</button>
+        </div>
+        <div class="roombutton2" ng-hide="showListProblems">
+          <button ng-click="showProblemList()" class="danger mybtn2">Terminar de limpiar y reportar problema</button>
+        </div>
+      </div>
 
-        <tr>
-          <div class="col-md-12 outer" ng-show="showList">
-            
-            <select id="sel" class="input-block-level" ng-model="seleccionado" ng-options="obj._id as obj.problem_description for obj in no_limpio">    
-                <option value="" disabled selected>Seleccione uno..</option>
-            </select>
+      <!-- Botones de finalización -->
+      <div class="col-md-8 col-md-offset-2">
+        <div ng-show="showList">
+          
+          <select id="sel" class="input-block-level" ng-model="seleccionado" ng-options="obj._id as obj.problem_description for obj in no_limpio">    
+              <option value="" disabled selected>Seleccione un Problema</option>
+          </select>
 
-            <div class="col-md-12 contain2">
-              <button ng-click="cambioEstados(4)" ng-show="showList " class="mybtn2 col-md-2"> Finalizar </button>
-            </div>
+          <div class="contain2">
+            <button ng-click="cambioEstados(4)" ng-show="showList " class="mybtn2" data-dismiss="modal"> Finalizar </button>
           </div>
-        </tr>
-        <tr>
-          <div class="col-md-12 outer" ng-show="showListProblems">
-            <select id="sel" class="input-block-level" ng-model="seleccionado" ng-options="obj._id as obj.problem_description for obj in limpio_problema">    
-                <option value="" disabled selected>Seleccione uno..</option>
-            </select>
+        </div>
+
+        <div ng-show="showListProblems">
+          <select id="sel" class="input-block-level" ng-model="seleccionado" ng-options="obj._id as obj.problem_description for obj in limpio_problema">    
+              <option value="" disabled selected>Seleccione un Problema</option>
+          </select>
+        
+          <div class="contain2">
+            <button ng-click="cambioEstados(3)" ng-show="showListProblems" class="mybtn2" data-dismiss="modal"> Finalizar </button>
           </div>
-          <div class="col-md-12 contain2">
-            <button ng-click="cambioEstados(3)" ng-show="showListProblems" class="mybtn2 col-md-3"> Finalizar </button>
-          </div>
-        </tr>
-      </table>
+        </div>
+      </div>
     </div>
   </div>
+
+  
+
+  
+
 </div>

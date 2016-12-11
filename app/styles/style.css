@@ -55,6 +55,10 @@ h1{
 	padding-left: 25%;
 	padding-top: 5%;
 }
+.pin-login{
+  padding-left: 0%;
+  padding-top: 5%;
+}
 
 /*add Rooms*/
 .habs{
@@ -156,6 +160,38 @@ h1{
 }
 
 /*Employees*/
+.habs.emp{
+  background: #f4f7f8;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.grids_emp {
+  /*padding: 10px;*/
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px;
+  text-align: center;
+}
+.main-grid {
+  display: inline-block;
+  padding: 50px;
+  width: 80px!important;
+  height: 80px!important;
+  border-radius: 8px!important;
+  line-height: 73px;
+  text-align: center;
+}
+.text-emp{
+  font-size: 28px!important;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+.simb.emp{
+  font-size: 18px !important;
+  font-weight: 310 !important;
+}
 .glyphicon.glyphicon-move.list-group-item{
   width: 20px;
 }
@@ -238,7 +274,6 @@ h1{
 }
 
 /**** Select Room button Employee ****/
-
 .mybtn {
     background-color: gray;
     color: white;
@@ -263,24 +298,24 @@ h1{
 }
 
 /***** Room start/end button *****/
-
 .mybtn2 {
-    background-color: gray;
-    color: white;
-    padding: 22px;
-    margin-left: 40px;
-    font-size: 24px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
+  background-color: gray;
+  color: white;
+  padding: 20px;
+  margin-left: 40px;
+  font-size: 22px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
 
 .roombutton2 {
-    padding: 5px;
-    position: relative;
-    display: inline-block;
+  padding: 5px;
+  position: relative;
+  display: inline-block;
+  margin-left: 30px!important;
 }
 
 .roombutton2:hover .mybtn2 {
@@ -350,10 +385,10 @@ textarea.focus {
 }
 
 .contain2 {
-  clear: both;
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-left: 33%;
+  margin-top: 5px;
+  margin-left: 30%;
+  margin-right: 30%;
+  padding-right: 90px!important;
 }
 
 label.lb {
@@ -490,20 +525,15 @@ input.radio:checked ~ label {
     height: 75px;
 }
 
-.text {
-  font-size: 16px !important;
-  font-weight: 310 !important;
-}
-
 .startform {
   margin: 28% 5% 28% 5%;
 }
 
 .photo-button {
   background: white;
-  border: 2px solid;
-  border-radius: 50%;
-  border-color: lightgray;
+  border: 2px solid!important;
+  border-radius: 50%!important;
+  border-color: lightgray!important;
   margin: 5px !important;
 }
 
