@@ -2,6 +2,7 @@
   <div id = "time"> </div>
   <div class="row">
     <!-- Seleccion de Empleadas -->
+    <h2 ng-click="createAllRooms()">Meow!</h2>
     <div class="emps col-md-4">
       <h1>Empleados</h1>
         <!-- Modal -->
@@ -98,7 +99,7 @@
             {{f.room_id}}
 
             <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span><br>
-            <span class = "glyphicon glyphicon-thumbs-down" ng-hide = "manita(f.room_id)"></span>
+            <span class = "glyphicon glyphicon-thumbs-down" ng-hide = "manita(f.arreglo_problemas.length)"></span>
           </div>
           <br>
           <br>

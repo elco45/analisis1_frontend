@@ -51,6 +51,9 @@
               <th>
                 Fecha de cambio de estado
               </th>
+              <th>
+                Resuelto
+              </th>
             </tr>
             <tr ng-repeat="rep in reportsList | filter:searchInputVal | orderBy:sortOrderVal | filter:filterByUsername | limitTo:recordLimit | filter:filterByState">
               <td>
@@ -76,6 +79,9 @@
               </td>
               <td>
                 {{rep.date_reported | date: 'EEEE dd/MM/yyyy'}}
+              </td>
+              <td>
+                {{rep.resolved == true ? 'Resuelto' : 'Falta Resolver'}}
               </td>
             </tr>
           </table>
