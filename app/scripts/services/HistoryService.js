@@ -21,7 +21,10 @@ angular.module('AngularScaffold.Services').factory('HistoryService', ['$http',
   			},
 			ReportModifySeen: function(payload){
 				return $http.post(baseUrl + "v1/reportModifySeen",payload);
-			}
+			},
+			get_problemas_para_unahabitacion: function(payload){
+    			return $http.post(baseUrl + "v1/getproble_para_habitacion",payload);
+  			}
 		}
 	}
 ]);
