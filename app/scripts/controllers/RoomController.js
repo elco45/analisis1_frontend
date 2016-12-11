@@ -979,6 +979,7 @@ angular.module('AngularScaffold.Controllers')
         RoomTypeService.GetRoomType(temp).then(function(response){
           $scope.typeRoom = response.data.description;
         })
+        $scope.getReports($scope.infoRC.arreglo_problemas)
         $('#infoMsg').modal('show');
       }
     };
@@ -1162,10 +1163,32 @@ angular.module('AngularScaffold.Controllers')
               }
             });
       });
+  }//plantilla final
+  
+  $scope.getReports = function(data){
+    $scope.roomProblems = [];
+    console.log(data)
+    for (var i = 0; i < data.length; i++) {
+      var t={
+        _id: data[i]
+      }
+      HistoryService.GetReport(t).then(function(response){
+        var t2 = {
+          id: response.data.problem_id
+        }
+        ProblemService.GetProblema_por_habitacion(t2).then(function(response2){
+          var ans = {
+            _id: response.data._id,
+            problem: response2.data.problem_description,
+            date_reported: response.data.date_reported,
+            employee_username: response.data.employee_username
+          }
+          $scope.roomProblems.push(response.data) 
+        })
+      })
+    }
   }
   
-
-  //plantilla final
 
 }]);
 

@@ -72,6 +72,7 @@ angular.module('AngularScaffold.Controllers')
             $scope.getResolved ();
           })
         });
+        $('#infoMsg').modal('toggle');
       }
 
       $scope.filter = function(){};
@@ -169,5 +170,6 @@ angular.module('AngularScaffold.Controllers')
           console.log($scope.problem_list)
         });
       }
+
 
 }]);

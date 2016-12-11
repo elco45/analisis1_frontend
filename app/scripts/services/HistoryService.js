@@ -24,6 +24,9 @@ angular.module('AngularScaffold.Services').factory('HistoryService', ['$http',
 			},
 			get_problemas_para_unahabitacion: function(payload){
     			return $http.post(baseUrl + "v1/getproble_para_habitacion",payload);
+  			},
+  			GetReport: function(payload){
+  				return $http.post(baseUrl + "v1/getReport",payload);
   			}
 		}
 	}
