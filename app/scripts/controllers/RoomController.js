@@ -502,6 +502,7 @@ angular.module('AngularScaffold.Controllers')
             status: 0,
             room_id:i +100,
             idUser: [],
+            arreglo_problemas: [],
             priority: -1,
             observation: "",
             idRoomType: tempRoomType[random]._id,
@@ -831,7 +832,7 @@ angular.module('AngularScaffold.Controllers')
       for(var i=0;i<$scope.currentEmpRooms.length;i++){
         if (id === $scope.currentEmpRooms[i].room_id) {
           $scope.room = $scope.currentEmpRooms[i];
-          console.log($scope.room)
+
           $scope.RoomSelected = true;
           $scope.start = false;
           $scope.showList = false;
@@ -842,6 +843,29 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.cambioEstados = function(estado){
+      console.log(estado)
+      if(estado ===2){
+        console.log("aqui entra porque no hay problemas")
+      
+      }else{
+        console.log( $scope.room.arreglo_problemas)
+        if( $scope.room.arreglo_problemas === null){
+           var params ={
+              id: $scope.seleccionado._id,
+              description:  $scope.seleccionado.problem_description
+            }
+          console.log("suprimera ves")
+          $scope.room.arreglo_problemas=params;
+        }else{
+        var params ={
+          id: $scope.seleccionado._id,
+          description:  $scope.seleccionado.problem_description
+        }
+        $scope.room.arreglo_problemas.push(params)
+        }
+        
+      }
+      
       if($scope.seleccionado === "El cliente no queria." || $scope.seleccionado === "La puerta esta dañada."){
         swal({
               title: "Debe de seleccionar una opción!!",
