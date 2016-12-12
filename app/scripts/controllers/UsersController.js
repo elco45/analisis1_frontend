@@ -270,6 +270,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }
 
     $scope.select_current_emp = function(employee){
+      
       $scope.SelectedEmployee = employee;
       if(employee.pin === null){
         BootstrapDialog.confirm({
