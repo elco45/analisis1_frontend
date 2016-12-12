@@ -486,9 +486,11 @@ angular.module('AngularScaffold.Controllers')
     	}
 
     	RoomService.UpdateRoom(room_data).then(function(response){
-      	if ($scope.employeeWithRooms.length>0) {
-          $scope.distribute();
-        }
+	      	if ($scope.employeeWithRooms.length>0) {
+	          $scope.distribute();
+	        }else{
+	        	$scope.buttonDisabled = false;
+	        }
     	})
 
     };
@@ -537,7 +539,6 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.distribute = function(){
-      $scope.buttonDisabled = true;
     	var selectedRooms = $scope.selectedRooms
     	if(selectedRooms.length !== 0){
       	var temp;
@@ -911,7 +912,7 @@ angular.module('AngularScaffold.Controllers')
       for (var i = 0; i <$scope.n_problemas.length; i++) {
         $scope.n2problem.push($scope.n_problemas[i]._id);
       }
-      console.log("el arre es: "+$scope.n2problem)
+
       $scope.room.arreglo_problemas=$scope.n2problem;
                        
       if($scope.seleccionado && estado != 2){
@@ -979,7 +980,9 @@ angular.module('AngularScaffold.Controllers')
         RoomTypeService.GetRoomType(temp).then(function(response){
           $scope.typeRoom = response.data.description;
         })
-        $scope.getReports($scope.infoRC.arreglo_problemas)
+
+        $scope.getReportsR($scope.infoRC.arreglo_problemas)
+
         $('#infoMsg').modal('show');
       }
     };
@@ -1116,7 +1119,6 @@ angular.module('AngularScaffold.Controllers')
   //plantilla inicio
  /* $scope.get_plantillas = function(){
     RoomService.GetPlantillas().then(function(function){
-
     })
   }*/
   $scope.cargar_plantilla = function(plantilla){ 
@@ -1165,9 +1167,10 @@ angular.module('AngularScaffold.Controllers')
       });
   }//plantilla final
   
-  $scope.getReports = function(data){
+
+  $scope.getReportsR = function(data){
     $scope.roomProblems = [];
-    console.log(data)
+
     for (var i = 0; i < data.length; i++) {
       var t={
         _id: data[i]
@@ -1181,9 +1184,12 @@ angular.module('AngularScaffold.Controllers')
             _id: response.data._id,
             problem: response2.data.problem_description,
             date_reported: response.data.date_reported,
-            employee_username: response.data.employee_username
+
+            employee_username: response.data.employee_username,
+            room_number: response.data.room_number
           }
-          $scope.roomProblems.push(response.data) 
+          $scope.roomProblems.push(ans) 
+
         })
       })
     }

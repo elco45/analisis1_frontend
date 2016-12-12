@@ -1,6 +1,6 @@
 angular.module('AngularScaffold.Controllers')
-  .controller('HistoryController', ['HistoryService' ,'ProblemService', '$scope', '$state', '$rootScope', '$sessionStorage',
-    function (HistoryService,ProblemService, $scope, $state, $rootScope, $sessionStorage) {
+  .controller('HistoryController', ['HistoryService' ,'ProblemService', 'RoomService','$scope', '$state', '$rootScope', '$sessionStorage',
+    function (HistoryService,ProblemService,RoomService, $scope, $state, $rootScope, $sessionStorage) {
       $scope.reportsList = [];
       $scope.lista_problemas = [];
       $scope.userList = [];
@@ -42,34 +42,37 @@ angular.module('AngularScaffold.Controllers')
       };
 
       $scope.getResolved = function(){
-          HistoryService.getResolved().then(function(response){
-            $scope.lista_problemas  = response.data
+        HistoryService.getResolved().then(function(response){
+          $scope.lista_problemas  = response.data
 
-            ProblemService.GetProblema().then(function(response2){
-              for (var j = 0; j < $scope.lista_problemas.length; j++) {
-                for (var k = 0; k < response2.data.length; k++) {
-                  if ($scope.lista_problemas[j].problem_id === response2.data[k]._id) {
-                    $scope.lista_problemas[j].problem_id = response2.data[k].problem_description;
-                  };
+          ProblemService.GetProblema().then(function(response2){
+            for (var j = 0; j < $scope.lista_problemas.length; j++) {
+              for (var k = 0; k < response2.data.length; k++) {
+                if ($scope.lista_problemas[j].problem_id === response2.data[k]._id) {
+                  $scope.lista_problemas[j].problem_id = response2.data[k].problem_description;
                 };
               };
-            });
-
+            };
           });
+
+        });
       }
       $scope.cambiar_estado_problema = function(algo){
         var params={
-          employee_username:algo.employee_username,
-          room_number:  algo.room_number,
-          problem_id: algo.problem_id,
-          room_state: algo.room_state,
-          date_reported: algo.date_reported,
-          resolved: true
+          _id: algo._id,
+          employee_username:algo.employee_username
         }
         HistoryService.modResolved(params).then(function(response2){
-          $scope.lista_problemas = [];
-          $scope.getResolved ();
+          var params2 ={
+            room_id: algo.room_number,
+            report_id: algo._id
+          }
+          RoomService.UpdateRoomProblems(params2).then(function(response3){
+            $scope.lista_problemas = [];
+            $scope.getResolved ();
+          })
         });
+        $('#infoMsg').modal('toggle');
       }
 
       $scope.filter = function(){};
@@ -167,5 +170,10 @@ angular.module('AngularScaffold.Controllers')
           console.log($scope.problem_list)
         });
       }
+
+    $scope.loadMore = function() {
+      var increamented = $scope.recordLimit + 8;
+      $scope.recordLimit = increamented > $scope.records.length ? $scope.records.length : increamented;
+    };
 
 }]);

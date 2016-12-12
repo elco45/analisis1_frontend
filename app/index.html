@@ -46,14 +46,14 @@
         <a href="">Hola, {{$sessionStorage.currentUser.username}}!</a>
       </li>
       <div class="pull-right">
-        <li ng-cloak ng-show="show_for_admin()" ><a href="/#/home"> Manejar Habitaciones</a></li>
+        <li ng-cloak ng-show="show_for_admin()" ><a href="/#/home">Repartición de Habitaciones</a></li>
         <li ng-if="show_for_admin()" ng-cloak><a href="/#/manage">Manejar Usuarios</a></li>
         <li ng-if="show_for_admin()" ng-cloak><a href="/#/reports">Historial</a></li>
         <li ng-if="show_for_admin()" ng-cloak><a href="/#/problemas">Manejar Problemas</a></li>
         <li ng-if="show_for_admin()" ng-cloak  ng-click ="show_options()">
-          <a class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a>
+          <a href="" class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a>
         </li>
-        <li ng-if="show_logout()" ng-cloak ng-click="logout()"><a href="">Logout</a></li>
+        <li ng-if="show_logout()" ng-cloak ng-click="logout()"><a href="">Cerrar Sesión</a></li>
         <li class="icon">
           <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
         </li>
@@ -66,7 +66,7 @@
   <!-- inicio modal opciones-->
     <div class="" ng-controller = "RoomController">
       <div class="modal fade" id="settings_modal" tabindex="1" role="dialog" aria-labelledby="settings_modal_label"  >
-        <div class="modal-dialog sizing" role="document">
+        <div class="modal-dialog sizing settings" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -111,6 +111,8 @@
   <script src="angular-dragdrop/src/angular-dragdrop.min.js"></script>
   <script src="/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
   <script src="scripts/notify.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.4.6/angular-locale_es-es.js"></script>
+  
   <!-- endinject -->
   <script src="app.js"></script>
   <!-- inject:js -->

@@ -1,86 +1,49 @@
-<div class="container" ng-controller="RoomController"  ng-init= "init()"> <!--ng-init= " createAllRooms() "--!>
+<div class="container" ng-controller="RoomController"  ng-init="init()">
+
+  <h1>Repartición de Habitaciones</h1>
   <div id = "time"> </div>
   <div class="row">
     <!-- Seleccion de Empleadas -->
     <div class="emps col-md-4">
+      <!--Listado de empleados -->
       <h1>Empleados</h1>
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Seleccione Empleados</h4>
-              </div>
-              <div class="modal-body">
-                <select ng-options="employee as employee.username for employee in empleados" ng-model="n">
-                </select>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" ng-click="submitEmployee(n)">Agregar</button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <ul class="list-group">
+        <li ng-repeat = "n in employeeWithRooms track by $index" class="list-group-item" >
+          {{n.empleado.username}}
+          <a ng-click="close($index)" class="fa fa-remove fa-times fa-lg pull-right" style="color: gray;"></a>
+          <span data-drag="true"
+                data-jqyoui-options="{revert: 'invalid'}"
+                ng-model="firstfloor" jqyoui-draggable="{index: {{$index}}, animate:true, onStart:'startCallback(n)', onStop:'stopCallback(n)'}" class="glyphicon glyphicon-hand-up badge">
+          </span>
+        </li>
+      </ul>
 
-        <ul class="list-group">
-          <li ng-repeat = "n in employeeWithRooms track by $index" class="list-group-item" >
-            {{n.empleado.username}}
-            <a ng-click="close($index)" class="fa fa-remove fa-times fa-lg pull-right" style="color: gray;"></a>
-            <span data-drag="true"
-                  data-jqyoui-options="{revert: 'invalid'}"
-                  ng-model="firstfloor" jqyoui-draggable="{index: {{$index}}, animate:true, onStart:'startCallback(n)', onStop:'stopCallback(n)'}" class="glyphicon glyphicon-hand-up badge">
-            </span>
-          </li>
-        </ul>
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal" ></button>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal" ></button>
-    </div>
-
-
-     <!-- inicio modal plantillas-->
-      <div class="modal fade" id="plantilla_modal" tabindex="2" role="dialog" aria-labelledby="plantilla_modal_label"  >
-        <div class="modal-dialog sizing" role="document">
+      <!-- Modal de Selección de empleados-->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  >
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="plantilla_modal_label">Opciones</h4>
+              <h3 class="modal-title" id="myModalLabel">Seleccione Empleados</h3>
             </div>
             <div class="modal-body">
-              <div ng-init = "get_plantillas()">
-                <table class="row">
-                    <tr ng-repeat = "n in plantillas track by $index">
-                      <td>{{n.plantilla_nombre}}</td>
-                      <td>{{n.plantilla_descripcion}}</td>
-                      <td><button ng-click = "cargar_plantilla(n)">cargar plantilla</button></td>
-                      
-                    </tr>
-                </table>
-
-              </div>
-              <br></br>
-              <span>GUARDAR PLANTILLA ACTUAL</span>
-              <div>
-                <span>Nombre</span>
-                <input type = "text" id = "plantilla_name_input"></input>
-                <span>Descripcion</span>
-                <input type = "text" id = "plantilla_descripcion_input" ></input>
-                <button type = "button" class = "btn btn-primary" ng-click ="create_plantillas()">guardar</button>
-
-              </div>
+              <h4>Eliga los empleados a trabajar</h4>
+              <select ng-options="employee as employee.username for employee in empleados" ng-model="n">
+                <option disabled selected value> -- Seleccione un empleado -- </option>
+              </select>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-              <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "save_settings()">Guardar Opciones</button> -->
+              <button type="button" class="btn btn-primary" ng-click="submitEmployee(n)">Agregar</button>
             </div>
           </div>
         </div>
       </div>
-     <!-- fin modal plantillas-->
 
-     
+    </div>
 
    <!-- Grid de habitaciones -->
     <div class="habs col-md-8">
@@ -98,7 +61,7 @@
             {{f.room_id}}
 
             <span class = "glyphicon glyphicon-user" ng-hide = "f.idUser.length == 0"></span><br>
-            <span class = "glyphicon glyphicon-thumbs-down" ng-hide = "manita(f.room_id)"></span>
+            <span class = "glyphicon glyphicon-thumbs-down" ng-hide = "manita(f.arreglo_problemas.length)"></span>
           </div>
           <br>
           <br>
@@ -124,81 +87,131 @@
         <span class="label label-danger">No Limpia</span>
       </div>
     </div>
- </div>
+  </div>
 
- <br>
- <button class = "btn btn-primary" data-toggle="modal" data-target="#plantilla_modal">Mostrar Plantillas</button>
- <br>
+  <button class = "btn btn-primary" data-toggle="modal" data-target="#plantilla_modal">Mostrar Plantillas</button>
 
-<!-- Reparticion de Habitaciones -->
-<div class="habs">
-  <h1>Repartición de Habitaciones</h1>
-  <div class="row">
-    <div class="repart col-md-3" ng-repeat = "e in employeeWithRooms track by $index"
-         ng-model="employeeWithRooms.habitacion" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true,onOver:'room_hover(e)',
-         onOut:'room_hover_out(e)',onDrop:'stopCallback_distribution(e)'}">
-      <h4 class="repart-name" >
-        {{e.empleado.username}}
-      </h4>
-      <ul class="list-group" >
-        <li class="list-group-item" data-drag="true"
-            data-jqyoui-options="{revert: 'invalid'}"
-            data-id="{{h.room_id}}"
-            ng-model="employeeWithRooms.habitacion" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback_distribution(h,e)',
-             onStop:'startCallback_distribution(h,e)',onDrop:'dropCallback_distribution(e)'}"
-            ng-repeat = "h in e.habitacion track by $index"> {{h.room_id}} </li>
-      </ul>
+  <!-- inicio modal plantillas-->
+  <div class="modal fade" id="plantilla_modal" tabindex="2" role="dialog" aria-labelledby="plantilla_modal_label" >
+    <div class="modal-dialog sizing plantilla" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title" id="plantilla_modal_label">Opciones de Plantillas</h3>
+        </div>
+
+        <div class="modal-body">
+          <!--Cargar plantillas-->
+          <div ng-init = "get_plantillas()">
+            <h4>Cargar Plantilla </h4>
+            <select ng-model="n" ng-options="n as n.plantilla_nombre for n in plantillas">
+              <option disabled selected value> -- Seleccione una plantilla -- </option>
+            </select>
+            <button type="button" class="btn btn-primary" ng-click = "cargar_plantilla(n)">Cargar</button>
+          </div>
+          <!--Guardar plantillas -->
+          <div>
+            <h4>Guardar Plantilla Actual</h4>
+            <span>Nombre</span>
+            <input type = "text" id = "plantilla_name_input"></input>
+            <span>Descripción</span>
+            <input type = "text" id = "plantilla_descripcion_input" ></input>
+            <button type = "button" class = "btn btn-primary" ng-click ="create_plantillas()">Guardar</button>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "save_settings()">Guardar Opciones</button> -->
+        </div>
+      </div>
+    </div>
+  </div>    
+  <!-- fin modal plantillas-->
+
+
+  <!-- Reparticion de Habitaciones -->
+  <div class="habs">
+    <h1>Repartición de Habitaciones</h1>
+    <div class="row">
+      <div class="repart col-md-3" ng-repeat = "e in employeeWithRooms track by $index"
+           ng-model="employeeWithRooms.habitacion" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true,onOver:'room_hover(e)',
+           onOut:'room_hover_out(e)',onDrop:'stopCallback_distribution(e)'}">
+        <h4 class="repart-name" >
+          {{e.empleado.username}}
+        </h4>
+        <ul class="list-group" >
+          <li class="list-group-item" data-drag="true"
+              data-jqyoui-options="{revert: 'invalid'}"
+              data-id="{{h.room_id}}"
+              ng-model="employeeWithRooms.habitacion" jqyoui-draggable="{index: {{$index}},animate:true,onStart:'startCallback_distribution(h,e)',
+               onStop:'startCallback_distribution(h,e)',onDrop:'dropCallback_distribution(e)'}"
+              ng-repeat = "h in e.habitacion track by $index"> {{h.room_id}} </li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Modal Info Habitación -->
-<div  id="infoMsg" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <!-- Modal Info Habitación -->
+  <div  id="infoMsg" class="modal fade" role="dialog" ng-controller="HistoryController">
+    <div class="modal-dialog">
 
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h2 class="modal-title"><center>Habitación {{infoRC.room_id}}</center></h2>
-      </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h2 class="modal-title"><center>Habitación {{infoRC.room_id}}</center></h2>
+        </div>
 
-      <div class="modal-body" ng-model="infoRC">
+        <div class="modal-body" ng-model="infoRC">
         <div class="row">
-        	 <div class="col-md-6 room-image">
-        	 	<img style="height:100%; width:100%;" data-ng-src="img2.JPEG"/>
-        	 </div>
-        	 
-        	 <div class="col-md-6 emps-info" >
-        	   	<div class="row" ng-repeat="f in infoRC.idUser">
-        	   		<h4 class="name-emps-info " class="col-xs-6 "><strong>Empleado(a):</strong> {{f.username}}</h4>
-                	<h4 class="name-emps-info " class="col-xs-6 "><strong>Celular:</strong> {{f.cel}}</h4>
-        	   	</div>
-        	   	<div class="row">
-        		<h3 class="name-emps-info ">Tipo de cuarto:</h3>
-    	   		<h4 class="name-emps-info " class="col-xs-6 ">{{typeRoom}}</h4>
-    	   	</div>
-        	</div>
-        	<hr><br>
-        	
+           <div class="col-md-6 room-image">
+            <img style="height:100%; width:100%;" data-ng-src="img2.JPEG"/>
+           </div>
+           
+           <div class="col-md-6 emps-info" >
+              <div class="row" ng-repeat="f in infoRC.idUser">
+                <h4 class="name-emps-info " class="col-xs-6 "><strong>Empleado(a):</strong> {{f.username}}</h4>
+                  <h4 class="name-emps-info " class="col-xs-6 "><strong>Celular:</strong> {{f.cel}}</h4>
+              </div>
+              <div class="row">
+            <h3 class="name-emps-info ">Tipo de cuarto:</h3>
+            <h4 class="name-emps-info " class="col-xs-6 ">{{typeRoom}}</h4>
+          </div>
+          </div>
+          <hr><br>
+          
         </div>
         <div class = "row">
-        	<h3 class="name-emps-info ">Problemas Recientes:</h3>
-             <hr><br>
-             <h3 class="name-emps-info" ng-init="get_observation(infoRC.observation)"> <span ng-repeat="ob in observation1">
-              {{ob.problem_description}}
-             </span> </h3>
+          <h3 class="name-emps-info ">Problemas Recientes:</h3>
+          <table id="table_by_room" class="table table-stripes">
+            <tr ng-repeat="rep in roomProblems">
+              <td>
+                {{rep.problem}}
+              </td>
+              <td>
+                {{rep.date_reported | date: 'EEEE dd/MM/yyyy'}}
+              </td>
+              <td>
+                <button type="button" class="btn btn-info" ng-click="cambiar_estado_problema(rep)">Problema Resuelto</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click = "selectRoom(false,infoRC,true)" ng-disabled="infoRC.status === 0 || employeeWithRooms.length <= 0 || infoRC.status === false || infoRC.status === 2 || infoRC.status === 3 || infoRC.status === 4">{{infoRC.status === 5 ? 'Despriorizar' : 'Priorizar'}}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+        
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click = "selectRoom(false,infoRC,true)" ng-disabled="infoRC.status === 0 || employeeWithRooms.length <= 0 || infoRC.status === false || infoRC.status === 2 || infoRC.status === 3 || infoRC.status === 4">{{infoRC.status === 5 ? 'Despriorizar' : 'Priorizar'}}</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-      </div>
-      
     </div>
   </div>
-</div>
 </div>
 
 
 <div id="notifications" >
 </div>
+
+
+

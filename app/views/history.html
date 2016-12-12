@@ -51,6 +51,12 @@
               <th>
                 Fecha de cambio de estado
               </th>
+              <th>
+                Hora
+              </th>
+              <th>
+                Resuelto
+              </th>
             </tr>
             <tr ng-repeat="rep in reportsList | filter:searchInputVal | orderBy:sortOrderVal | filter:filterByUsername | limitTo:recordLimit | filter:filterByState">
               <td>
@@ -77,6 +83,12 @@
               <td>
                 {{rep.date_reported | date: 'EEEE dd/MM/yyyy'}}
               </td>
+              <td>
+                {{rep.date_reported | date: 'h:mma'}}
+              </td>
+              <td>
+                {{rep.resolved == true ? 'Resuelto' : 'Falta Resolver'}}
+              </td>
             </tr>
           </table>
         </div>
@@ -93,10 +105,13 @@
                 Nombre del Empleado
               </th>
               <th>
-                 Observación
+                Observación
               </th>
               <th>
-                  Fecha de cambio de estado
+                Fecha de cambio de estado
+              </th>
+              <th>
+                Hora
               </th>
               <th>
                 Estado
@@ -114,6 +129,9 @@
               </td>
               <td>
                 {{rep.date_reported | date: 'EEEE dd/MM/yyyy'}}
+              </td>
+              <td>
+                {{rep.date_reported | date: 'h:mma'}}
               </td>
               <td>
                 <button type="button" class="btn btn-info" ng-click="cambiar_estado_problema(rep)">Problema Resuelto</button>
@@ -152,7 +170,7 @@
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-primary" ng-if="tab<4" ng-show="records.length > recordLimit" ng-click="recordLimit = recordLimit + 8">Mostrar más Reportes</button>
+  <button type="button" class="btn btn-primary" ng-if="tab<4" ng-show="records.length > recordLimit" ng-click="loadMore()">Mostrar más Reportes</button>
   <button type="button" class="btn btn-primary" ng-click="printToCart('printThisElement')">Imprimir</button>
   <div class="container-extra">
   </div>
