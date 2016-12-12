@@ -2,7 +2,7 @@
   
   <div class="pin-login row">
     <div class="emp_img col-md-3" ng-repeat = "e in employees track by $index">
-      <div class="btn photo-button" ng-click="select_current_emp(e)" data-toggle = "modal" data-target="#numpad">
+      <div class="btn photo-button" ng-click="select_current_emp(e); vm.numbers=''" data-toggle = "modal" data-target="#numpad">
         <center>
           <img class="img-circle" src="{{e.photo}}" width="200" height="200" /> 
         </center>
