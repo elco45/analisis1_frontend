@@ -406,7 +406,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.selectRoom = function(dragged,room,prioridad) {
-    	
+    	$scope.buttonDisabled = true;
     	var index = -1;
     	for (i =0; i < $scope.selectedRooms.length; i++) {
       	if(room.room_id == $scope.selectedRooms[i].room_id){
@@ -486,9 +486,11 @@ angular.module('AngularScaffold.Controllers')
     	}
 
     	RoomService.UpdateRoom(room_data).then(function(response){
-      	if ($scope.employeeWithRooms.length>0) {
-          $scope.distribute();
-        }
+	      	if ($scope.employeeWithRooms.length>0) {
+	          $scope.distribute();
+	        }else{
+	        	$scope.buttonDisabled = false;
+	        }
     	})
 
     };
@@ -537,7 +539,7 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.distribute = function(){
-      $scope.buttonDisabled = true;
+      
     	var selectedRooms = $scope.selectedRooms
     	if(selectedRooms.length !== 0){
       	var temp;
@@ -979,7 +981,7 @@ angular.module('AngularScaffold.Controllers')
         RoomTypeService.GetRoomType(temp).then(function(response){
           $scope.typeRoom = response.data.description;
         })
-        $scope.getReports($scope.infoRC.arreglo_problemas)
+        $scope.getReportsR($scope.infoRC.arreglo_problemas)
         $('#infoMsg').modal('show');
       }
     };
@@ -1116,7 +1118,6 @@ angular.module('AngularScaffold.Controllers')
   //plantilla inicio
  /* $scope.get_plantillas = function(){
     RoomService.GetPlantillas().then(function(function){
-
     })
   }*/
   $scope.cargar_plantilla = function(plantilla){ 
@@ -1165,7 +1166,7 @@ angular.module('AngularScaffold.Controllers')
       });
   }//plantilla final
   
-  $scope.getReports = function(data){
+  $scope.getReportsR = function(data){
     $scope.roomProblems = [];
     console.log(data)
     for (var i = 0; i < data.length; i++) {
@@ -1179,11 +1180,13 @@ angular.module('AngularScaffold.Controllers')
         ProblemService.GetProblema_por_habitacion(t2).then(function(response2){
           var ans = {
             _id: response.data._id,
-            problem: response2.data.problem_description,
+            problem: response2.data[0].problem_description,
             date_reported: response.data.date_reported,
-            employee_username: response.data.employee_username
+            employee_username: response.data.employee_username,
+            room_number: response.data.room_number
           }
-          $scope.roomProblems.push(response.data) 
+          console.log(ans)
+          $scope.roomProblems.push(ans) 
         })
       })
     }
