@@ -171,5 +171,9 @@ angular.module('AngularScaffold.Controllers')
         });
       }
 
+    $scope.loadMore = function() {
+      var increamented = $scope.recordLimit + 8;
+      $scope.recordLimit = increamented > $scope.records.length ? $scope.records.length : increamented;
+    };
 
 }]);
