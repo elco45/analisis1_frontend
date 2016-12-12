@@ -1178,7 +1178,7 @@ angular.module('AngularScaffold.Controllers')
         ProblemService.GetProblema_por_habitacion(t2).then(function(response2){
           var ans = {
             _id: response.data._id,
-            problem: response2.data[0].problem_description,
+            problem: response2.data.problem_description,
             date_reported: response.data.date_reported,
             employee_username: response.data.employee_username,
             room_number: response.data.room_number

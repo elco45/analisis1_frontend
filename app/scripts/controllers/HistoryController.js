@@ -58,7 +58,6 @@ angular.module('AngularScaffold.Controllers')
         });
       }
       $scope.cambiar_estado_problema = function(algo){
-        console.log(algo)
         var params={
           _id: algo._id,
           employee_username:algo.employee_username
@@ -68,7 +67,6 @@ angular.module('AngularScaffold.Controllers')
             room_id: algo.room_number,
             report_id: algo._id
           }
-          console.log(params2)
           RoomService.UpdateRoomProblems(params2).then(function(response3){
             $scope.lista_problemas = [];
             $scope.getResolved ();
