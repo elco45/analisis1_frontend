@@ -51,7 +51,7 @@
         <li ng-if="show_for_admin()" ng-cloak><a href="/#/reports">Historial</a></li>
         <li ng-if="show_for_admin()" ng-cloak><a href="/#/problemas">Manejar Problemas</a></li>
         <li ng-if="show_for_admin()" ng-cloak  ng-click ="show_options()">
-          <a class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a>
+          <a href="" class = "glyphicon glyphicon-cog" data-toggle="modal" data-target="#settings_modal" ></a>
         </li>
         <li ng-if="show_logout()" ng-cloak ng-click="logout()"><a href="">Cerrar Sesión</a></li>
         <li class="icon">
@@ -111,6 +111,8 @@
   <script src="angular-dragdrop/src/angular-dragdrop.min.js"></script>
   <script src="/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
   <script src="scripts/notify.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.4.6/angular-locale_es-es.js"></script>
+  
   <!-- endinject -->
   <script src="app.js"></script>
   <!-- inject:js -->
