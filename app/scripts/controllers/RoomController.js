@@ -913,7 +913,6 @@ angular.module('AngularScaffold.Controllers')
       for (var i = 0; i <$scope.n_problemas.length; i++) {
         $scope.n2problem.push($scope.n_problemas[i]._id);
       }
-      console.log("el arre es: "+$scope.n2problem)
       $scope.room.arreglo_problemas=$scope.n2problem;
                        
       if($scope.seleccionado && estado != 2){
@@ -1168,7 +1167,6 @@ angular.module('AngularScaffold.Controllers')
   
   $scope.getReportsR = function(data){
     $scope.roomProblems = [];
-    console.log(data)
     for (var i = 0; i < data.length; i++) {
       var t={
         _id: data[i]
@@ -1185,7 +1183,6 @@ angular.module('AngularScaffold.Controllers')
             employee_username: response.data.employee_username,
             room_number: response.data.room_number
           }
-          console.log(ans)
           $scope.roomProblems.push(ans) 
         })
       })
