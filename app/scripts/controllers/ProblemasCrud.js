@@ -11,16 +11,8 @@ angular.module('AngularScaffold.Controllers')
 
 
     $scope.crear_problema= function(){
-        if($scope.problema_nuevo.tipo === undefined){
-            swal({
-                  title: "Debe de seleccionar una opción!!",
-                  type: "warning",
-                  confirmButtonColor: "#DD6B55",
-                  confirmButtonText: "Cerrar",
-                  closeOnConfirm: false,
-                
-            });
-        }else{
+      console.log(!!$scope.problema_nuevo.descripcion)
+        if(!!$scope.problema_nuevo.descripcion){
             var temp = {
                 tipo: $scope.problema_nuevo.tipo,
                 descripcion: $scope.problema_nuevo.descripcion
@@ -40,6 +32,17 @@ angular.module('AngularScaffold.Controllers')
                   }
                 });
             }) 
+            
+        }else{
+          swal({
+                  title: "Debe de seleccionar una opción!!",
+                  type: "warning",
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Cerrar",
+                  closeOnConfirm: false,
+                
+            });
+          
         }
     }
 
@@ -59,22 +62,13 @@ angular.module('AngularScaffold.Controllers')
     }
 
     $scope.guardar_modificado = function(){
-        if ($scope.seleccionado === undefined) {
-            swal({
-                  title: "Debe de seleccionar una opción!!",
-                  type: "warning",
-                  confirmButtonColor: "#DD6B55",
-                  confirmButtonText: "Cerrar",
-                  closeOnConfirm: false,
-                
-            });
-        }else{
-        	var param ={
-        		id: $scope.seleccionado2._id,
-        		problem_description: $scope.problema_modificado,
-        		problem_type: $scope.seleccionado2.problem_type
-        	}
-        	ProblemService.Modificar(param).then(function(response2){
+        if (!!$scope.problema_modificado) {
+                var param ={
+            id: $scope.seleccionado2._id,
+            problem_description: $scope.problema_modificado,
+            problem_type: $scope.seleccionado2.problem_type
+          }
+          
                 swal({
                   title: "Desea guardar los cambios realizados",
                   type: "success",
@@ -86,10 +80,22 @@ angular.module('AngularScaffold.Controllers')
                 },
                 function(isConfirm){
                   if (isConfirm) {
+                    ProblemService.Modificar(param).then(function(response2){
+                    });
                     window.location.reload(false);
                   }
                 }); 
-            });            
+     
+        }else{
+             swal({
+                  title: "Debe de seleccionar una opción!!",
+                  type: "warning",
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Cerrar",
+                  closeOnConfirm: false,
+                
+            });
+                 
         }
     }
 

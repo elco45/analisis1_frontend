@@ -80,10 +80,22 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
           $scope.usuario.photo = reader.result
           UserService.Register($scope.usuario).then(function(algo){
             $scope.notsaved = false;
-            swal("¡Exito!","success");
-            $scope.usuario="";
+              $scope.usuario="";
             $scope.password2="";
             document.getElementById("nac").value = "";
+              swal({
+                  title: "Guardado con Exito!",
+                  type: "success",
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "OK!",
+                  closeOnConfirm: false,
+                },
+                function(isConfirm){
+                  if (isConfirm) {
+                    window.location.reload(false);
+                  }
+                });
+          
           }).catch(function(err){
             swal("Error", "Error al guardar el usuario", "error");
         },false)
@@ -128,8 +140,21 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
           && !!$scope.usuarioSeleccionado.tel && !!$scope.usuarioSeleccionado.direction &&  !!$scope.usuarioSeleccionado.id
           &&  !!$scope.usuarioSeleccionado.civil_status && !!$scope.usuarioSeleccionado.password) {
           UserService.UpdateUser($scope.usuarioSeleccionado).then(function(algo){
-        swal("¡Exito!","success");
-        $scope.usuarioSeleccionado = " ";
+            $scope.usuarioSeleccionado = " ";
+                swal({
+                  title: "Guardado con Exito!",
+                  type: "success",
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "OK!",
+                  closeOnConfirm: false,
+                },
+                function(isConfirm){
+                  if (isConfirm) {
+                    window.location.reload(false);
+                  }
+                });
+              
+
       }).catch(function(err){
       });
     }else{

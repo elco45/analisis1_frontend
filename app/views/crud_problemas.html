@@ -21,7 +21,7 @@
         </select>
 
         <label for="name">Descripcion del Problema:</label>
-        <input type="text" id="name" name="user_name"  ng-model ="problema_nuevo.descripcion" required placeholder="El problema debe tener entre 3 y 45 letras/espacios" minlength="3" maxlength="45" pattern="[a-zA-Z]{3}[a-zA-Z]*([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?">
+        <input type="text" id="name" name="user_name"  ng-model ="problema_nuevo.descripcion" required placeholder="El problema debe tener entre 2 y 45 letras/espacios" minlength="2" maxlength="45" pattern="[a-zA-Z]{2}[a-zA-Z]*([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?">
       </fieldset>
 
       <p></p>
@@ -43,7 +43,7 @@
         <label >Problema Actual:</label>
         <select ng-model="seleccionado2" ng-options="o as o.problem_description for o in no_limpio"></select>
         <label >Problema Nuevo:</label>
-        <input type="text" ng-model="problema_modificado" required placeholder="El problema debe tener entre 3 y 45 letras/espacios" minlength="3" maxlength="45" pattern="[a-zA-Z]{3}[a-zA-Z]*([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?">
+        <input type="text" ng-model="problema_modificado" required placeholder="El problema debe tener entre 2 y 45 letras/espacios" minlength="2" maxlength="45" pattern="[a-zA-Z]{2}[a-zA-Z]*([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?([ ][a-zA-Z]*)?">
 
       </fieldset>
       <p></p>
