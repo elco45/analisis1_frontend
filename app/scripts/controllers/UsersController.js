@@ -32,10 +32,6 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
       var pwd2 = document.getElementById("password_2").value;
       var pwdm = document.getElementById("passwordm").value;
       var pwd2m = document.getElementById("password_2m").value;
-
-      console.log("Pass: " + pwd)
-      console.log("Pass2: " + pwd2)
-
       if (pwd === null || pwdm === null) {
         $scope.validpwd=false;
       } else if (pwd === pwd2) {

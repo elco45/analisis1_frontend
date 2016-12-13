@@ -9,6 +9,14 @@ angular.module('AngularScaffold.Controllers')
     $scope.no_limpio = [];
     $scope.problema_modificado;
 
+    $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+      if (toState.authenticate && !$scope.$sessionStorage.logged){
+        console.log("login")
+        // User isn’t authenticated
+        $state.transitionTo("login");
+        event.preventDefault(); 
+      }
+    });
 
     $scope.crear_problema= function(){
         if($scope.problema_nuevo.tipo === undefined){

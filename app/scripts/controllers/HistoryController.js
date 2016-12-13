@@ -12,6 +12,15 @@ angular.module('AngularScaffold.Controllers')
       $scope.recordLimit = 8;
       $scope.problem_list = [];
 
+      $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+        if (toState.authenticate && !$scope.$sessionStorage.logged){
+          console.log("login")
+          // User isn’t authenticated
+          $state.transitionTo("login");
+          event.preventDefault(); 
+        }
+      });
+      
       $scope.getReports = function(){
         HistoryService.GetReports().then(function(response){
           $scope.reportsList = response.data;
