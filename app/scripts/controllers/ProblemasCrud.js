@@ -13,7 +13,7 @@ angular.module('AngularScaffold.Controllers')
       if (toState.authenticate && !$scope.$sessionStorage.logged){
         console.log("login")
         // User isn’t authenticated
-        $state.transitionTo("login");
+        $state.transitionTo("start");
         event.preventDefault(); 
       }
     });
