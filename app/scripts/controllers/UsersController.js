@@ -65,7 +65,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     }
 
     $scope.crear_usuario = function(){
-      /*
+      
      console.log(!!$scope.usuario.name )
       console.log( !!$scope.usuario.username )
        console.log( !!$scope.usuario.cel)
@@ -75,9 +75,9 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
          console.log(   !!$scope.usuario.civil_status)
          console.log(    !!$scope.usuario.children )
          console.log(    !!$scope.usuario.role );
-         */
+         
       if (!!$scope.usuario.name && !!$scope.usuario.username && !!$scope.usuario.cel && !!$scope.usuario.tel && !!$scope.usuario.direction
-           &&  !!$scope.usuario.id &&  !!$scope.usuario.civil_status && !!$scope.usuario.pin) {
+           &&  !!$scope.usuario.id &&  !!$scope.usuario.civil_status ) {
         var file = document.querySelector('input[type=file]').files[0];
         var reader  = new FileReader();
         reader.readAsDataURL(file)
