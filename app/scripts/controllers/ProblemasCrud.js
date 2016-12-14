@@ -2,6 +2,7 @@ angular.module('AngularScaffold.Controllers')
   .controller('ProblemasCrud', ['ProblemService' , '$scope', '$state', '$rootScope', '$sessionStorage',
     function (ProblemService, $scope, $state, $rootScope, $sessionStorage) {
     //dario maricon
+    $scope.$sessionStorage = $sessionStorage;
     $scope.problema_nuevo={};
     $scope.seleccionado;
     $scope.seleccionado2;
@@ -9,6 +10,13 @@ angular.module('AngularScaffold.Controllers')
     $scope.no_limpio = [];
     $scope.problema_modificado;
 
+    /*$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+      if (toState.authenticate && !$scope.$sessionStorage.logged){
+        // User isn’t authenticated
+        $state.transitionTo("start");
+        event.preventDefault(); 
+      }
+    });*/
 
     $scope.crear_problema= function(){
       console.log(!!$scope.problema_nuevo.descripcion)

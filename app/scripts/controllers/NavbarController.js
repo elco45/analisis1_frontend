@@ -1,6 +1,7 @@
 angular.module('AngularScaffold.Controllers')
   .controller('NavbarController', ['AuthService','RoomService','UserService' , '$scope', '$state', '$rootScope', '$sessionStorage',
   	function (authService,RoomService,UserService, $scope, $state, $rootScope, $sessionStorage) {
+    $scope.$sessionStorage = $sessionStorage;
     $scope.infoRC;
     
     //settings

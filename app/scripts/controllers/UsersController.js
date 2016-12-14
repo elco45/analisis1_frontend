@@ -16,10 +16,19 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     $scope.is_admin_logged = false;
     $scope.show_logout = false;
 
+    /*$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+      console.log($scope.isLogged())
+      console.log(toState.authenticate)
+      if (toState.authenticate && !$scope.isLogged()){
+        // User isn’t authenticated
+        $state.transitionTo("start");
+        event.preventDefault(); 
+      }
+    })*/
+
     $scope.getUser = function(){
       UserService.GetUser().then(function(response){
-      $scope.lisUsuario = response.data
-      console.log($scope.lisUsuario);
+        $scope.lisUsuario = response.data
       });
     }
 
@@ -32,10 +41,6 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
       var pwd2 = document.getElementById("password_2").value;
       var pwdm = document.getElementById("passwordm").value;
       var pwd2m = document.getElementById("password_2m").value;
-
-      console.log("Pass: " + pwd)
-      console.log("Pass2: " + pwd2)
-
       if (pwd === null || pwdm === null) {
         $scope.validpwd=false;
       } else if (pwd === pwd2) {
