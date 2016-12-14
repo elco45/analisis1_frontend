@@ -1,10 +1,7 @@
-angular.module('AngularScaffold.Services').factory('AuthService', ['$http', '$httpProvider',
-	function($http,$httpProvider){
-		$httpProvider.defaults.headers.common = {};
-  $httpProvider.defaults.headers.post = {};
-  $httpProvider.defaults.headers.put = {};
-  $httpProvider.defaults.headers.patch = {};
+angular.module('AngularScaffold.Services').factory('AuthService', ['$http', 
+	function($http){
 		$http.defaults.withCredentials = true;
+		$http.defaults.headers = {};
 		var baseUrl = 'https://macarthur-backend.herokuapp.com/';
 		//var baseUrl = 'http://localhost:8000/';
 		return {
