@@ -1,9 +1,7 @@
 angular.module('AngularScaffold.Services').factory('ProblemService', ['$http', 
 	function($http){
 		$http.defaults.withCredentials = true;
-		$http.defaults.headers = {};
-		var baseUrl = 'https://macarthur-backend.herokuapp.com/';
-		//var baseUrl = 'http://localhost:8000/';
+		var baseUrl = 'http://localhost:8000/';
 		return {	
 			CrearProblemas: function(payload){
 				console.log(payload)
