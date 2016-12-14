@@ -41,13 +41,13 @@ angular.module('AngularScaffold.Controllers')
     $scope.observation1=[];
     $scope.typeRoom="Ninguno";
 
-    $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+    /*$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
       if (toState.authenticate && !$scope.$sessionStorage.logged){
         // User isn’t authenticated
         $state.transitionTo("start");
         event.preventDefault(); 
       }
-    });
+    });*/
 
     $scope.Timer = function () {
       //console.log($scope.currentEmpRooms)

@@ -15,7 +15,8 @@ app.config(['$stateProvider', '$urlRouterProvider','$provide', function($statePr
         .state('login', {
             url: '/login',
             params: {content:undefined},
-            templateUrl: '/views/login.html'
+            templateUrl: '/views/login.html',
+            authenticate: false
         })
         .state('manage', {
             url: '/manage',
@@ -38,7 +39,8 @@ app.config(['$stateProvider', '$urlRouterProvider','$provide', function($statePr
         .state('start', {
             url: '/start',
             params: {content:undefined},
-            templateUrl: '/views/start_page.html'
+            templateUrl: '/views/start_page.html',
+            authenticate: false
         })
         .state('problemas', {
             url: '/problemas',
@@ -49,7 +51,8 @@ app.config(['$stateProvider', '$urlRouterProvider','$provide', function($statePr
         .state('pin_login', {
             url: '/login_emp',
             params: {content:undefined},
-            templateUrl: '/views/pin_login.html'
+            templateUrl: '/views/pin_login.html',
+            authenticate: false
         });
 
 }])

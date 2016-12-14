@@ -1,6 +1,7 @@
 angular.module('AngularScaffold.Controllers')
   .controller('HistoryController', ['HistoryService' ,'ProblemService', 'RoomService','$scope', '$state', '$rootScope', '$sessionStorage',
     function (HistoryService,ProblemService,RoomService, $scope, $state, $rootScope, $sessionStorage) {
+      $scope.$sessionStorage = $sessionStorage;
       $scope.reportsList = [];
       $scope.lista_problemas = [];
       $scope.userList = [];
@@ -12,13 +13,13 @@ angular.module('AngularScaffold.Controllers')
       $scope.recordLimit = 8;
       $scope.problem_list = [];
 
-      $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+      /*$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
         if (toState.authenticate && !$scope.$sessionStorage.logged){
           // User isn’t authenticated
           $state.transitionTo("start");
           event.preventDefault(); 
         }
-      });
+      });*/
 
       $scope.getReports = function(){
         HistoryService.GetReports().then(function(response){

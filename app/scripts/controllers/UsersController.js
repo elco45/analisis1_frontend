@@ -16,10 +16,19 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     $scope.is_admin_logged = false;
     $scope.show_logout = false;
 
+    /*$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+      console.log($scope.isLogged())
+      console.log(toState.authenticate)
+      if (toState.authenticate && !$scope.isLogged()){
+        // User isn’t authenticated
+        $state.transitionTo("start");
+        event.preventDefault(); 
+      }
+    })*/
+
     $scope.getUser = function(){
       UserService.GetUser().then(function(response){
-      $scope.lisUsuario = response.data
-      console.log($scope.lisUsuario);
+        $scope.lisUsuario = response.data
       });
     }
 
