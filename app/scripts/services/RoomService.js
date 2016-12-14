@@ -1,7 +1,7 @@
 angular.module('AngularScaffold.Services').factory('RoomService', ['$http',
 	function($http){
 		$http.defaults.withCredentials = true;
-		var baseUrl = 'http://macarthur-backend.herokuapp.com/';
+		var baseUrl = 'https://macarthur-backend.herokuapp.com/';
 		//var baseUrl = 'http://localhost:8000/';
 		return {
 			GetEmpleado: function(){
