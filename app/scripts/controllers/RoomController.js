@@ -40,6 +40,10 @@ angular.module('AngularScaffold.Controllers')
     $scope.buttonDisabled = false;
     $scope.observation1=[];
     $scope.typeRoom="Ninguno";
+    $scope.plantilla = {
+      'Nombre':"",
+      'Descripcion': ""
+    };
 
     /*$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
       if (toState.authenticate && !$scope.$sessionStorage.logged){
@@ -53,6 +57,7 @@ angular.module('AngularScaffold.Controllers')
       //console.log($scope.currentEmpRooms)
       if($scope.doneChecking && typeof($sessionStorage.currentUser) !== "undefined" ){
         $scope.doneChecking = false;
+        console.log("hoilas")
         var employee_username ={
           username: $sessionStorage.currentUser.username
         }
@@ -67,16 +72,19 @@ angular.module('AngularScaffold.Controllers')
                 HistoryService.GetSeenReports().then(function(response){
                   if (response.data ) {
                     for (var i = 0; i < response.data.length; i++) {
+                      
                       var temp = {
                         reporte:response.data[i]
                       }
                       HistoryService.ReportModifySeen(temp).then(function(response2){
                         var str="HAY PROBLEMA EN LA HABITACION: "+response2.data.room_number;
                         Notify(str, null, null, 'danger');
+                        $scope.change_true=true;
+                        console.log("me cago")
                       });
                     }
                   }
-                  $scope.change_true=true;
+                
                 });
               }
             }
@@ -953,9 +961,7 @@ angular.module('AngularScaffold.Controllers')
         empty:null
       }
       HistoryService.ReportModifySeen(temp).then(function(response){
-        if (response.data ) {
-          Notify("Stop! Hammer time", null, null, 'danger');
-        }
+        
         $scope.change_true=true;
       });
     }
@@ -1033,25 +1039,42 @@ angular.module('AngularScaffold.Controllers')
       });
   }
   $scope.create_plantillas  = function(algo){
-      
-      var plantilla ={
-         plantilla_nombre: document.getElementById("plantilla_name_input").value,
-         plantilla_descripcion: document.getElementById("plantilla_descripcion_input").value
-      };
-      RoomService.CreatePlantillas(plantilla).then(function(response){
-            swal({
-              title: "Guardado con Exito!",
-              type: "success",
-              confirmButtonColor: "#DD6B55",
-              confirmButtonText: "OK!",
-              closeOnConfirm: false,
-            },
-            function(isConfirm){
-              if (isConfirm) {
-                window.location.reload(false);
-              }
-            });
-      });
+      if($scope.plantilla.Nombre.length ===0 || $scope.plantilla.Descripcion.length===0){
+         swal({
+          title: "No puede dejar los campos en blanco?",
+          type: "success",
+          showCancelButton: false,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "OK",
+          closeOnConfirm: true,
+        },
+        function(isConfirm){
+          if (isConfirm) {
+                  
+          
+          }
+        }); 
+      }else{
+         var plantilla ={
+                 plantilla_nombre: document.getElementById("plantilla_name_input").value,
+                 plantilla_descripcion: document.getElementById("plantilla_descripcion_input").value
+                };
+            RoomService.CreatePlantillas(plantilla).then(function(response){
+                swal({
+                  title: "Guardado con Exito!",
+                  type: "success",
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "OK!",
+                  closeOnConfirm: false,
+                },
+                function(isConfirm){
+                  if (isConfirm) {
+                    window.location.reload(false);
+                  }
+                });
+          }); 
+      }
+   
   }//plantilla final
   
 

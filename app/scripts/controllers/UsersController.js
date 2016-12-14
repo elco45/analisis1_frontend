@@ -399,7 +399,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
     //fin settings
 
     $scope.clickIconButton = function(){
-      Notify("Stop! Hammer time", null, null, 'danger');
+  
       RoomService.GetSettings().then(function(response){
         if(response.data.pin_login === true){
           if($sessionStorage.currentUser.role === 0 ){

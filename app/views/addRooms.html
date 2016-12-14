@@ -114,9 +114,9 @@
           <div>
             <h4>Guardar Plantilla Actual</h4>
             <span>Nombre</span>
-            <input type = "text" id = "plantilla_name_input"></input>
+            <input type = "text" id = "plantilla_name_input" ng-model="plantilla.Nombre"></input>
             <span>Descripción</span>
-            <input type = "text" id = "plantilla_descripcion_input" ></input>
+            <input type = "text" id = "plantilla_descripcion_input" ng-model ="plantilla.Descripcion"></input>
             <button type = "button" class = "btn btn-primary" ng-click ="create_plantillas()">Guardar</button>
           </div>
 
