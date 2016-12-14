@@ -1,7 +1,7 @@
 angular.module('AngularScaffold.Services').factory('AuthService', ['$http', 
 	function($http){
 		$http.defaults.withCredentials = true;
-		//var baseUrl = 'https://hotelmacarthur-backend.herokuapp.com/';
+		var baseUrl = 'https://macarthur-backend.herokuapp.com/';
 		var baseUrl = 'http://localhost:8000/';
 		return {
 			Logout: function(){
