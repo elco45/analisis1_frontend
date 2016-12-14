@@ -77,7 +77,7 @@ angular.module('AngularScaffold.Controllers',['bc.AngularKeypad'])
          console.log(    !!$scope.usuario.role );
          
       if (!!$scope.usuario.name && !!$scope.usuario.username && !!$scope.usuario.cel && !!$scope.usuario.tel && !!$scope.usuario.direction
-           &&  !!$scope.usuario.id &&  !!$scope.usuario.civil_status ) {
+           &&  !!$scope.usuario.id ) {
         var file = document.querySelector('input[type=file]').files[0];
         var reader  = new FileReader();
         reader.readAsDataURL(file)
