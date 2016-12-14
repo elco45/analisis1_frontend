@@ -52,9 +52,6 @@
                 Fecha de cambio de estado
               </th>
               <th>
-                Hora
-              </th>
-              <th>
                 Resuelto
               </th>
             </tr>
@@ -84,9 +81,6 @@
                 {{rep.date_reported | date: 'EEEE dd/MM/yyyy'}}
               </td>
               <td>
-                {{rep.date_reported | date: 'h:mma'}}
-              </td>
-              <td>
                 {{rep.resolved == true ? 'Resuelto' : 'Falta Resolver'}}
               </td>
             </tr>
@@ -111,9 +105,6 @@
                 Fecha de cambio de estado
               </th>
               <th>
-                Hora
-              </th>
-              <th>
                 Estado
               </th>
             </tr>
@@ -129,9 +120,6 @@
               </td>
               <td>
                 {{rep.date_reported | date: 'EEEE dd/MM/yyyy'}}
-              </td>
-              <td>
-                {{rep.date_reported | date: 'h:mma'}}
               </td>
               <td>
                 <button type="button" class="btn btn-info" ng-click="cambiar_estado_problema(rep)">Problema Resuelto</button>
